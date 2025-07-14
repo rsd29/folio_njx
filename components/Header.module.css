@@ -1,0 +1,166 @@
+.headerBar {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  z-index: 10;
+  
+/* lets inner elements float and remain interactive */
+}
+.sideLeft,
+.sideRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  pointer-events: all;
+  width: 30%;
+}
+
+.sideRight{
+  justify-content: right;
+}
+
+.logo {
+  height: 35px;     /* or whatever suits your nav */
+  width: auto;
+  object-fit: contain;
+  display: block;
+  
+  transition: all ease-in-out 0.s;
+  padding: 5px;
+  z-index: 5;
+}
+
+.logoDiv{
+    position: relative;
+clip-path: polygon(
+  5px 0%,       /* top-left cut */
+  100% 0%, 
+  100% calc(100% - 7px),  /* bottom-right cut start */
+  calc(100% - 7px) 100%,  /* bottom-right cut end */
+  0% 100%, 
+  0% 5px        /* back to start */
+  
+);
+  display: inline-block;
+    background: rgba(58, 58, 58, 0.516);
+      backdrop-filter: blur(10px) !important;
+}
+
+
+
+
+.logoDesc {
+  font-size: 1rem;
+  color: #efefef;
+}
+.headerWrapper {
+  position: relative;
+  z-index: 999;
+  width: 200px;
+  padding: 0 15px;
+
+  border: 1px solid #424242;
+  border-radius: 30px;
+
+  background: rgba(54, 54, 54, 0.367) !important;
+
+  backdrop-filter: blur(10px) !important;
+
+
+  overflow: hidden;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.headerWrapper:hover {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 0 4px rgba(255, 255, 255, 0.2),
+    0 0 12px rgba(255, 255, 255, 0.1),
+    inset 0 0 4px rgba(255, 255, 255, 0.05);
+}
+
+.headerInner {
+  position: relative;
+  justify-content: space-between;
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  background-color: none;
+}
+.logoDescDiv{
+display: flex;
+flex-direction: column;
+gap: 0;
+line-height: 1;
+font-weight: 300;
+
+margin-top: 5px;}
+.logoDescSub{
+  display: flex;
+flex-direction: column;
+font-weight: 300;
+gap: 0;
+line-height: 1.4;
+margin-top: -3px;
+color: rgb(171, 171, 171);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+
+.navItem {
+  position: relative;
+  font-size: 1rem;
+  color: #878787; /* white text */
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 50px;
+
+  transition: 
+    color 0.2s ease,
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+  font-weight: 200;
+
+}
+
+.navItem:hover {
+  color: #e0e0e0; /* soft white hover */
+  cursor: pointer;
+}
+
+.dot {
+  position: absolute;
+  bottom: 0;
+  width: 40px;
+  height: 4px;
+  background: #ffffff;
+  border: 0.5px rgb(141, 141, 141) solid;
+  border-radius: 1px;
+  transform: translateX(-50%);
+  transition: left 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
+
+
+
+  /* LED glow effect */
+  box-shadow:
+    0 0 4px #ffffff,
+    0 0 8px #ffffff,
+    0 0 12px rgba(31, 28, 28, 0.4),
+    0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.active{
+
+    color: rgb(255, 255, 255);
+
+border-radius: 9999px;
+    
+}
+

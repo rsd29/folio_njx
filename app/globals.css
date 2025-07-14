@@ -1,0 +1,122 @@
+/* Import Funnel Display and Funnel Sans (all weights) */
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+/* CSS Variables (Dark Theme) */
+:root {
+  --font-body: 'Funnel Sans', sans-serif;
+  --font-heading: 'Funnel Display', sans-serif;
+
+  --background: #181818;
+  --foreground: #f5f5f5;
+}
+
+/* Base styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  background-color: var(--background);
+  color: var(--foreground);
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Typography Reset for consistency */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: inherit;
+  color: var(--foreground);
+}
+
+p, b, strong, span {
+  font-family: var(--font-body);
+  font-weight: inherit;
+  color: var(--foreground);
+}
+
+/* Type scale */
+h1 {
+  font-size: 3rem;     /* 48px */
+}
+
+h2 {
+  font-size: 2.25rem;  /* 36px */
+}
+
+h3 {
+  font-size: 1.75rem;  /* 28px */
+}
+
+h4 {
+  font-size: 1.5rem;   /* 24px */
+}
+
+h5 {
+  font-size: 1.25rem;  /* 20px */
+}
+
+h6 {
+  font-size: 1.125rem; /* 18px */
+}
+
+p, b, strong {
+  font-size: 1rem;     /* 16px */
+}
+
+/* Hide scrollbars */
+html, body {
+  overflow: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+strong{
+  font-size: inherit;
+}
+
+.heroTitle{
+  font-weight: 350;
+  line-height: 1;
+  letter-spacing: -9px;
+  margin-bottom: 0;
+  margin-top: 0;
+  margin-left: -14px;
+  font-family: 'Funnel Display', sans-serif;
+
+}
+
+.heroTitle span{
+    font-family: 'Funnel Display', sans-serif;
+}
+
+.heroSubtext {
+  font-weight: 350;
+  line-height: 1;
+  
+  margin-bottom: 0;
+  margin-top: 0;
+    font-family: 'Funnel Display', sans-serif;
+}
+
+.heroSubtext span{
+  font-family: 'Funnel Display', sans-serif;
+}
+
+.heroSubtext2{
+    font-weight: 300;
+  line-height: 1;
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  margin-top: 0;
+  color: rgb(125, 125, 125);
+
+}
+

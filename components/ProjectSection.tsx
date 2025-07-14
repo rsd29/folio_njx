@@ -1,0 +1,13 @@
+import ProjectOne from './projects/ProjectOne'
+import ProjectTwo from './projects/ProjectTwo'
+import ProjectThree from './projects/ProjectThree'
+
+export default function ProjectsSection() {
+  return (
+    <section style={{ width: '100%', gap:50, display:'flex', flexDirection:'column' }}>
+      <ProjectOne />
+      <ProjectTwo />
+      <ProjectThree />
+    </section>
+  )
+}

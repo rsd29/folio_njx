@@ -1,0 +1,44 @@
+/* app/Home.module.css */
+.hero {
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 24px;
+  width: 100%;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.hero p {
+  font-size: 18px;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+.fullWidthSection {
+  width: 100%;
+    
+  padding: 0 20px; /* Scales spacing with screen size */
+  box-sizing: border-box;
+}
+.heroSection{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  width: 100%;
+  padding: 0 12%;
+}
+@media (max-width: 768px) {
+  .fullWidthSection {
+    padding: 16px;
+  }
+}
+

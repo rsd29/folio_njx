@@ -1,0 +1,116 @@
+/* ProjectLayout.module.css */
+
+.outerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+
+}
+
+
+
+.innerContainer {
+  width: 80%;
+
+  padding: 10px;
+
+  border: 1px solid #282828;
+  border-radius: 12px;
+
+  background-image: linear-gradient(
+    to bottom,
+    rgba(155, 155, 155, 0.12) 0%,
+    rgba(77, 77, 77, 0.222) 12%,
+    transparent 50%
+  );
+  background-color:     rgba(77, 77, 77, 0.222) 12%;
+
+  background-repeat: no-repeat;
+
+  box-shadow:
+    0 0 12px rgba(0, 0, 0, 0.4),
+    inset 0 -2px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+      transition: all ease 0.4s;
+}
+
+.innerContainer:hover{
+    scale: 1.05;
+    cursor: pointer;
+}
+
+/* Inner content box */
+.innerContentDiv {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  padding: 50px;
+
+  border: 1px solid #383838;
+  border-radius: 8px;
+
+  background: linear-gradient(
+    to top,
+    #0b0b0b 0%,
+    #101010 40%,
+    #181818 100%
+  );
+}
+.innerContainer,
+.innerContentDiv {
+  position: relative;
+  overflow: hidden;
+}
+
+.innerContainer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(251, 251, 251, 0.641) 50%,
+    transparent
+  );
+  z-index: 1;
+}
+.innerContentDiv::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent
+  );
+  z-index: 1;
+}
+.imagePlaceholder {
+  flex: 3;
+  height: 100%;
+  background-color: #262626;
+  color: rgb(188, 188, 188);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.projectDesc{
+      flex: 1;
+  height: 100%;
+  background-color: #000000;
+  color: rgb(188, 188, 188);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
