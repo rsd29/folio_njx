@@ -83,12 +83,11 @@ strong{
 }
 
 .heroTitle{
-  font-weight: 350;
   line-height: 1;
-  letter-spacing: -9px;
+  letter-spacing: -0;
   margin-bottom: 0;
   margin-top: 0;
-  margin-left: -14px;
+
   font-family: 'Funnel Display', sans-serif;
 
 }
@@ -102,7 +101,7 @@ strong{
   line-height: 1;
   
   margin-bottom: 0;
-  margin-top: 0;
+  margin-top: 20px;
     font-family: 'Funnel Display', sans-serif;
 }
 
@@ -120,3 +119,22 @@ strong{
 
 }
 
+html, body {
+  cursor: none !important;
+}
+
+
+.custom-cursor {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+  background-color: white;
+  transition: background-color 0.3s ease;
+  will-change: transform;
+}

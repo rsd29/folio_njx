@@ -37,7 +37,6 @@
 
 .innerContainer:hover{
     scale: 1.05;
-    cursor: pointer;
 }
 
 /* Inner content box */

@@ -90,6 +90,7 @@ clip-path: polygon(
   gap: 20px;
   width: 100%;
   background-color: none;
+
 }
 .logoDescDiv{
 display: flex;
@@ -115,22 +116,22 @@ color: rgb(171, 171, 171);
 .navItem {
   position: relative;
   font-size: 1rem;
-  color: #878787; /* white text */
+  color: #979797; /* white text */
   text-decoration: none;
   padding: 8px 12px;
   border-radius: 50px;
-
+  font-family: 'Funnel Sans', sans-serif;
   transition: 
     color 0.2s ease,
     background-color 0.3s ease,
     border-color 0.3s ease;
   font-weight: 200;
-
+  cursor: none;
 }
 
 .navItem:hover {
   color: #e0e0e0; /* soft white hover */
-  cursor: pointer;
+  cursor: none;
 }
 
 .dot {

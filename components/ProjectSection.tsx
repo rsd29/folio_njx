@@ -4,10 +4,10 @@ import ProjectThree from './projects/ProjectThree'
 
 export default function ProjectsSection() {
   return (
-    <section style={{ width: '100%', gap:50, display:'flex', flexDirection:'column' }}>
+    <section style={{ width: '100%', gap: 50, display: 'flex', flexDirection: 'column', paddingBottom: 150 }}>
       <ProjectOne />
-      <ProjectTwo />
-      <ProjectThree />
+      <ProjectTwo  />
+      <ProjectThree  />
     </section>
   )
 }

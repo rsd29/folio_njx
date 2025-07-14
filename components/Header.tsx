@@ -62,9 +62,9 @@ useEffect(() => {
   </div>
 
 <div className={styles.sideRight}>
-  <AnimatedNavItem href="/contact" label="Contact" className={styles.navItem} />
-  <AnimatedNavItem href="/resume" label="Resume" className={styles.navItem} />
-  <AnimatedNavItem href="/off-the-clock" label="Off the Clock" className={styles.navItem} />
+  <Link href="/contact"  className={styles.navItem} >Contact</Link>
+  <Link href="/resume" className={styles.navItem} >Resume</Link>
+  <Link href="/off-the-clock" className={styles.navItem} >Off the Clock</Link>
 </div>
 </header>
 

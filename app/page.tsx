@@ -10,10 +10,19 @@ export default function HomePage() {
 <section className={`${styles.fullWidthSection} ${styles.heroSection}`}>
 <AnimatedRichText 
   className="heroTitle"
-  segments={[{ text: 'Russell Saw' }]}
-  fontSize="10rem"
+  segments={[{ text: 'Human-Centered. ' }]}
+  fontSize="5rem"
   fontWeight={300}
-  lineHeight={1}
+  lineHeight={.9}
+  maxWidth="100%"
+  useFlickerEffect={false}
+/>
+<AnimatedRichText 
+  className="heroTitle"
+  segments={[{ text: 'System-Minded.' }]}
+  fontSize="5rem"
+  fontWeight={300}
+  lineHeight={.9}
   maxWidth="100%"
   useFlickerEffect={false}
 />
@@ -33,7 +42,8 @@ export default function HomePage() {
   fontWeight={300}
 />
 
-<h3 className='heroSubtext2'>UX Designer. Based in Melbourne.</h3>
+
+<h3 className='heroSubtext2'>UX Designer based in Melbourne.</h3>
 
 </section>
 
@@ -41,12 +51,12 @@ export default function HomePage() {
       <ProjectsSection />
 
       {/* Call-to-Action */}
-      <section className={styles.fullWidthSection}>
+      {/* <section className={styles.fullWidthSection}>
         <h2 style={{ fontSize: '28px', fontWeight: 600, marginBottom: '12px' }}>More About Me</h2>
         <p style={{ fontSize: '16px', maxWidth: '600px' }}>
           Outside of work, I explore ideas through writing, design experiments, and side projects.
         </p>
-      </section>
+      </section> */}
     </main>
   )
 }
