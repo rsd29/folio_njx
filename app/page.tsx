@@ -10,18 +10,18 @@ export default function HomePage() {
 <section className={`${styles.fullWidthSection} ${styles.heroSection}`}>
 <AnimatedRichText 
   className="heroTitle"
-  segments={[{ text: 'Human-Centered. ' }]}
+  segments={[{ text: 'Human-Centered' }]}
   fontSize="5rem"
-  fontWeight={300}
+  fontWeight={500}
   lineHeight={.9}
   maxWidth="100%"
   useFlickerEffect={false}
 />
 <AnimatedRichText 
   className="heroTitle"
-  segments={[{ text: 'System-Minded.' }]}
+  segments={[{ text: 'System-Minded' }]}
   fontSize="5rem"
-  fontWeight={300}
+  fontWeight={500}
   lineHeight={.9}
   maxWidth="100%"
   useFlickerEffect={false}
@@ -34,7 +34,7 @@ export default function HomePage() {
     { text: 'designer', isStrong: true },
     { text: ' who builds, and a ' },
     { text: 'developer', isStrong: true },
-    { text: ' who thinks like a user.' },
+    { text: ' who thinks like a user' },
  
   ]}
   useFlickerEffect={false}
@@ -43,7 +43,7 @@ export default function HomePage() {
 />
 
 
-<h3 className='heroSubtext2'>UX Designer based in Melbourne.</h3>
+<h3 className='heroSubtext2'>Russell is a UX Designer based in Melbourne Au.</h3>
 
 </section>
 
