@@ -1,7 +1,7 @@
 import styles from './ProjectLayout.module.css'
 import { HTMLAttributes } from 'react'
 
-interface ProjectProps extends HTMLAttributes<HTMLDivElement> {}
+
 
 export default function ProjectOne() {
   return (
