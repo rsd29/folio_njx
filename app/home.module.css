@@ -35,7 +35,9 @@
   justify-content: flex-start;
   width: 100%;
 
-  padding: 100px 10%;
+  padding: 0 10%;
+  padding-top: 100px;
+  padding-bottom: 50px;
 }
 @media (max-width: 768px) {
   .fullWidthSection {
@@ -48,6 +50,7 @@
   justify-content: center;
     margin-top: auto;
   padding: 0 20px;
+
 }
 .heroBreakDiv {
   width: 100%;
