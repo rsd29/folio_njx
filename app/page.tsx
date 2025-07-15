@@ -47,16 +47,10 @@ export default function HomePage() {
 
 </section>
 
-      {/* Featured Projects Placeholder */}
+
       <ProjectsSection />
 
-      {/* Call-to-Action */}
-      {/* <section className={styles.fullWidthSection}>
-        <h2 style={{ fontSize: '28px', fontWeight: 600, marginBottom: '12px' }}>More About Me</h2>
-        <p style={{ fontSize: '16px', maxWidth: '600px' }}>
-          Outside of work, I explore ideas through writing, design experiments, and side projects.
-        </p>
-      </section> */}
+
     </main>
   )
 }
