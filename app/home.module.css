@@ -31,14 +31,34 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: left;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100%;
-  padding: 0 12%;
+
+  padding: 100px 10%;
 }
 @media (max-width: 768px) {
   .fullWidthSection {
     padding: 16px;
   }
 }
+.heroBreakDivContainer{
+    width: 100%;
+  display: flex;
+  justify-content: center;
+    margin-top: auto;
+  padding: 0 20px;
+}
+.heroBreakDiv {
+  width: 100%;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
 
+  background-size: 100% 2px;
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
+  transition: background-position 0.1s ease;
+  pointer-events: none;
+}

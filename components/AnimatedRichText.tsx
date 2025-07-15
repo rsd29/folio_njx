@@ -126,7 +126,7 @@ export default function AnimatedRichText({
               }}
               style={{
                 display: 'inline-block',
-                fontWeight: isStrong ? 450 : fontWeight,
+                fontWeight: isStrong ? 400 : fontWeight,
                 color: useFlickerEffect
                   ? char !== text[i]
                     ? '#4cff75'

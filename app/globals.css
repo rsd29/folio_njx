@@ -93,9 +93,9 @@ strong{
 }
 
 .heroSubtext {
-  font-weight: 350;
+  font-weight: 300;
   line-height: 1;
-  
+  color: grey;
   margin-bottom: 0;
   margin-top: 20px;
     font-family: 'Funnel Display', sans-serif;
@@ -106,15 +106,28 @@ strong{
 }
 
 .heroSubtext2{
-    font-weight: 300;
+  font-weight: 200;
   line-height: 1;
   font-size: 1.2rem;
   margin-bottom: 0;
   margin-top: 0;
   color: rgb(125, 125, 125);
-
 }
 
+.heroSubtext3{
+    font-weight: 200;
+  line-height: 1;
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  margin-top: 0;
+  color: rgb(71, 71, 71);
+  transition: all ease-in-out 0.2s;
+    pointer-events: auto;
+}
+
+.heroSubtext3:hover{
+  color: rgb(196, 196, 196);
+}
 html, body {
   cursor: none !important;
 }
@@ -134,3 +147,4 @@ html, body {
   transition: background-color 0.3s ease;
   will-change: transform;
 }
+

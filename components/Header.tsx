@@ -13,9 +13,9 @@ const navItems = [
 ]
 
 const rightNavItems = [
-  { label: 'Contact', href: '/contact' },
+  { label: 'LinkedIn', href: '/contact' },
   { label: 'Off the Clock', href: '/off-the-clock' },
-  { label: 'Resume', href: '/rs-resume-q3-2025.pdf' }, // Direct path to file
+  { label: 'Resume', href: '/rs-resume-q3-2025-v2.pdf' }, // Direct path to file
 ]
 
 export default function Header() {
