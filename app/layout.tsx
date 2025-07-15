@@ -25,6 +25,7 @@ const funnelSans = Funnel_Sans({
   variable: '--font-body',
   display: 'swap',
 })
+
 export const metadata = {
   title: 'Russell Saw — UX Portfolio',
   description: 'UX Designer & Developer Portfolio',
