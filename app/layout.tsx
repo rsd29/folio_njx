@@ -32,9 +32,9 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${funnelDisplay.variable} ${funnelSans.variable}`}>
 
-      <body className={dmSans.className}>
+      <body className={dmSans.className} > 
         <Analytics/ >
         <NegativeCursor />
         <Header />
