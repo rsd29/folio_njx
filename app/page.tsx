@@ -43,7 +43,7 @@ export default function HomePage() {
 />
 
 
-<h3 className='heroSubtext2'>Russell is a UX Designer based in Melbourne Au.</h3>
+<h3 className='heroSubtext2'>UX Designer based in Melbourne</h3>
 
 </section>
 
