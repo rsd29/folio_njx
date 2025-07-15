@@ -6,6 +6,7 @@ const NextConfig = {
     nextScriptWorkers: false,
     serverActions: false,
     instrumentationHook: false,
+    appDir: true,
   },
   // optional, but good hygiene
   reactStrictMode: true,
