@@ -1,10 +1,9 @@
 .footer {
   width: 100%;
-  padding: 40px 20px;
+  padding: 40px 10%;
   background-color: #0e0e0e;
   color: #aaa;
   display: flex;
-  justify-content: center;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -77,34 +76,7 @@ clip-path: polygon(
   
 );
   display: inline-block;
-background: linear-gradient(
-  130deg,
-  #e0eafc,
-  #cfdef3,
-  #dde1e7,
-  #cfd9df,
-  #e0eafc
-);
-  background-size: 400% 400%;
-  animation: rainbowPulse 20s ease-in-out infinite;
+background: rgba(58, 58, 58, 0.516);
       backdrop-filter: blur(10px) !important;
 }
 
-
-@keyframes rainbowPulse {
-  0% {
-    background-position: 0% 50%;
-  }
-  25% {
-    background-position: 25% 47%;
-  }
-  50% {
-    background-position: 75% 53%;
-  }
-  75% {
-    background-position: 50% 45%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}

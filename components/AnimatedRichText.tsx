@@ -9,6 +9,8 @@ const getRandomChar = () => chars[Math.floor(Math.random() * chars.length)]
 interface TextSegment {
   text: string
   isStrong?: boolean
+  opacity?: number
+  color?: string
 }
 
 interface AnimatedRichTextProps {
@@ -19,6 +21,7 @@ interface AnimatedRichTextProps {
   maxWidth?: string
   className?: string
   useFlickerEffect?: boolean
+  letterSpacing?: string
 }
 
 export default function AnimatedRichText({
@@ -29,6 +32,7 @@ export default function AnimatedRichText({
   maxWidth = '100ch',
   className = '',
   useFlickerEffect = true,
+  letterSpacing = '0',
 }: AnimatedRichTextProps) {
   const fullText = useMemo(() => segments.map((s) => s.text).join(''), [segments])
   const [displayed, setDisplayed] = useState<string[]>([])
@@ -91,9 +95,10 @@ export default function AnimatedRichText({
         maxWidth,
         fontFamily: 'Funnel Sans, sans-serif',
         flexWrap: 'wrap',
+        letterSpacing,
       }}
     >
-      {segments.map(({ text, isStrong }, segmentIdx) => {
+      {segments.map(({ text, isStrong, opacity, color }, segmentIdx) => {
         const chars = text.split('').map((_, i) => {
           const globalIdx = globalCharIndex + i
           const char = displayed[globalIdx] ?? ''
@@ -111,7 +116,7 @@ export default function AnimatedRichText({
   : 'none'
               }}
               animate={{
-                opacity: 1,
+                opacity: opacity !== undefined ? opacity : 1,
                 y: 0,
                 x: 0,
                 scale: 1,
@@ -127,11 +132,11 @@ export default function AnimatedRichText({
               style={{
                 display: 'inline-block',
                 fontWeight: isStrong ? 400 : fontWeight,
-                color: useFlickerEffect
+                color: color || (useFlickerEffect
                   ? char !== text[i]
                     ? '#4cff75'
                     : '#ffffff'
-                  : '#ffffff',
+                  : '#ffffff'),
               }}
             >
               {char === ' ' ? '\u00A0' : char}

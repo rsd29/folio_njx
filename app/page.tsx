@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './home.module.css'
 import AnimatedRichText from '../components/AnimatedRichText'
+import ScrollRevealText from '../components/ScrollRevealText'
 import ProjectsSection from '../components/ProjectSection'
 
 const taglines = [
@@ -83,33 +84,83 @@ export default function HomePage() {
   return (
     <main style={{ maxWidth: '100%' }}>
       <section className={`${styles.fullWidthSection} ${styles.heroSection}`}>
-        <AnimatedRichText
-          className="heroSubtext"
-          segments={[{ text: "Hi, I'm Russell" }]}
-          useFlickerEffect={false}
-          fontSize="4rem"
-          fontWeight={300}
-          lineHeight={0.9}
-        />
-        <AnimatedRichText
-          className="heroSubtext"
-          segments={[
-            { text: 'A designer ', isStrong: true },
-            { text: 'who builds, and a ' },
-            { text: 'developer ', isStrong: true },
-            { text: 'who thinks like a user. ' },
-          ]}
-          useFlickerEffect={false}
-          fontSize="4rem"
-          fontWeight={300}
-          lineHeight={0.9}
-        />
+        {/* Background Video */}
+        <div className={styles.videoBackground}>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className={styles.videoElement}
+            style={{
+              backgroundImage: 'url("https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-poster-00001.jpg")'
+            }}
+          >
+            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.mp4" />
+            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.webm" />
+          </video>
+          
+          {/* Text inside video frame */}
+          <div className={styles.heroTextTop}>
+            <AnimatedRichText
+              className="heroSubtext"
+              segments={[
+                { text: "Hi, I'm ", color: "#ffffff", opacity: 1 },
+                { text: "Russell", color: "#ffffff", opacity: 1, isStrong: true }
+              ]}
+              useFlickerEffect={false}
+              fontSize="10rem"
+              fontWeight={300}
+              lineHeight={0.9}
+              letterSpacing="-0.06em"
+            />
+          </div>
+        </div>
+
+        {/* Text below video frame */}
+        <div className={styles.heroTextBottom}>
+          <AnimatedRichText
+            className="heroSubtext"
+            segments={[
+              { text: 'A designer ', isStrong: true },
+              { text: 'who builds, and a ' },
+              { text: 'developer ', isStrong: true },
+              { text: 'who thinks like a user. ' },
+            ]}
+            useFlickerEffect={false}
+            fontSize="4rem"
+            fontWeight={300}
+            lineHeight={0.9}
+          />
+        </div>
 
         <div className={styles.heroBreakDivContainer}>
           <div className={styles.heroBreakDiv} ref={breakRef}>
             <h4 className="heroSubtext2">Based in Melbourne, {displayed}</h4>
             <h4 className="heroSubtext3" onClick={loadNewTagline}>Want another?</h4>
           </div>
+        </div>
+      </section>
+
+      {/* Animated Text Section */}
+      <section className={styles.animatedTextSection}>
+        <div className={styles.animatedTextContainer}>
+          <ScrollRevealText
+            text="Year 5 of UX."
+            fontSize="3.5rem"
+            fontWeight={300}
+            lineHeight={1.2}
+            letterSpacing="-0.01em"
+            className="scrollRevealText"
+          />
+          <ScrollRevealText
+            text="Currently leading product design across enterprise platforms at Oriental Merchant."
+            fontSize="2.5rem"
+            fontWeight={300}
+            lineHeight={1.2}
+            letterSpacing="-0.01em"
+            className="scrollRevealText"
+          />
         </div>
       </section>
 

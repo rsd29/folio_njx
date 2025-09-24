@@ -34,7 +34,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-
+  position: relative;
   padding: 0 10%;
   padding-top: 100px;
   padding-bottom: 50px;
@@ -52,6 +52,48 @@
   padding: 0 20px;
 
 }
+/* Video Background Styles */
+.videoBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.videoElement {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Hero Text Styles */
+.heroTextTop {
+  position: absolute;
+  bottom: 40px;
+  left: 10%;
+  right: 10%;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+}
+
+.heroTextBottom {
+  position: absolute;
+  top: 50vh;
+  left: 10%;
+  right: 10%;
+  padding-top: 40px;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+}
+
 .heroBreakDiv {
   width: 100%;
   padding-bottom: 20px;
@@ -64,4 +106,22 @@
   background-position: 50% 100%;
   transition: background-position 0.1s ease;
   pointer-events: none;
+}
+
+/* Animated Text Section */
+.animatedTextSection {
+  width: 100%;
+  padding: 0 10%;
+  margin: 200px 0 80px 0;
+  box-sizing: border-box;
+}
+
+.animatedTextContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 200px;
+  gap: 0;
 }
