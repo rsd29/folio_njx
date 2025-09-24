@@ -41,6 +41,50 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <LenisWrapper />
         {children}
+        {/* Video Strip */}
+        <div style={{
+          width: '100%',
+          height: '50vh',
+          overflow: 'hidden',
+          position: 'relative',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              backgroundImage: 'url("https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-poster-00001.jpg")'
+            }}
+          >
+            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.mp4" />
+            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.webm" />
+          </video>
+          
+          {/* Text Overlay */}
+          <div style={{
+            position: 'absolute',
+            bottom: '40px',
+            left: '10%',
+            right: '10%',
+            textAlign: 'left',
+            zIndex: 2,
+            color: '#ffffff',
+            fontSize: '5rem',
+            fontWeight: 300,
+            fontFamily: 'Funnel Sans, sans-serif',
+            letterSpacing: '-0.08em',
+            lineHeight: 1.1
+          }}>
+            Let's collaborate, Drop us a line  →
+          </div>
+        </div>
           <Footer/>
       </body>
     </html>
