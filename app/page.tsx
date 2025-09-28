@@ -27,13 +27,13 @@ export default function HomePage() {
   const [fullTagline, setFullTagline] = useState('')
   const [charIndex, setCharIndex] = useState(0)
 
-  // Typing animation
+  // Typing animation - Optimized
   useEffect(() => {
     if (charIndex < fullTagline.length) {
       const timeout = setTimeout(() => {
         setDisplayed((prev) => prev + fullTagline[charIndex])
         setCharIndex((prev) => prev + 1)
-      }, 15)
+      }, 20) // Slightly slower for better performance
       return () => clearTimeout(timeout)
     }
   }, [charIndex, fullTagline])
@@ -55,18 +55,24 @@ export default function HomePage() {
     loadNewTagline()
   }, [])
 
-  // Mouse-following radial gradient
+  // Mouse-following radial gradient - Optimized
   useEffect(() => {
     const el = breakRef.current
     if (!el) return
 
     let targetX = 50
     let currentX = 50
+    let animationId: number | null = null
+    let lastUpdate = 0
+    const throttleMs = 16 // ~60fps
 
-    const animate = () => {
-      currentX += (targetX - currentX) * 0.08
-      el.style.backgroundImage = `radial-gradient(circle at ${currentX}% 100%, white 0%, rgba(175, 175, 175, 0.1) 90%, rgba(255, 255, 255, 0.05) 100%, transparent 95%)`
-      requestAnimationFrame(animate)
+    const animate = (timestamp: number) => {
+      if (timestamp - lastUpdate >= throttleMs) {
+        currentX += (targetX - currentX) * 0.12 // Faster convergence
+        el.style.backgroundImage = `radial-gradient(circle at ${currentX}% 100%, white 0%, rgba(175, 175, 175, 0.1) 90%, rgba(255, 255, 255, 0.05) 100%, transparent 95%)`
+        lastUpdate = timestamp
+      }
+      animationId = requestAnimationFrame(animate)
     }
 
     const handleMouse = (e: MouseEvent) => {
@@ -75,29 +81,33 @@ export default function HomePage() {
       targetX = relX
     }
 
-    window.addEventListener('mousemove', handleMouse)
-    animate()
+    window.addEventListener('mousemove', handleMouse, { passive: true })
+    animationId = requestAnimationFrame(animate)
 
-    return () => window.removeEventListener('mousemove', handleMouse)
+    return () => {
+      window.removeEventListener('mousemove', handleMouse)
+      if (animationId) cancelAnimationFrame(animationId)
+    }
   }, [])
 
   return (
     <main style={{ maxWidth: '100%' }}>
       <section className={`${styles.fullWidthSection} ${styles.heroSection}`}>
-        {/* Background Video */}
+        {/* Background Video - Optimized */}
         <div className={styles.videoBackground}>
           <video
             autoPlay
             loop
             muted
             playsInline
+            preload="metadata"
             className={styles.videoElement}
             style={{
               backgroundImage: 'url("https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-poster-00001.jpg")'
             }}
           >
-            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.mp4" />
-            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.webm" />
+            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.webm" type="video/webm" />
+            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.mp4" type="video/mp4" />
           </video>
           
           {/* Text inside video frame */}
@@ -109,7 +119,7 @@ export default function HomePage() {
                 { text: "Russell", color: "#ffffff", opacity: 1, isStrong: true }
               ]}
               useFlickerEffect={false}
-              fontSize="10rem"
+              fontSize="8rem"
               fontWeight={300}
               lineHeight={0.9}
               letterSpacing="-0.06em"
@@ -122,10 +132,10 @@ export default function HomePage() {
           <AnimatedRichText
             className="heroSubtext"
             segments={[
-              { text: 'A designer ', isStrong: true },
-              { text: 'who builds, and a ' },
-              { text: 'developer ', isStrong: true },
-              { text: 'who thinks like a user. ' },
+              { text: 'A developer', isStrong: true },
+              { text: ' fluent in design,' },
+              { text: 'and a designer ', isStrong: true },
+              { text: 'fluent in code.' },
             ]}
             useFlickerEffect={false}
             fontSize="4rem"

@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import LenisWrapper from '../components/SmoothScroll'
 import Footer from '../components/Footer'
 import NegativeCursor from '../components/NegativeCursor'
+import ClientPageTransition from '../components/ClientPageTransition'
 import { Analytics } from "@vercel/analytics/next"
 import { Funnel_Display, Funnel_Sans } from 'next/font/google'
 
@@ -41,7 +42,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <LenisWrapper />
         {children}
-        {/* Video Strip */}
+        <ClientPageTransition />
+        {/* Video Strip - Optimized */}
         <div style={{
           width: '100%',
           height: '50vh',
@@ -56,6 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             loop
             muted
             playsInline
+            preload="metadata"
             style={{
               width: '100%',
               height: '100%',
@@ -63,8 +66,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               backgroundImage: 'url("https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-poster-00001.jpg")'
             }}
           >
-            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.mp4" />
-            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.webm" />
+            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.webm" type="video/webm" />
+            <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.mp4" type="video/mp4" />
           </video>
           
           {/* Text Overlay */}
@@ -78,11 +81,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             color: '#ffffff',
             fontSize: '5rem',
             fontWeight: 300,
-            fontFamily: 'Funnel Sans, sans-serif',
+            fontFamily: 'var(--font-body)',
             letterSpacing: '-0.08em',
             lineHeight: 1.1
           }}>
-            Let's collaborate, Drop us a line  →
+            Let&apos;s collaborate, Drop us a line  →
           </div>
         </div>
           <Footer/>

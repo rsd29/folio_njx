@@ -70,6 +70,8 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 /* Hero Text Styles */
@@ -100,12 +102,12 @@
   display: flex;
   justify-content: space-between;
   position: relative;
-
   background-size: 100% 2px;
   background-repeat: no-repeat;
   background-position: 50% 100%;
   transition: background-position 0.1s ease;
   pointer-events: none;
+  will-change: background-position;
 }
 
 /* Animated Text Section */

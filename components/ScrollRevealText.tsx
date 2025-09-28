@@ -27,42 +27,50 @@ export default function ScrollRevealText({
   const [countValue, setCountValue] = useState(0)
 
   useEffect(() => {
+    let ticking = false
+    
     const handleScroll = () => {
-      if (!containerRef.current) return
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          if (!containerRef.current) return
 
-      const rect = containerRef.current.getBoundingClientRect()
-      const windowHeight = window.innerHeight
-      
-      // More precise trigger logic
-      const elementTop = rect.top
-      const elementBottom = rect.bottom
-
-      // Trigger when element enters viewport with small buffer
-      const shouldBeVisible = elementTop < windowHeight * 0.95 && elementBottom > windowHeight * 0.05
-
-      if (shouldBeVisible && !isVisible) {
-        setIsVisible(true)
-        setHasAnimated(true)
-        
-        // Start counting animation if text contains "Year 5"
-        if (text.toLowerCase().includes('year 5')) {
-          setCountValue(0)
-          let currentCount = 0
-          const delays = [100, 100, 150, 200, 250] // Faster start, slower end
+          const rect = containerRef.current.getBoundingClientRect()
+          const windowHeight = window.innerHeight
           
-          const countNext = () => {
-            if (currentCount < 5) {
-              setCountValue(currentCount + 1)
-              currentCount++
-              setTimeout(countNext, delays[currentCount - 1] || 250)
+          // More precise trigger logic
+          const elementTop = rect.top
+          const elementBottom = rect.bottom
+
+          // Trigger when element enters viewport with small buffer
+          const shouldBeVisible = elementTop < windowHeight * 0.95 && elementBottom > windowHeight * 0.05
+
+          if (shouldBeVisible && !isVisible) {
+            setIsVisible(true)
+            setHasAnimated(true)
+            
+            // Start counting animation if text contains "Year 5"
+            if (text.toLowerCase().includes('year 5')) {
+              setCountValue(0)
+              let currentCount = 0
+              const delays = [120, 120, 180, 220, 280] // Slightly slower for better performance
+              
+              const countNext = () => {
+                if (currentCount < 5) {
+                  setCountValue(currentCount + 1)
+                  currentCount++
+                  setTimeout(countNext, delays[currentCount - 1] || 280)
+                }
+              }
+              
+              setTimeout(countNext, 120)
             }
+          } else if (!shouldBeVisible && isVisible) {
+            setIsVisible(false)
+            setCountValue(0) // Reset count when not visible
           }
-          
-          setTimeout(countNext, 100)
-        }
-      } else if (!shouldBeVisible && isVisible) {
-        setIsVisible(false)
-        setCountValue(0) // Reset count when not visible
+          ticking = false
+        })
+        ticking = true
       }
     }
 

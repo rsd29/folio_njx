@@ -14,11 +14,18 @@ export default function NegativeCursor() {
     let currentX = 0
     let currentY = 0
 
-    const updateCursor = () => {
-      currentX += (mouseX - currentX) * 0.2
-      currentY += (mouseY - currentY) * 0.2
-      cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`
-      requestAnimationFrame(updateCursor)
+    let animationId: number | null = null
+    let lastUpdate = 0
+    const throttleMs = 16 // ~60fps
+
+    const updateCursor = (timestamp: number) => {
+      if (timestamp - lastUpdate >= throttleMs) {
+        currentX += (mouseX - currentX) * 0.25 // Slightly faster convergence
+        currentY += (mouseY - currentY) * 0.25
+        cursor.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`
+        lastUpdate = timestamp
+      }
+      animationId = requestAnimationFrame(updateCursor)
     }
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -26,11 +33,12 @@ export default function NegativeCursor() {
       mouseY = e.clientY
     }
 
-    document.addEventListener('mousemove', handleMouseMove)
-    updateCursor()
+    document.addEventListener('mousemove', handleMouseMove, { passive: true })
+    animationId = requestAnimationFrame(updateCursor)
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove)
+      if (animationId) cancelAnimationFrame(animationId)
     }
   }, [])
 

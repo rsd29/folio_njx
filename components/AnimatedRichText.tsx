@@ -70,7 +70,7 @@ export default function AnimatedRichText({
         }
       }
 
-      timeouts.push(setTimeout(() => requestAnimationFrame(animate), i * 50))
+      timeouts.push(setTimeout(() => requestAnimationFrame(animate), i * 60)) // Slightly slower
     }
 
     for (let i = 0; i < fullText.length; i++) {
@@ -123,10 +123,10 @@ export default function AnimatedRichText({
                 textShadow: isStrong ? '0 0 4px rgba(255, 255, 255, 0.6)' : 'none',
               }}
               transition={{
-                delay: globalIdx * 0.04,
+                delay: globalIdx * 0.06, // Slightly slower
                 type: 'spring',
-                stiffness: 120,
-                damping: 16,
+                stiffness: 100, // Reduced stiffness
+                damping: 20, // Increased damping
                 mass: 1,
               }}
               style={{

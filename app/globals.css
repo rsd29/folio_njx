@@ -80,49 +80,43 @@ strong{
 
 .heroTitle{
   line-height: 1;
-  letter-spacing: -0;
-  margin-bottom: 0;
-  margin-top: 0;
-
-  font-family: 'Funnel Display', sans-serif;
-
+  letter-spacing: 0;
+  margin: 0;
+  font-family: var(--font-heading);
 }
 
 .heroTitle span{
-    font-family: 'Funnel Display', sans-serif;
+  font-family: var(--font-heading);
 }
 
 .heroSubtext {
   font-weight: 300;
   line-height: 1;
   color: grey;
-  margin-bottom: 0;
-  margin-top: 20px;
-    font-family: 'Funnel Display', sans-serif;
+  margin: 20px 0 0 0;
+  font-family: var(--font-heading);
 }
 
 .heroSubtext span{
-  font-family: 'Funnel Display', sans-serif;
+  font-family: var(--font-heading);
 }
 
 .heroSubtext2{
   font-weight: 200;
   line-height: 1;
   font-size: 1.2rem;
-  margin-bottom: 0;
-  margin-top: 0;
+  margin: 0;
   color: rgb(125, 125, 125);
 }
 
 .heroSubtext3{
-    font-weight: 200;
+  font-weight: 200;
   line-height: 1;
   font-size: 1.2rem;
-  margin-bottom: 0;
-  margin-top: 0;
+  margin: 0;
   color: rgb(71, 71, 71);
-  transition: all ease-in-out 0.2s;
-    pointer-events: auto;
+  transition: color 0.2s ease-in-out;
+  pointer-events: auto;
 }
 
 .heroSubtext3:hover{
@@ -146,6 +140,7 @@ html, body {
   background-color: white;
   transition: background-color 0.3s ease;
   will-change: transform;
+  transform: translateZ(0); /* Force hardware acceleration */
 }
 
 .about-blank {
@@ -154,6 +149,21 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
+/* Loading animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
