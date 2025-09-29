@@ -1,12 +1,9 @@
 import type { NextConfig } from "next";
 
-const NextConfig = {
+const NextConfig: NextConfig = {
   experimental: {
     // This disables the floating Vercel feedback button
     nextScriptWorkers: false,
-    serverActions: false,
-    instrumentationHook: false,
-    appDir: true,
   },
   // optional, but good hygiene
   reactStrictMode: true,

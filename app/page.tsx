@@ -115,8 +115,8 @@ export default function HomePage() {
             <AnimatedRichText
               className="heroSubtext"
               segments={[
-                { text: "Hi, I'm ", color: "#ffffff", opacity: 1 },
-                { text: "Russell", color: "#ffffff", opacity: 1, isStrong: true }
+
+                { text: "Russell Saw", color: "#ffffff", opacity: 1, isStrong: true }
               ]}
               useFlickerEffect={false}
               fontSize="8rem"
