@@ -7,7 +7,7 @@ import NegativeCursor from '../components/NegativeCursor'
 import ClientPageTransition from '../components/ClientPageTransition'
 import PasswordGate from '../components/PasswordGate'
 import { Analytics } from "@vercel/analytics/next"
-import { Funnel_Display, Funnel_Sans } from 'next/font/google'
+import { Funnel_Display, Funnel_Sans, UnifrakturMaguntia } from 'next/font/google'
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -28,6 +28,13 @@ const funnelSans = Funnel_Sans({
   display: 'swap',
 })
 
+const unifrakturMaguntia = UnifrakturMaguntia({
+  weight: ['400'],
+  subsets: ['latin'],
+  variable: '--font-unifraktur',
+  display: 'swap',
+})
+
 export const metadata = {
   title: 'Russell Saw — UX Portfolio',
   description: 'UX Designer & Developer Portfolio',
@@ -35,7 +42,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${funnelDisplay.variable} ${funnelSans.variable}`}>
+    <html lang="en" className={`${funnelDisplay.variable} ${funnelSans.variable} ${unifrakturMaguntia.variable}`}>
 
       <body className={dmSans.className} > 
         <Analytics/ >

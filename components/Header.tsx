@@ -60,8 +60,22 @@ export default function Header() {
 
   // Helper function to get nav item styles
   const getNavItemStyle = (itemHref: string) => {
+    const isActive = pathname === itemHref
     const isHovered = hoveredItem === itemHref
     const baseColor = isOverVideo ? '#333333' : '#808080'
+    
+    // Active state - glowing/shining effect
+    if (isActive) {
+      return {
+        color: isOverVideo ? '#000000' : '#ffffff',
+        fontWeight: 400,
+        textShadow: isOverVideo 
+          ? '0 0 8px rgba(0, 0, 0, 0.5), 0 0 16px rgba(0, 0, 0, 0.3)' 
+          : '0 0 8px rgba(255, 255, 255, 0.8), 0 0 16px rgba(255, 255, 255, 0.5), 0 0 24px rgba(255, 255, 255, 0.3)',
+        filter: 'brightness(1.2)',
+        transition: 'all 0.2s ease'
+      }
+    }
     
     if (isHovered) {
       return {

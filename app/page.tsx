@@ -134,7 +134,7 @@ export default function HomePage() {
             segments={[
               { text: 'A developer', isStrong: true },
               { text: ' fluent in design,' },
-              { text: 'and a designer ', isStrong: true },
+              { text: ' and a designer ', isStrong: true },
               { text: 'fluent in code.' },
             ]}
             useFlickerEffect={false}
