@@ -26,6 +26,12 @@ interface AnimatedRichTextProps {
   useFlickerEffect?: boolean
   letterSpacing?: string
   animationSpeed?: number // Multiplier for animation speed (higher = faster)
+  startDelay?: number // Delay in seconds before animation starts
+  margin?: string
+  marginTop?: string
+  marginBottom?: string
+  marginLeft?: string
+  marginRight?: string
 }
 
 export default function AnimatedRichText({
@@ -38,6 +44,12 @@ export default function AnimatedRichText({
   useFlickerEffect = true,
   letterSpacing = '0',
   animationSpeed = 1,
+  startDelay = 0,
+  margin,
+  marginTop,
+  marginBottom,
+  marginLeft,
+  marginRight,
 }: AnimatedRichTextProps) {
   const fullText = useMemo(() => segments.map((s) => s.text).join(''), [segments])
   const [displayed, setDisplayed] = useState<string[]>([])
@@ -57,7 +69,7 @@ export default function AnimatedRichText({
         setTimeout(() => {
           displayedRef.current[i] = fullText[i]
           setDisplayed([...displayedRef.current])
-        }, (i * 10) / animationSpeed)
+        }, (startDelay * 1000) + (i * 10) / animationSpeed)
         return
       }
 
@@ -75,7 +87,7 @@ export default function AnimatedRichText({
         }
       }
 
-      timeouts.push(setTimeout(() => requestAnimationFrame(animate), (i * 60) / animationSpeed))
+      timeouts.push(setTimeout(() => requestAnimationFrame(animate), (startDelay * 1000) + (i * 60) / animationSpeed))
     }
 
     for (let i = 0; i < fullText.length; i++) {
@@ -86,7 +98,7 @@ export default function AnimatedRichText({
       timeouts.forEach(clearTimeout)
       if (animationFrame.current) cancelAnimationFrame(animationFrame.current)
     }
-  }, [fullText, useFlickerEffect, animationSpeed])
+  }, [fullText, useFlickerEffect, animationSpeed, startDelay])
 
   let globalCharIndex = 0
 
@@ -102,6 +114,11 @@ export default function AnimatedRichText({
         flexWrap: 'wrap',
         letterSpacing,
         wordBreak: 'normal',
+        margin,
+        marginTop,
+        marginBottom,
+        marginLeft,
+        marginRight,
         overflowWrap: 'break-word',
         whiteSpace: 'normal',
       }}
@@ -143,7 +160,7 @@ export default function AnimatedRichText({
                     : 'none',
                 }}
                 transition={{
-                  delay: (globalIdx * 0.06) / animationSpeed,
+                  delay: startDelay + (globalIdx * 0.06) / animationSpeed,
                   type: 'spring',
                   stiffness: 100,
                   damping: 20,

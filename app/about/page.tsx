@@ -1,10 +1,287 @@
 'use client'
 
+import { useState } from 'react'
 import AnimatedRichText from '../../components/AnimatedRichText'
 import ScrollRevealText from '../../components/ScrollRevealText'
 import AnimatedFrame from '../../components/AnimatedFrame'
 
 export default function Page() {
+  const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
+  const [isTransitioning, setIsTransitioning] = useState(false)
+  const [overlayVisible, setOverlayVisible] = useState(false)
+  
+  const skillDescriptions: { [key: string]: string } = {
+    'Adobe Creative Suite': 'Industry-standard design tools including Photoshop, Illustrator, and InDesign for creating compelling visual content and brand assets.',
+    'React': 'Modern JavaScript library for building interactive user interfaces with component-based architecture and efficient state management.',
+    'Wireframing': 'Creating low-fidelity blueprints and structural layouts to visualize user flows and interface hierarchy before development.',
+    'CSS': 'Styling language that brings designs to life with animations, responsive layouts, and pixel-perfect visual implementations.',
+    'Usability Testing': 'Observing real users interact with products to identify pain points and optimize user experience through data-driven insights.',
+    'Angular': 'Robust TypeScript framework for building scalable web applications with powerful features like dependency injection and routing.',
+    'Figma': 'Collaborative design platform for creating interactive prototypes, design systems, and seamless designer-developer handoffs.',
+    'Journey Mapping': 'Visualizing the complete user experience across touchpoints to identify opportunities for improvement and innovation.',
+    'TypeScript': 'Statically typed JavaScript that catches errors early and enables more maintainable, scalable code for complex applications.',
+    'Git': 'Version control system for tracking changes, collaborating with teams, and managing code repositories efficiently.',
+    'Interaction Design': 'Crafting intuitive and engaging user interactions through thoughtful micro-animations, transitions, and feedback systems.',
+    'Python': 'Versatile programming language used for automation, data analysis, and backend development with clean, readable syntax.',
+    'QA Testing': 'Systematic testing processes to ensure product quality, functionality, and reliability before deployment.',
+    'Canva': 'User-friendly design tool for creating marketing materials, presentations, and quick visual content with professional templates.',
+    'Design Systems': 'Comprehensive libraries of reusable components, patterns, and guidelines that ensure consistency across products.',
+    'Node.js': 'JavaScript runtime that enables server-side development, allowing full-stack development with a unified language.',
+    'User Research': 'Discovering user needs, behaviors, and motivations through interviews, surveys, and observational studies.',
+    'SASS': 'CSS preprocessor that adds powerful features like variables, mixins, and nesting for more efficient stylesheet development.',
+    'Accessibility': 'Ensuring digital products are usable by people with disabilities through inclusive design practices and WCAG compliance.',
+    'JavaScript': 'Core web programming language that adds interactivity, dynamic content, and modern user experience features.',
+    'Framer Motion': 'Advanced animation library for React that creates smooth, performant animations and gesture-based interactions.',
+    'Personas': 'Research-based user archetypes that help teams make design decisions by keeping target users at the center of development.',
+    'User Interviews': 'One-on-one conversations with users to gather deep insights about their needs, frustrations, and goals.',
+    'Next.js': 'React framework with built-in optimization, server-side rendering, and routing for high-performance web applications.',
+    'A/B Testing': 'Comparing two versions of a design to determine which performs better through controlled experimentation.',
+    'Bitbucket': 'Git repository hosting service with integrated CI/CD pipelines, code review tools, and team collaboration features.',
+    'Visual Design': 'Creating aesthetically pleasing and functional interfaces through typography, color, layout, and visual hierarchy.',
+    'Atlassian': 'Suite of collaboration tools including Jira, Confluence, and Trello for project management and team productivity.',
+    'Prototyping': 'Building interactive mockups and proof-of-concepts to test ideas, validate concepts, and communicate design intent.',
+    'Design Thinking': 'Human-centered problem-solving methodology that emphasizes empathy, ideation, and iterative testing.'
+  }
+
+  const personalUsage: { [key: string]: string } = {
+    'Adobe Creative Suite': 'Honestly, I have a love-hate relationship with Photoshop. It\'s <em>incredibly</em> powerful but can feel like overkill for web work. I mainly use it when I need precise control over image optimization or when designers hand me PSDs that need surgery. Illustrator is my go-to for creating custom icons and vector assets that scale perfectly across devices. There\'s something satisfying about crafting <em>pixel-perfect</em> UI elements that look crisp at any size.',
+    'React': 'React changed how I approach design because it forced me to think in <em>components</em> from the start. I love that I can prototype real, functional interfaces instead of static mockups. It means stakeholders interact with something that <em>actually works</em>, not just looks pretty. The component mindset has made me a better designer because I\'m constantly thinking about reusability, states, and how things break down into atomic pieces. Plus, being able to ship my own designs feels <em>incredibly empowering</em>.',
+    'Wireframing': 'I\'m a big believer in starting ugly. Low-fidelity wireframes keep stakeholders focused on structure and flow instead of debating button colors for an hour. I sketch on paper first, then move to digital wireframes to test different approaches quickly. The best part? When a wireframe fails in testing, I haven\'t wasted days on high-fidelity work. It\'s saved me countless hours and helped me stay <em>detached</em> from ideas that don\'t work.',
+    'CSS': 'CSS is where design <em>comes alive</em> for me. I get genuinely excited about modern CSS features like Grid, Flexbox, and custom properties. They\'ve transformed how we build responsive layouts. I obsess over micro-interactions and subtle animations that make interfaces feel polished and intentional. There\'s a <em>huge difference</em> between a designer who understands CSS constraints and one who doesn\'t, and I think that knowledge makes my designs more feasible and elegant.',
+    'Usability Testing': 'Watching real people struggle with something you designed is <em>humbling</em>, but it\'s the fastest way to get better. I try to test early and often, even with rough prototypes, because you learn so much more from observation than opinions. The best insights usually come from what users <em>don\'t say</em>. The hesitations, the confused mouse movements, the moments they go silent trying to figure something out. It\'s uncomfortable but invaluable.',
+    'Angular': 'Working with Angular taught me to respect developer workflows and constraints. I don\'t love its verbosity compared to React, but understanding how it handles state, routing, and dependency injection has made me design smarter component architectures. When I know the development team is using Angular, I can anticipate technical challenges and design solutions that work <em>with</em> the framework instead of fighting against it.',
+    'Figma': 'Figma <em>fundamentally changed</em> how I collaborate with teams. The fact that everyone can jump into the same file, leave comments, and see changes in real-time eliminates so much friction. I use it for everything: wireframes, high-fidelity designs, prototypes, design systems, even presentations. Auto Layout feels like CSS Flexbox for designers, and once you master it, you can\'t imagine working any other way. Honestly, it\'s the tool I\'d be <em>most lost without</em>.',
+    'Journey Mapping': 'Journey maps help me see beyond individual screens to understand the complete experience. I like mapping emotional states alongside actions because it reveals where we\'re creating frustration or delight. The process often exposes gaps we never considered, like what happens between someone signing up and actually using the product for the first time. Those <em>in-between moments</em> are where experiences often break down.',
+    'TypeScript': 'TypeScript has made me a more <em>disciplined</em> developer. The type safety catches so many bugs before they happen, and it makes codebases way more maintainable as they grow. I especially love it for design systems because it enforces consistency. You can\'t accidentally pass the wrong prop type to a component. It has a learning curve, but once you get it, going back to plain JavaScript feels <em>reckless</em>.',
+    'Git': 'Version control isn\'t just for code. I use Git for design systems, documentation, even my personal portfolio. Being able to track changes, revert mistakes, and collaborate without overwriting each other\'s work is essential. I\'ve seen too many "design_final_v2_ACTUAL_FINAL.fig" files in my career. Git brings <em>sanity</em> to creative work, and more designers should embrace it.',
+    'Interaction Design': 'Good interaction design is <em>invisible</em>. Users don\'t notice it, they just feel like the interface "gets them." I spend way too much time perfecting timing curves and transition durations because those details matter. A 150ms transition feels completely different from 300ms, and most people can\'t articulate why but they definitely feel it. Motion should always serve a purpose: guide attention, provide feedback, or maintain context.',
+    'Python': 'Python is my secret weapon for automating boring tasks. I\'ve written scripts to process hundreds of user survey responses, extract patterns from analytics data, batch process images, and generate design documentation. It\'s not glamorous, but it frees up time for <em>actual design work</em>. Plus, understanding programming logic makes me better at designing complex systems and flows.',
+    'QA Testing': 'I learned early that sitting with QA during testing sessions is invaluable. They find edge cases and scenarios I never considered, and their perspective helps me design more robust solutions. I see QA as <em>partners</em>, not gatekeepers. They\'re protecting the user experience just as much as I am. Plus, when designs break in weird ways, it usually reveals assumptions I made that need to be reconsidered.',
+    'Canva': 'Canva gets a bad rap from designers, but it\'s perfect for quick social media graphics or when I need to empower non-designers to create content without breaking brand guidelines. I\'ve built Canva templates for marketing teams that keep our visual identity consistent while letting them work independently. It\'s not replacing Figma for serious design work, but it has its place in the toolkit.',
+    'Design Systems': 'Building design systems is one of my favorite challenges because it\'s designing for <em>designers and developers</em>. A good system speeds up everyone\'s work and ensures consistency, but it requires deep thinking about flexibility vs. constraints. I document not just what components do, but <em>when to use them and why</em>. The hardest part is keeping systems alive. They need constant maintenance and evolution or they become outdated artifacts nobody uses.',
+    'Node.js': 'Node.js lets me build the tools I wish existed. I\'ve created custom APIs for design demos, automation scripts that run on servers, and even simple backend services for prototypes that need real data. Understanding how the backend works makes me a better designer because I can have <em>informed conversations</em> with engineers about what\'s feasible and design APIs that make sense.',
+    'User Research': 'Research is where great design starts. I\'m a firm believer that you can\'t design effective solutions without understanding the problem <em>deeply</em> first. I push back when stakeholders want to skip research and jump to solutions. That\'s how you end up building features nobody needs. The best projects I\'ve worked on all started with thorough research that gave the team <em>conviction</em> about what to build.',
+    'SASS': 'SASS makes CSS actually maintainable at scale. Variables, mixins, nesting. They all help organize styles in ways that make sense. I use it to build design token systems that keep colors, spacing, and typography consistent across large applications. The ability to do calculations and loops in stylesheets opens up possibilities pure CSS can\'t match, though modern CSS is slowly catching up.',
+    'Accessibility': 'Accessibility isn\'t optional, it\'s <em>fundamental</em>. I\'m passionate about this because good accessible design is just good design: semantic HTML, clear hierarchies, sufficient contrast, keyboard navigation. These things benefit <em>everyone</em>, not just people using assistive technologies. I audit my work with screen readers regularly because it reveals how your interface actually communicates, not just how it looks. We have a responsibility to design for everyone.',
+    'JavaScript': 'JavaScript is how I bring interactivity to life. I use it to prototype complex interactions, validate design concepts, and sometimes just to see if an idea actually works before handing it off. Understanding JavaScript has made me a more effective designer because I know what\'s easy to build versus what\'s complex. I can have technical conversations with developers and design solutions that are both <em>ambitious and realistic</em>.',
+    'Framer Motion': 'Framer Motion is <em>hands down</em> my favorite animation library. The declarative API makes complex animations feel intuitive, and the gesture controls open up interaction possibilities that feel magical. I use it to prototype sophisticated UI behaviors: shared element transitions, scroll-linked animations, drag interactions. Seeing designs move exactly how I imagined them is incredibly satisfying, and it helps stakeholders understand the vision in ways static mocks never could.',
+    'Personas': 'I only create personas grounded in <em>real research data</em>. Fictional personas are worse than useless because they give teams false confidence. Good personas synthesize patterns from actual users and keep everyone aligned on who we\'re designing for. I reference them constantly in design critiques: "Would Sarah, our operations manager persona, understand this?" They\'re most valuable when they <em>challenge</em> our assumptions and biases.',
+    'User Interviews': 'One-on-one interviews are where I learn the most about users. The key is asking open-ended questions and shutting up to let people talk. I\'ve learned to embrace awkward silences. That\'s often when people share the most honest insights. The goal isn\'t to validate my ideas but to understand their world, their frustrations, their workarounds. Every interview makes me a little <em>less confident</em> in my assumptions, which is exactly the point.',
+    'Next.js': 'Next.js is my framework of choice for building high-fidelity prototypes that feel real. The performance optimizations, image handling, and routing are built-in, so I can focus on the design. I love that I can start with static pages and progressively add dynamic features. When a prototype is this polished, stakeholder feedback is way more meaningful because they\'re reacting to something that feels <em>production-ready</em>.',
+    'A/B Testing': 'A/B testing keeps design decisions <em>honest</em>. I\'ve been humbled by tests that proved my "obviously better" design actually performed worse. The key is testing one variable at a time and having enough traffic to reach statistical significance. I also think qualitative data matters. Sometimes a design wins the metric but loses user trust in ways that take longer to manifest. Data informs decisions, but shouldn\'t make them blindly.',
+    'Bitbucket': 'I work with Bitbucket because that\'s what our team uses, though honestly I prefer GitHub\'s interface. Still, it does the job: pull requests, code reviews, CI/CD integration. Being able to review code implementation of my designs helps ensure quality and catch issues early. I leave comments when implementations don\'t match the specs or when I notice accessibility issues in the code.',
+    'Visual Design': 'Visual design is where I get to express creativity within constraints. I love the challenge of making interfaces beautiful <em>without sacrificing usability</em>. Typography, color, spacing, hierarchy. These fundamentals matter more than trendy effects. I\'m drawn to clean, modern aesthetics with thoughtful details that reward attention. Good visual design should <em>enhance</em> the experience, not distract from it, and finding that balance is what makes it interesting.',
+    'Atlassian': 'Jira and Confluence are <em>necessary evils</em> in enterprise work. I use them to document design decisions, maintain a single source of truth, and keep stakeholders updated. Are they my favorite tools? No. Are they where the rest of the organization lives? Yes. So I embrace them, build good documentation habits, and try to make our Confluence spaces actually useful instead of design graveyards. Organization is part of the craft.',
+    'Prototyping': 'I prototype obsessively because it\'s how I <em>think through problems</em>. Low-fidelity for structure, high-fidelity for polish, and everything in between. Interactive prototypes force you to consider states, transitions, and edge cases that static designs gloss over. The fidelity should match what you\'re trying to learn. Don\'t waste time on pixel perfection when you\'re still validating basic concepts. Prototype to think, to test, to communicate.',
+    'Design Thinking': 'Design thinking gets criticized for being buzzwordy, and sometimes it is. But the core principles (empathize, define, ideate, prototype, test) are genuinely valuable when applied authentically. The framework gives teams permission to explore problems deeply before jumping to solutions. I use it to facilitate workshops and align stakeholders around user needs. The key is not treating it like a rigid process but as a <em>mindset</em> that values iteration and learning over being right.'
+  }
+
+  // All available skills
+  const allSkills = [
+    'Design Thinking', 'User Research', 'User Interviews', 'Personas', 'A/B Testing', 'Usability Testing', 'Wireframing', 'Journey Mapping', 'Interaction Design', 'Prototyping', 'Design Systems', 'Accessibility', 'Visual Design',
+    'Figma', 'Adobe Creative Suite', 'Canva',
+    'React', 'Next.js', 'Angular', 'JavaScript', 'TypeScript', 'CSS', 'SASS', 'Framer Motion',
+    'Node.js', 'Python',
+    'Git', 'Bitbucket',
+    'QA Testing', 'Atlassian'
+  ]
+
+  // Helper function to render a skill element
+  const renderSkill = (skill: string) => {
+    // During transition, keep all skills visible
+    // After transition, only show selected skill or all skills if none selected
+    const shouldShow = isTransitioning || !selectedSkill || selectedSkill === skill
+    
+    if (!shouldShow) return null
+    
+    const isSelected = selectedSkill === skill
+    
+    // Get index for color variation
+    const skillIndex = allSkills.indexOf(skill)
+    
+    const getHoverColor = (index: number) => {
+      const colors = [
+        { color: '#ff9a9e', shadow: '255, 154, 158' },
+        { color: '#a8e6cf', shadow: '168, 230, 207' },
+        { color: '#ffd3a5', shadow: '255, 211, 165' },
+        { color: '#fd79a8', shadow: '253, 121, 168' },
+        { color: '#fdcb6e', shadow: '253, 203, 110' },
+        { color: '#6c5ce7', shadow: '108, 92, 231' },
+        { color: '#a29bfe', shadow: '162, 155, 254' },
+        { color: '#74b9ff', shadow: '116, 185, 255' },
+        { color: '#81ecec', shadow: '129, 236, 236' },
+        { color: '#55a3ff', shadow: '85, 163, 255' }
+      ]
+      return colors[index % colors.length]
+    }
+    
+    const colorScheme = getHoverColor(skillIndex)
+    
+    return (
+      <div 
+        key={skill}
+        data-skill={skill}
+        className={`skill-word ${isSelected ? 'selected' : ''}`}
+        onClick={() => handleSkillClick(skill)}
+        style={{
+          cursor: 'pointer',
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          transition: 'all 0.15s cubic-bezier(0.4, 0, 0.2, 1)',
+          willChange: 'transform, color, text-shadow'
+        }}>
+        {isSelected ? (
+          <div style={{
+            width: '100%'
+          }}>
+            {/* Title and Back Button Row */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '8px',
+              width: '100%'
+            }}>
+              <span style={{
+                fontSize: '2.8rem',
+                fontWeight: 300,
+                color: '#ffffff',
+                fontFamily: 'var(--font-body)',
+                lineHeight: '1.2',
+                width: '100%',
+                flex: '1'
+              }}>
+                {skill}
+              </span>
+              <span 
+                onClick={() => handleSkillClick(skill)}
+                style={{
+                  fontSize: '2.8rem',
+                  fontWeight: 300,
+                  color: '#aaa',
+                  fontFamily: 'var(--font-body)',
+                  lineHeight: '1.2',
+                  cursor: 'pointer',
+                  transition: 'color 0.2s ease',
+                  flexShrink: 0,
+                  marginLeft: '20px'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = '#fff'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = '#aaa'
+                }}>
+                ← Back
+              </span>
+            </div>
+            {/* Description */}
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '32px',
+              width: '100%'
+            }}>
+              <div style={{
+                fontSize: '2.8rem',
+                lineHeight: '1.2',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 300,
+                color: '#999',
+                textAlign: 'left'
+              }}>
+                {skillDescriptions[skill]}
+              </div>
+              <div 
+                style={{
+                  fontSize: '2.8rem',
+                  lineHeight: '1.2',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 300,
+                  color: '#999',
+                  textAlign: 'left'
+                }}
+                dangerouslySetInnerHTML={{ __html: personalUsage[skill] }}
+              />
+            </div>
+          </div>
+        ) : (
+          <span
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = colorScheme.color
+              e.currentTarget.style.textShadow = `
+                0 0 8px rgba(${colorScheme.shadow}, 0.5),
+                0 0 15px rgba(${colorScheme.shadow}, 0.3),
+                0 0 20px rgba(${colorScheme.shadow}, 0.2)
+              `
+              e.currentTarget.style.transform = 'translateY(-5px) scale(1.02)'
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = ''
+              e.currentTarget.style.textShadow = ''
+              e.currentTarget.style.transform = ''
+            }}
+            style={{
+              transition: 'all 0.15s cubic-bezier(0.4, 0, 0.2, 1)',
+              willChange: 'transform, color, text-shadow'
+            }}>
+            {skill}
+          </span>
+        )}
+      </div>
+    )
+  }
+
+  const handleSkillClick = (skill: string) => {
+    if (selectedSkill === skill) {
+      // Deselecting - use blur transition
+      console.log('Deselecting skill:', skill)
+      setOverlayVisible(true)
+      // DON'T set isTransitioning true yet - this would show all skills immediately
+      
+      // Wait for blur to reach maximum (400ms)
+      setTimeout(() => {
+        console.log('Peak blur reached - changing state to show all skills')
+        // At peak blur/darkness, change the state AND enable transition mode
+        setSelectedSkill(null)
+        setIsTransitioning(true) // NOW enable transition mode so all skills appear
+        
+        // Wait a moment for state to update, then start reveal
+        setTimeout(() => {
+          console.log('Starting reveal animation')
+          setOverlayVisible(false)
+          
+          // Keep isTransitioning true until reveal completes so all skills stay visible
+          setTimeout(() => {
+            console.log('Reveal complete - cleaning up transition state')
+            setIsTransitioning(false)
+          }, 450) // Wait for blur-out animation to complete
+        }, 50) // Small delay to ensure state change is processed
+      }, 400) // Wait for blur-in animation to complete
+    } else {
+      // Selecting - use blur transition
+      console.log('Selecting skill:', skill)
+      setIsTransitioning(true)
+      setOverlayVisible(true)
+      
+      // Wait for blur to reach maximum (400ms)
+      setTimeout(() => {
+        console.log('Peak blur reached - changing state to selected skill')
+        // At peak blur/darkness, change the state
+        setSelectedSkill(skill)
+        setIsTransitioning(false) // Allow DOM to update to selected state
+        
+        // Wait a moment for state to update, then start reveal
+        setTimeout(() => {
+          console.log('Starting reveal animation for selected skill')
+          setOverlayVisible(false)
+        }, 50) // Small delay to ensure state change is processed
+      }, 400) // Wait for blur-in animation to complete
+    }
+  }
+
   return (
     <>
         <style jsx>{`
@@ -12,6 +289,49 @@ export default function Page() {
             transform: perspective(1000px) rotateX(0deg) translateZ(30px) !important;
             box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
           }
+          
+          em {
+            font-style: italic;
+          }
+
+          .skill-word.selected {
+            opacity: 1 !important;
+            color: #ffffff !important;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 60px rgba(255, 255, 255, 0.4);
+            filter: none !important;
+          }
+
+          .blur-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0);
+            backdrop-filter: blur(0px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.4s ease-in-out;
+            z-index: 10;
+          }
+
+          .blur-overlay.active {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            opacity: 1;
+          }
+
+          .skills-container {
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 200px;
+          }
+
+          .skills-container.selected-mode {
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 20px 20px;
+          }
+
         `}</style>
       <main style={{ maxWidth: '100%', minHeight: '100vh', backgroundColor: 'var(--background)', color: 'var(--foreground)' }}>
       {/* Hero Section */}
@@ -29,24 +349,48 @@ export default function Page() {
 
         <div style={{
           fontFamily: 'var(--font-body)',
-          maxWidth: '1200px',
+          maxWidth: '100%',
           marginBottom: '60px',
           paddingTop: '100px',
-          paddingBottom: '100px'
+          paddingBottom: '100px',
+          minHeight: '350px',
+          display: 'flex',
+          alignItems: 'center'
         }}>
-          <AnimatedRichText
-            className="heroSubtext"
-            segments={[
-              { text: 'I create interfaces that make complex business challenges feel simple, so people can focus on ' },
-              { text: 'what matters most.', color: '#ffffff', isStrong: true, fontFamily: 'var(--font-unifraktur)', fontSize: '3.6rem', glow: true }
-            ]}
-            useFlickerEffect={false}
-            fontSize="3.3rem"
-            fontWeight={300}
-            lineHeight={1.2}
-            letterSpacing="-0.01em"
-            animationSpeed={4}
-          />
+          <div style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0'
+          }}>
+            <AnimatedRichText
+              className="heroSubtext"
+              segments={[
+                { text: 'I create interfaces that make complex business challenges feel simple, so people can focus on' }
+              ]}
+              useFlickerEffect={false}
+              fontSize="clamp(2rem, 3.5vw, 3.2rem)"
+              fontWeight={300}
+              lineHeight={1.2}
+              letterSpacing="-0.01em"
+              animationSpeed={4}
+              marginBottom="0"
+            />
+            <AnimatedRichText
+              className="heroSubtext"
+              segments={[
+                { text: 'what matters most.', color: '#ffffff', isStrong: true, fontFamily: 'var(--font-unifraktur)', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', glow: true }
+              ]}
+              useFlickerEffect={false}
+              fontSize="clamp(2.5rem, 4.5vw, 4rem)"
+              fontWeight={300}
+              lineHeight={1.1}
+              letterSpacing="-0.01em"
+              animationSpeed={4}
+              startDelay={2}
+              marginTop="0"
+            />
+          </div>
         </div>
 
 
@@ -78,18 +422,24 @@ export default function Page() {
         }}>
           <div style={{
             textAlign: 'center',
-            marginBottom: '80px'
+            marginBottom: '80px',
+            height: '180px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center'
           }}>
-            <ScrollRevealText
-              text="Behind the work"
-              fontSize="2.6rem"
-              fontWeight={300}
-              lineHeight={1.1}
-              letterSpacing="-0.01em"
-              className="scrollRevealText"
-            />
+            <div style={{ height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <ScrollRevealText
+                text="Behind the work"
+                fontSize="2.6rem"
+                fontWeight={300}
+                lineHeight={1.1}
+                letterSpacing="-0.01em"
+                className="scrollRevealText"
+              />
+            </div>
             <p style={{
-              fontSize: '1.2rem',
+        fontSize: '1.3rem',
               fontWeight: 300,
               lineHeight: 1.6,
               color: 'white',
@@ -194,6 +544,14 @@ export default function Page() {
               transition: 'transform 0.3s ease, box-shadow 0.3s ease',
               cursor: 'pointer'
             }}>
+              <h3 style={{
+           fontSize: '1.3rem',
+                fontWeight: 300,
+                color: '#ffffff',
+                fontFamily: 'var(--font-body)',
+                margin: '0 0 16px 0',
+                lineHeight: '1.2'
+              }}>Current Work</h3>
               At Oriental Merchant, I lead UX/UI design across enterprise platforms, transforming 
               intricate workflows into intuitive interfaces that people actually want to use.
             </div>
@@ -258,8 +616,7 @@ export default function Page() {
             </AnimatedFrame>
                       {/* Story Text 4 - Left side */}
                       <div className="story-text-card" style={{
-              fontSize: '1.2rem',
-              color: '#ccc',
+      fontSize: '1.3rem',              color: '#ccc',
               fontFamily: 'var(--font-body)',
               fontWeight: 300,
               lineHeight: '1.7',
@@ -274,6 +631,14 @@ export default function Page() {
               transition: 'transform 0.3s ease, box-shadow 0.3s ease',
               cursor: 'pointer'
             }}>
+              <h3 style={{
+      fontSize: '1.3rem',
+                fontWeight: 300,
+                color: '#ffffff',
+                fontFamily: 'var(--font-body)',
+                margin: '0 0 16px 0',
+                lineHeight: '1.2'
+              }}>My Passion</h3>
               I&apos;m passionate about design systems that scale, accessibility that&apos;s built-in rather than 
               bolted-on, and user research that drives real change in how we build digital experiences.
             </div>
@@ -304,6 +669,14 @@ export default function Page() {
               transition: 'transform 0.3s ease, box-shadow 0.3s ease',
               cursor: 'pointer'
             }}>
+              <h3 style={{
+           fontSize: '1.3rem',
+                fontWeight: 300,
+                color: '#ffffff',
+                fontFamily: 'var(--font-body)',
+                margin: '0 0 16px 0',
+                lineHeight: '1.2'
+              }}>The Beginning</h3>
               My journey began with curiosity—about how things work, why they&apos;re built the way they are, 
               and how design can make technology feel human.
             </div>
@@ -369,8 +742,7 @@ export default function Page() {
             
                     {/* Story Text 3 */}
                     <div className="story-text-card" style={{
-              fontSize: '1.2rem',
-              color: '#ccc',
+      fontSize: '1.3rem',              color: '#ccc',
               fontFamily: 'var(--font-body)',
               fontWeight: 300,
               lineHeight: '1.7',
@@ -385,6 +757,13 @@ export default function Page() {
               transition: 'transform 0.3s ease, box-shadow 0.3s ease',
               cursor: 'pointer'
             }}>
+              <h3 style={{
+      fontSize: '1.3rem',                fontWeight: 300,
+                color: '#ffffff',
+                fontFamily: 'var(--font-body)',
+                margin: '0 0 16px 0',
+                lineHeight: '1.2'
+              }}>My Approach</h3>
               My approach combines deep user empathy with strategic thinking, ensuring every design 
               decision serves both user needs and business objectives.
             </div>
@@ -456,8 +835,7 @@ export default function Page() {
         {/* Final Story Text */}
         <div style={{
           maxWidth: '100%',
-          fontSize: '1.2rem',
-          lineHeight: '1.7',
+          fontSize: '1.3rem',          lineHeight: '1.7',
           fontFamily: 'var(--font-body)',
           fontWeight: 300,
           color: '#ccc',
@@ -494,7 +872,10 @@ export default function Page() {
           <div style={{
             fontFamily: 'var(--font-heading)',
             marginBottom: '80px',
-            color: 'var(--foreground)'
+            color: 'var(--foreground)',
+            height: '80px',
+            display: 'flex',
+            alignItems: 'center'
           }}>
             <ScrollRevealText
               text="Experience"
@@ -520,7 +901,7 @@ export default function Page() {
                   UX Designer 
                 </div>
                 <div style={{
-                  fontSize: '1rem',
+              fontSize: '1.3rem',
                   color: '#aaa',
                   fontWeight: 300,
                   marginBottom: '8px'
@@ -528,7 +909,7 @@ export default function Page() {
                   Oriental Merchant
                 </div>
                 <div style={{
-                  fontSize: '1.1rem',
+                        fontSize: '1.3rem',
                   color: '#888',
                   fontWeight: 300
                 }}>
@@ -536,7 +917,7 @@ export default function Page() {
                 </div>
               </div>
               <div style={{
-                fontSize: '1.2rem',
+        fontSize: '1.3rem',
                 color: '#ccc',
                 lineHeight: 1.6,
                 fontWeight: 300
@@ -559,7 +940,7 @@ export default function Page() {
                   Freelance 
                 </div>
                 <div style={{
-                  fontSize: '1rem',
+               fontSize: '1.3rem',
                   color: '#aaa',
                   fontWeight: 300,
                   marginBottom: '8px'
@@ -567,7 +948,7 @@ export default function Page() {
                   Self-Employed
                 </div>
                 <div style={{
-                  fontSize: '1.1rem',
+                  fontSize: '1.3rem',
                   color: '#888',
                   fontWeight: 300
                 }}>
@@ -575,7 +956,7 @@ export default function Page() {
                 </div>
               </div>
               <div style={{
-                fontSize: '1.2rem',
+            fontSize: '1.3rem',
                 color: '#ccc',
                 lineHeight: 1.6,
                 fontWeight: 300
@@ -597,7 +978,7 @@ export default function Page() {
                   Junior Programmer
                 </div>
                 <div style={{
-                  fontSize: '1rem',
+                   fontSize: '1.3rem',
                   color: '#aaa',
                   fontWeight: 300,
                   marginBottom: '8px'
@@ -605,7 +986,7 @@ export default function Page() {
                   Oriental Merchant
                 </div>
                 <div style={{
-                  fontSize: '1.1rem',
+                    fontSize: '1.3rem',
                   color: '#888',
                   fontWeight: 300
                 }}>
@@ -613,7 +994,7 @@ export default function Page() {
                 </div>
               </div>
               <div style={{
-                fontSize: '1.2rem',
+             fontSize: '1.3rem',
                 color: '#ccc',
                 lineHeight: 1.6,
                 fontWeight: 300
@@ -628,181 +1009,223 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Values Section */}
-      <section style={{ 
-        padding: '120px 10%',
-        backgroundColor: 'var(--background)'
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
-          <div style={{
-            fontFamily: 'var(--font-heading)',
-            marginBottom: '80px',
-            color: 'var(--foreground)'
-          }}>
-            <div style={{ fontFamily: 'var(--font-body)' }}>
-              <ScrollRevealText
-                text="What I Believe"
-                fontSize="3.5rem"
-                fontWeight={300}
-                lineHeight={1.1}
-                letterSpacing="-0.01em"
-                className="scrollRevealText"
-              />
-            </div>
-          </div>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '60px' }}>
-            {/* Statement Cards */}
-            {[
-              {
-                title: 'User-Centered',
-                statement: 'Every decision starts with understanding the human behind the screen.',
-                detail: 'I conduct user research, create personas, and validate assumptions through testing.'
-              },
-              {
-                title: 'Data-Driven',
-                statement: 'Design should be informed by both qualitative insights and quantitative metrics.',
-                detail: 'I analyze user behavior patterns and iterate based on real performance data.'
-              },
-              {
-                title: 'Technical Excellence',
-                statement: 'Great design requires understanding the constraints and possibilities of code.',
-                detail: 'I advocate for design decisions that are both beautiful and implementable.'
-              }
-            ].map((item, index) => (
-              <div key={index} style={{
-                padding: '40px',
-                borderRadius: '20px',
-                backgroundColor: '#111111',
-                border: '1px solid #333'
-              }}>
-                <h3 style={{
-                  fontSize: '2rem',
-                  fontWeight: 400,
-                  lineHeight: 1.1,
-                  fontFamily: 'var(--font-heading)',
-                  marginBottom: '20px',
-                  color: 'var(--foreground)'
-                }}>
-                  {item.title}
-                </h3>
-                <p style={{
-                  fontSize: '1.2rem',
-                  fontWeight: 300,
-                  lineHeight: 1.4,
-                  color: '#ccc',
-                  marginBottom: '16px'
-                }}>
-                  {item.statement}
-                </p>
-                <p style={{
-                  fontSize: '1rem',
-                  fontWeight: 300,
-                  lineHeight: 1.5,
-                  color: '#888'
-                }}>
-                  {item.detail}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+ 
 
       {/* Skills Section */}
       <section style={{ 
-        padding: '120px 10%',
+        padding: '200px 10% 400px 10%',
         backgroundColor: '#111111'
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <h2 style={{
-            fontSize: '3.5rem',
-            fontWeight: 300,
-            lineHeight: 1.1,
-            letterSpacing: '-0.01em',
+        <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+          <div style={{
             fontFamily: 'var(--font-heading)',
-            marginBottom: '60px',
+            marginBottom: '80px',
             color: 'var(--foreground)',
-            textAlign: 'center'
+            height: '80px',
+            display: 'flex',
+            alignItems: 'center'
           }}>
-            Tools & Skills
-          </h2>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }}>
-            {/* Skills Content */}
-            <div>
-              <h3 style={{
-                fontSize: '2.5rem',
-                fontWeight: 300,
-                lineHeight: 1.1,
-                letterSpacing: '-0.01em',
-                fontFamily: 'var(--font-body)',
-                marginBottom: '40px',
-                color: 'var(--foreground)'
-              }}>
-                Design + Development
-              </h3>
-              
-              <div style={{ marginBottom: '40px' }}>
-                <h4 style={{
-                  fontSize: '1.3rem',
-                  fontWeight: 400,
-                  marginBottom: '15px',
-                  color: 'var(--foreground)',
-                  fontFamily: 'var(--font-body)'
-                }}>
-                  Design Tools
-                </h4>
-                <p style={{
-                  fontSize: '1.1rem',
-                  fontWeight: 300,
-                  lineHeight: 1.6,
-                  color: '#ccc',
-                  fontFamily: 'var(--font-body)'
-                }}>
-                  Figma, Sketch, Adobe Creative Suite, Principle, InVision
-                </p>
-              </div>
-              
-              <div>
-                <h4 style={{
-                  fontSize: '1.3rem',
-                  fontWeight: 400,
-                  marginBottom: '15px',
-                  color: 'var(--foreground)',
-                  fontFamily: 'var(--font-body)'
-                }}>
-                  Development
-                </h4>
-                <p style={{
-                  fontSize: '1.1rem',
-                  fontWeight: 300,
-                  lineHeight: 1.6,
-                  color: '#ccc',
-                  fontFamily: 'var(--font-body)'
-                }}>
-                  React, Next.js, TypeScript, CSS/SASS, Framer Motion, Three.js
-                </p>
-              </div>
-            </div>
-            
-            {/* Skills Image Placeholder */}
-            <div style={{
-              width: '100%',
-              height: '400px',
-              backgroundColor: '#2a2a2a',
-              borderRadius: '20px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '1.1rem',
-              color: '#666',
-              fontFamily: 'var(--font-body)',
-              border: '2px dashed #444'
-            }}>
-              Skills Visualization Placeholder
-            </div>
+            <ScrollRevealText
+              text="Deep in my bag"
+              fontSize="3.5rem"
+              fontWeight={300}
+              lineHeight={1.1}
+              letterSpacing="-0.01em"
+              className="scrollRevealText"
+            />
           </div>
+          
+          {/* Skills Paragraph */}
+          <div 
+            className={`skills-container ${selectedSkill ? 'selected-mode' : ''}`}
+            style={{
+              maxWidth: '100%',
+              margin: '0 auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '40px',
+              fontSize: '2.8rem',
+              lineHeight: '1.2',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 300,
+              color: '#ccc',
+              letterSpacing: '-0.01em',
+              minHeight: selectedSkill ? '100px' : 'auto',
+              position: 'relative' // Enable positioning for overlay
+            }}>
+            
+            {/* Blur Overlay */}
+            <div className={`blur-overlay ${overlayVisible ? 'active' : ''}`} />
+            
+            {/* UX & Design Category */}
+            {(isTransitioning || !selectedSkill || ['Design Thinking', 'User Research', 'User Interviews', 'Personas', 'A/B Testing', 'Usability Testing', 'Wireframing', 'Journey Mapping', 'Interaction Design', 'Prototyping', 'Design Systems', 'Accessibility', 'Visual Design'].includes(selectedSkill)) && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: selectedSkill ? '0' : '12px'
+              }}>
+                {(!selectedSkill || isTransitioning) && (
+                  <h3 style={{
+                    fontSize: '1.2rem',
+                    fontWeight: 400,
+                    color: '#888',
+                    margin: '0',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em'
+                  }}>UX & Design</h3>
+                )}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '20px 24px',
+                  alignItems: 'center'
+                }}>
+                  {['Design Thinking', 'User Research', 'User Interviews', 'Personas', 'A/B Testing', 'Usability Testing', 'Wireframing', 'Journey Mapping', 'Interaction Design', 'Prototyping', 'Design Systems', 'Accessibility', 'Visual Design'].map(skill => renderSkill(skill))}
+              </div>
+              </div>
+            )}
+
+            {/* Design Tools Category */}
+            {(isTransitioning || !selectedSkill || ['Figma', 'Adobe Creative Suite', 'Canva'].includes(selectedSkill)) && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: selectedSkill ? '0' : '12px'
+              }}>
+                {(!selectedSkill || isTransitioning) && (
+                  <h3 style={{
+                    fontSize: '1.2rem',
+                    fontWeight: 400,
+                    color: '#888',
+                    margin: '0',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em'
+                  }}>Design Tools</h3>
+                )}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '20px 24px',
+                  alignItems: 'center'
+                }}>
+                  {['Figma', 'Adobe Creative Suite', 'Canva'].map(skill => renderSkill(skill))}
+                </div>
+              </div>
+            )}
+
+            {/* Frontend Development Category */}
+            {(isTransitioning || !selectedSkill || ['React', 'Next.js', 'Angular', 'JavaScript', 'TypeScript', 'CSS', 'SASS', 'Framer Motion'].includes(selectedSkill)) && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: selectedSkill ? '0' : '12px'
+              }}>
+                {(!selectedSkill || isTransitioning) && (
+                  <h3 style={{
+                    fontSize: '1.2rem',
+                    fontWeight: 400,
+                    color: '#888',
+                    margin: '0',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em'
+                  }}>Frontend Development</h3>
+                )}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '20px 24px',
+                  alignItems: 'center'
+                }}>
+                  {['React', 'Next.js', 'Angular', 'JavaScript', 'TypeScript', 'CSS', 'SASS', 'Framer Motion'].map(skill => renderSkill(skill))}
+                </div>
+              </div>
+            )}
+
+            {/* Backend Development Category */}
+            {(isTransitioning || !selectedSkill || ['Node.js', 'Python'].includes(selectedSkill)) && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: selectedSkill ? '0' : '12px'
+              }}>
+                {(!selectedSkill || isTransitioning) && (
+                  <h3 style={{
+                    fontSize: '1.2rem',
+                    fontWeight: 400,
+                    color: '#888',
+                    margin: '0',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em'
+                  }}>Backend Development</h3>
+                )}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '20px 24px',
+                  alignItems: 'center'
+                }}>
+                  {['Node.js', 'Python'].map(skill => renderSkill(skill))}
+                </div>
+              </div>
+            )}
+
+            {/* Development Tools Category */}
+            {(isTransitioning || !selectedSkill || ['Git', 'Bitbucket'].includes(selectedSkill)) && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: selectedSkill ? '0' : '12px'
+              }}>
+                {(!selectedSkill || isTransitioning) && (
+                  <h3 style={{
+                    fontSize: '1.2rem',
+                    fontWeight: 400,
+                    color: '#888',
+                    margin: '0',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em'
+                  }}>Development Tools</h3>
+                )}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '20px 24px',
+                  alignItems: 'center'
+                }}>
+                  {['Git', 'Bitbucket'].map(skill => renderSkill(skill))}
+                </div>
+              </div>
+            )}
+
+            {/* Other Tools Category */}
+            {(isTransitioning || !selectedSkill || ['QA Testing', 'Atlassian'].includes(selectedSkill)) && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: selectedSkill ? '0' : '12px'
+              }}>
+                {(!selectedSkill || isTransitioning) && (
+                  <h3 style={{
+                    fontSize: '1.2rem',
+                    fontWeight: 400,
+                    color: '#888',
+                    margin: '0',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.1em'
+                  }}>Other Tools</h3>
+                )}
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '20px 24px',
+                  alignItems: 'center'
+                }}>
+                  {['QA Testing', 'Atlassian'].map(skill => renderSkill(skill))}
+                </div>
+              </div>
+            )}
+          </div>
+
         </div>
       </section>
     </main>

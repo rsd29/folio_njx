@@ -116,6 +116,7 @@ export default function HomePage() {
               className="heroSubtext"
               segments={[
 
+                { text: "Hi, I'm ", color: "#ffffff", opacity: .5, isStrong: true },
                 { text: "Russell Saw", color: "#ffffff", opacity: 1, isStrong: true }
               ]}
               useFlickerEffect={false}
@@ -132,10 +133,8 @@ export default function HomePage() {
           <AnimatedRichText
             className="heroSubtext"
             segments={[
-              { text: 'A developer', isStrong: true },
-              { text: ' fluent in design,' },
-              { text: ' and a designer ', isStrong: true },
-              { text: 'fluent in code.' },
+              { text: 'Design thinker.', isStrong: true },
+              { text: ' Code tinkerer.' },
             ]}
             useFlickerEffect={false}
             fontSize="4rem"
