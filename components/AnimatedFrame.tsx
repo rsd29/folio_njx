@@ -48,12 +48,10 @@ export default function AnimatedFrame({ children, delay = 0, style, comment }: A
     const handleMouseMove = (e: MouseEvent) => {
       if (!frameRef.current) return
 
-      // Cancel previous animation frame
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current)
       }
 
-      // Use requestAnimationFrame for smoother updates
       animationFrameRef.current = requestAnimationFrame(() => {
         if (!frameRef.current) return
 
@@ -61,27 +59,22 @@ export default function AnimatedFrame({ children, delay = 0, style, comment }: A
         const centerX = rect.left + rect.width / 2
         const centerY = rect.top + rect.height / 2
 
-        // Calculate distance from center
         const deltaX = e.clientX - centerX
         const deltaY = e.clientY - centerY
 
-        // Calculate rotation (increased for more noticeable effect)
         const maxRotation = 2
         const rotateY = (deltaX / (rect.width / 2)) * maxRotation
         const rotateX = -(deltaY / (rect.height / 2)) * maxRotation
 
-        // Calculate glare position (light reflection effect)
         const x = ((e.clientX - rect.left) / rect.width) * 100
         const y = ((e.clientY - rect.top) / rect.height) * 100
         
-        // Check if mouse is within frame bounds
         const isWithinBounds = 
           e.clientX >= rect.left && 
           e.clientX <= rect.right && 
           e.clientY >= rect.top && 
           e.clientY <= rect.bottom
 
-        // Apply transform directly to DOM with smooth transitions
         const scale = isWithinBounds ? 1.02 : 1
         const shadowIntensity = isWithinBounds ? 0.4 : 0.2
         const shadowBlur = 20 + Math.abs(rotateX) + Math.abs(rotateY)
@@ -89,24 +82,36 @@ export default function AnimatedFrame({ children, delay = 0, style, comment }: A
         frameRef.current.style.transform = `translateY(0) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`
         frameRef.current.style.filter = `drop-shadow(${rotateY * -2}px ${rotateX * 2}px ${shadowBlur}px rgba(0, 0, 0, ${shadowIntensity}))`
 
-        // Apply glare directly to DOM with smooth transitions
         if (glareRef.current) {
           const glareOpacity = isWithinBounds ? 0.12 : 0
           glareRef.current.style.background = `radial-gradient(circle 400px at ${Math.max(0, Math.min(100, x))}% ${Math.max(0, Math.min(100, y))}%, rgba(255, 255, 255, ${glareOpacity}), transparent 80%)`
         }
         
-        // Update hover state for text box
         setIsHovered(isWithinBounds)
       })
     }
 
+    let rafId: number | null = null
+    let ticking = false
+    
+    const throttledMouseMove = (e: MouseEvent) => {
+      if (!ticking) {
+        rafId = requestAnimationFrame(() => {
+          handleMouseMove(e)
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
     const handleMouseLeave = () => {
-      // Cancel any pending animation frame
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current)
       }
+      if (rafId) {
+        cancelAnimationFrame(rafId)
+      }
       
-      // Reset transforms directly to DOM with smooth transition
       if (frameRef.current) {
         frameRef.current.style.transform = 'translateY(0) perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)'
         frameRef.current.style.filter = 'drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.2))'
@@ -115,17 +120,20 @@ export default function AnimatedFrame({ children, delay = 0, style, comment }: A
         glareRef.current.style.background = 'radial-gradient(circle 400px at 50% 50%, rgba(255, 255, 255, 0), transparent 80%)'
       }
       setIsHovered(false)
+      ticking = false
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', throttledMouseMove, { passive: true })
     window.addEventListener('mouseleave', handleMouseLeave)
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mousemove', throttledMouseMove)
       window.removeEventListener('mouseleave', handleMouseLeave)
-      // Clean up animation frame
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current)
+      }
+      if (rafId) {
+        cancelAnimationFrame(rafId)
       }
     }
   }, [])

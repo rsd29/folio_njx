@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './Header.module.css'
 import { Link2Icon } from '@radix-ui/react-icons'
 
-
 const navItems = [
   { label: 'Projects', href: '/' },
   { label: 'About', href: '/about' },
@@ -15,7 +14,7 @@ const navItems = [
 const rightNavItems = [
   { label: 'LinkedIn', href: '/contact' },
   { label: 'Off the Clock', href: '/off-the-clock' },
-  { label: 'Resume', href: '/rs-resume-q3-2025-v2.pdf' }, // Direct path to file
+  { label: 'Resume', href: '/rs-resume-q3-2025-v2.pdf' },
 ]
 
 export default function Header() {
@@ -37,34 +36,29 @@ export default function Header() {
     }
   }, [pathname])
 
-  // Simple scroll detection for Russell Saw text color
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY
-      const videoHeight = window.innerHeight * 0.5 // 50vh - video height
+      const videoHeight = window.innerHeight * 0.5
       
-      // When scrolled past video, change text color
       setIsOverVideo(scrollY < videoHeight)
     }
 
-    // On non-home pages, always use light theme
     if (pathname !== '/') {
       setIsOverVideo(false)
       return
     }
 
-    handleScroll() // Initial check
+    handleScroll()
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [pathname])
 
-  // Helper function to get nav item styles
   const getNavItemStyle = (itemHref: string) => {
     const isActive = pathname === itemHref
     const isHovered = hoveredItem === itemHref
     const baseColor = isOverVideo ? '#333333' : '#808080'
     
-    // Active state - glowing/shining effect
     if (isActive) {
       return {
         color: isOverVideo ? '#000000' : '#ffffff',

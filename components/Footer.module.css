@@ -73,6 +73,17 @@
 .logoDiv {
   display: flex;
   transition: transform 0.3s ease;
+  position: relative;
+  clip-path: polygon(
+    5px 0%,
+    100% 0%, 
+    100% calc(100% - 7px),
+    calc(100% - 7px) 100%,
+    0% 100%, 
+    0% 5px
+  );
+  background: rgba(58, 58, 58, 0.516);
+  backdrop-filter: blur(10px) !important;
 }
 
 .logoDiv:hover {
@@ -154,21 +165,6 @@
   transition: all ease-in-out 0.3s;
   padding: 5px;
   z-index: 5;
-}
-
-.logoDiv{
-  position: relative;
-  clip-path: polygon(
-    5px 0%,       /* top-left cut */
-    100% 0%, 
-    100% calc(100% - 7px),  /* bottom-right cut start */
-    calc(100% - 7px) 100%,  /* bottom-right cut end */
-    0% 100%, 
-    0% 5px        /* back to start */
-  );
-  display: inline-block;
-  background: rgba(58, 58, 58, 0.516);
-  backdrop-filter: blur(10px) !important;
 }
 
 /* Responsive Design */

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import styles from './home.module.css'
 import AnimatedRichText from '../components/AnimatedRichText'
 import ScrollRevealText from '../components/ScrollRevealText'
@@ -10,14 +10,14 @@ const taglines = [
   "live from a shoebox that costs $800 a week.",
   "where house prices rise faster than frontend frameworks.",
   "currently battling three types of weather and two kinds of impostor syndrome.",
-  "broadcasting from a laneway you’ve probably never heard of.",
+  "broadcasting from a laneway you've probably never heard of.",
   "still saving for a place with natural light.",
   "where the rent is high but brunch is higher.",
   "where even the pigeons have a side hustle.",
   "still debugging life and code.",
   "home of coffee snobs and CSS bugs.",
   "where freelancers are born and slowly caffeinated to death.",
-  "live from the world’s most livable city (unless you're poor).",
+  "live from the world's most livable city (unless you're poor).",
 ]
 
 export default function HomePage() {
@@ -26,36 +26,37 @@ export default function HomePage() {
   const [displayed, setDisplayed] = useState('')
   const [fullTagline, setFullTagline] = useState('')
   const [charIndex, setCharIndex] = useState(0)
+  const fullTaglineRef = useRef(fullTagline)
 
-  // Typing animation - Optimized
+  useEffect(() => {
+    fullTaglineRef.current = fullTagline
+  }, [fullTagline])
+
   useEffect(() => {
     if (charIndex < fullTagline.length) {
       const timeout = setTimeout(() => {
         setDisplayed((prev) => prev + fullTagline[charIndex])
         setCharIndex((prev) => prev + 1)
-      }, 20) // Slightly slower for better performance
+      }, 20)
       return () => clearTimeout(timeout)
     }
   }, [charIndex, fullTagline])
 
-  // Function to pick a new tagline
-  const loadNewTagline = () => {
+  const loadNewTagline = useCallback(() => {
     let newLine = ''
     do {
       newLine = taglines[Math.floor(Math.random() * taglines.length)]
-    } while (newLine === fullTagline)
+    } while (newLine === fullTaglineRef.current)
 
     setFullTagline(newLine)
     setDisplayed('')
     setCharIndex(0)
-  }
-
-  // Load one tagline on boot
-  useEffect(() => {
-    loadNewTagline()
   }, [])
 
-  // Mouse-following radial gradient - Optimized
+  useEffect(() => {
+    loadNewTagline()
+  }, [loadNewTagline])
+
   useEffect(() => {
     const el = breakRef.current
     if (!el) return
@@ -64,11 +65,14 @@ export default function HomePage() {
     let currentX = 50
     let animationId: number | null = null
     let lastUpdate = 0
-    const throttleMs = 16 // ~60fps
+    const throttleMs = 16
+
+    const rectCache = { width: 0, left: 0 }
+    let rectCacheValid = false
 
     const animate = (timestamp: number) => {
       if (timestamp - lastUpdate >= throttleMs) {
-        currentX += (targetX - currentX) * 0.12 // Faster convergence
+        currentX += (targetX - currentX) * 0.12
         el.style.backgroundImage = `radial-gradient(circle at ${currentX}% 100%, white 0%, rgba(175, 175, 175, 0.1) 90%, rgba(255, 255, 255, 0.05) 100%, transparent 95%)`
         lastUpdate = timestamp
       }
@@ -76,9 +80,18 @@ export default function HomePage() {
     }
 
     const handleMouse = (e: MouseEvent) => {
-      const rect = el.getBoundingClientRect()
-      const relX = ((e.clientX - rect.left) / rect.width) * 100
+      if (!rectCacheValid) {
+        const rect = el.getBoundingClientRect()
+        rectCache.width = rect.width
+        rectCache.left = rect.left
+        rectCacheValid = true
+      }
+      const relX = ((e.clientX - rectCache.left) / rectCache.width) * 100
       targetX = relX
+      
+      if (Math.abs(e.clientX - (rectCache.left + rectCache.width / 2)) > rectCache.width * 0.1) {
+        rectCacheValid = false
+      }
     }
 
     window.addEventListener('mousemove', handleMouse, { passive: true })

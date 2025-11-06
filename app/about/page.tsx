@@ -236,49 +236,32 @@ export default function Page() {
 
   const handleSkillClick = (skill: string) => {
     if (selectedSkill === skill) {
-      // Deselecting - use blur transition
-      console.log('Deselecting skill:', skill)
       setOverlayVisible(true)
-      // DON'T set isTransitioning true yet - this would show all skills immediately
       
-      // Wait for blur to reach maximum (400ms)
       setTimeout(() => {
-        console.log('Peak blur reached - changing state to show all skills')
-        // At peak blur/darkness, change the state AND enable transition mode
         setSelectedSkill(null)
-        setIsTransitioning(true) // NOW enable transition mode so all skills appear
+        setIsTransitioning(true)
         
-        // Wait a moment for state to update, then start reveal
         setTimeout(() => {
-          console.log('Starting reveal animation')
           setOverlayVisible(false)
           
-          // Keep isTransitioning true until reveal completes so all skills stay visible
           setTimeout(() => {
-            console.log('Reveal complete - cleaning up transition state')
             setIsTransitioning(false)
-          }, 450) // Wait for blur-out animation to complete
-        }, 50) // Small delay to ensure state change is processed
-      }, 400) // Wait for blur-in animation to complete
+          }, 450)
+        }, 50)
+      }, 400)
     } else {
-      // Selecting - use blur transition
-      console.log('Selecting skill:', skill)
       setIsTransitioning(true)
       setOverlayVisible(true)
       
-      // Wait for blur to reach maximum (400ms)
       setTimeout(() => {
-        console.log('Peak blur reached - changing state to selected skill')
-        // At peak blur/darkness, change the state
         setSelectedSkill(skill)
-        setIsTransitioning(false) // Allow DOM to update to selected state
+        setIsTransitioning(false)
         
-        // Wait a moment for state to update, then start reveal
         setTimeout(() => {
-          console.log('Starting reveal animation for selected skill')
           setOverlayVisible(false)
-        }, 50) // Small delay to ensure state change is processed
-      }, 400) // Wait for blur-in animation to complete
+        }, 50)
+      }, 400)
     }
   }
 

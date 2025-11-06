@@ -10,25 +10,17 @@ export default function PageTransition() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
-    // Detect pathname change
     if (previousPathRef.current !== pathname) {
-      console.log('PATH CHANGED - Showing loader')
-      
-      // Show loading screen immediately
       setIsLoading(true)
       
-      // Clear any existing timeout
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current)
       }
       
-      // Keep loading screen visible for minimum 2 seconds
       timeoutRef.current = setTimeout(() => {
-        console.log('Hiding loader after 2 seconds')
         setIsLoading(false)
       }, 2000)
       
-      // Update previous path
       previousPathRef.current = pathname
     }
 
@@ -38,8 +30,6 @@ export default function PageTransition() {
       }
     }
   }, [pathname])
-
-  console.log('PageTransition render - isLoading:', isLoading)
 
   if (!isLoading) return null
 

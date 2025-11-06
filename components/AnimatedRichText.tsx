@@ -63,12 +63,21 @@ export default function AnimatedRichText({
     displayedRef.current = [...initialArray]
 
     const timeouts: NodeJS.Timeout[] = []
+    let rafPending = false
+
+    const flushUpdates = () => {
+      setDisplayed([...displayedRef.current])
+      rafPending = false
+    }
 
     const revealChar = (i: number) => {
       if (!useFlickerEffect) {
         setTimeout(() => {
           displayedRef.current[i] = fullText[i]
-          setDisplayed([...displayedRef.current])
+          if (!rafPending) {
+            rafPending = true
+            requestAnimationFrame(flushUpdates)
+          }
         }, (startDelay * 1000) + (i * 10) / animationSpeed)
         return
       }
@@ -79,12 +88,17 @@ export default function AnimatedRichText({
       const animate = () => {
         const finalChar = fullText[i]
         displayedRef.current[i] = iterations >= maxIterations ? finalChar : getRandomChar()
-        setDisplayed([...displayedRef.current])
-        iterations++
-
+        
         if (iterations <= maxIterations) {
+          if (!rafPending) {
+            rafPending = true
+            requestAnimationFrame(flushUpdates)
+          }
           animationFrame.current = requestAnimationFrame(animate)
+        } else {
+          flushUpdates()
         }
+        iterations++
       }
 
       timeouts.push(setTimeout(() => requestAnimationFrame(animate), (startDelay * 1000) + (i * 60) / animationSpeed))
@@ -97,6 +111,7 @@ export default function AnimatedRichText({
     return () => {
       timeouts.forEach(clearTimeout)
       if (animationFrame.current) cancelAnimationFrame(animationFrame.current)
+      rafPending = false
     }
   }, [fullText, useFlickerEffect, animationSpeed, startDelay])
 

@@ -6,8 +6,6 @@
   justify-content: space-between;
   padding: 15px 20px;
   z-index: 10;
-  
-/* lets inner elements float and remain interactive */
 }
 .sideLeft,
 .sideRight {
@@ -23,34 +21,29 @@
 }
 
 .logo {
-  height: 35px;     /* or whatever suits your nav */
+  height: 35px;
   width: auto;
   object-fit: contain;
   display: block;
-  
-  transition: all ease-in-out 0.s;
+  transition: all ease-in-out 0.3s;
   padding: 5px;
   z-index: 5;
 }
 
 .logoDiv{
-    position: relative;
-clip-path: polygon(
-  5px 0%,       /* top-left cut */
-  100% 0%, 
-  100% calc(100% - 7px),  /* bottom-right cut start */
-  calc(100% - 7px) 100%,  /* bottom-right cut end */
-  0% 100%, 
-  0% 5px        /* back to start */
-  
-);
+  position: relative;
+  clip-path: polygon(
+    5px 0%,
+    100% 0%, 
+    100% calc(100% - 7px),
+    calc(100% - 7px) 100%,
+    0% 100%, 
+    0% 5px
+  );
   display: inline-block;
-    background: rgba(58, 58, 58, 0.516);
-      backdrop-filter: blur(10px) !important;
+  background: rgba(58, 58, 58, 0.516);
+  backdrop-filter: blur(10px) !important;
 }
-
-
-
 
 .logoDesc {
   font-size: 1rem;
@@ -89,35 +82,32 @@ clip-path: polygon(
   display: flex;
   gap: 20px;
   width: 100%;
-  background-color: none;
-
 }
 .logoDescDiv{
-display: flex;
-flex-direction: column;
-gap: 0;
-line-height: 1;
-font-weight: 300;
-
-margin-top: 5px;}
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  line-height: 1;
+  font-weight: 300;
+  margin-top: 5px;
+}
 .logoDescSub{
   display: flex;
-flex-direction: column;
-font-weight: 300;
-gap: 0;
-line-height: 1.4;
-margin-top: -3px;
-color: rgb(120, 120, 120);
+  flex-direction: column;
+  font-weight: 300;
+  gap: 0;
+  line-height: 1.4;
+  margin-top: -3px;
+  color: rgb(120, 120, 120);
   white-space: nowrap;
   overflow: hidden;
   transition: color 0.3s ease;
 }
 
-
 .navItem {
   position: relative;
   font-size: 1rem;
-  color: #808080; /* darker grey text */
+  color: #808080;
   text-decoration: none;
   padding: 8px 12px;
   border-radius: 50px;
@@ -133,9 +123,9 @@ color: rgb(120, 120, 120);
 }
 
 .navItem:hover {
-  color: #b0b0b0; /* darker hover */
-  font-weight: 300; /* increase font weight */
-  filter: brightness(1.2); /* increase brightness */
+  color: #b0b0b0;
+  font-weight: 300;
+  filter: brightness(1.2);
   cursor: none;
   transition: color 0.2s ease, font-weight 0.2s ease, filter 0.2s ease;
 }
@@ -152,10 +142,6 @@ color: rgb(120, 120, 120);
   transition: left 0.3s ease;
   pointer-events: none;
   z-index: 0;
-
-
-
-  /* LED glow effect */
   box-shadow:
     0 0 4px #ffffff,
     0 0 8px #ffffff,
@@ -164,11 +150,6 @@ color: rgb(120, 120, 120);
 }
 
 .active{
-
-    color: rgb(255, 255, 255);
-
-border-radius: 9999px;
-    
+  color: rgb(255, 255, 255);
+  border-radius: 9999px;
 }
-
-

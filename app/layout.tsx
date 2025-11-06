@@ -43,16 +43,14 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${funnelDisplay.variable} ${funnelSans.variable} ${unifrakturMaguntia.variable}`}>
-
-      <body className={dmSans.className} > 
-        <Analytics/ >
+      <body className={dmSans.className}>
+        <Analytics />
         <PasswordGate>
           <NegativeCursor />
           <Header />
           <LenisWrapper />
           {children}
           <ClientPageTransition />
-          {/* Video Strip - Optimized */}
           <div style={{
             width: '100%',
             height: '50vh',
@@ -78,8 +76,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.webm" type="video/webm" />
               <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.mp4" type="video/mp4" />
             </video>
-            
-            {/* Text Overlay */}
             <div style={{
               position: 'absolute',
               bottom: '40px',
@@ -97,7 +93,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               Let&apos;s collaborate, Drop us a line  →
             </div>
           </div>
-          <Footer/>
+          <Footer />
         </PasswordGate>
       </body>
     </html>

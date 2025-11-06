@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 
 interface ScrollRevealTextProps {
   text: string
@@ -26,6 +26,13 @@ export default function ScrollRevealText({
   const [hasAnimated, setHasAnimated] = useState(false)
   const [countValue, setCountValue] = useState(0)
 
+  const textLower = useMemo(() => text.toLowerCase(), [text])
+  const chars = useMemo(() => text.split(''), [text])
+  const uxIndex = useMemo(() => textLower.indexOf('ux'), [textLower])
+  const hasUX = useMemo(() => uxIndex !== -1, [uxIndex])
+  const year5Index = useMemo(() => textLower.indexOf('year 5'), [textLower])
+  const hasYear5 = useMemo(() => year5Index !== -1, [year5Index])
+
   useEffect(() => {
     let ticking = false
     
@@ -37,22 +44,19 @@ export default function ScrollRevealText({
           const rect = containerRef.current.getBoundingClientRect()
           const windowHeight = window.innerHeight
           
-          // More precise trigger logic
           const elementTop = rect.top
           const elementBottom = rect.bottom
 
-          // Trigger when element enters viewport with small buffer
           const shouldBeVisible = elementTop < windowHeight * 0.95 && elementBottom > windowHeight * 0.05
 
           if (shouldBeVisible && !isVisible) {
             setIsVisible(true)
             setHasAnimated(true)
             
-            // Start counting animation if text contains "Year 5"
-            if (text.toLowerCase().includes('year 5')) {
+            if (hasYear5) {
               setCountValue(0)
               let currentCount = 0
-              const delays = [120, 120, 180, 220, 280] // Slightly slower for better performance
+              const delays = [120, 120, 180, 220, 280]
               
               const countNext = () => {
                 if (currentCount < 5) {
@@ -66,7 +70,7 @@ export default function ScrollRevealText({
             }
           } else if (!shouldBeVisible && isVisible) {
             setIsVisible(false)
-            setCountValue(0) // Reset count when not visible
+            setCountValue(0)
           }
           ticking = false
         })
@@ -74,18 +78,14 @@ export default function ScrollRevealText({
       }
     }
 
-    // Initial check
     handleScroll()
     
-    // Add scroll listener with passive for better performance
     window.addEventListener('scroll', handleScroll, { passive: true })
     
     return () => {
       window.removeEventListener('scroll', handleScroll)
     }
-  }, [isVisible])
-
-  const chars = text.split('')
+  }, [isVisible, hasYear5])
 
   return (
     <div 
@@ -111,15 +111,8 @@ export default function ScrollRevealText({
     >
       {chars.map((char, index) => {
         const delay = index * 0.015
-        // Check if this character is part of "UX" (case insensitive)
-        const isUXChar = text.toLowerCase().includes('ux') && 
-          index >= text.toLowerCase().indexOf('ux') && 
-          index < text.toLowerCase().indexOf('ux') + 2
-        
-        // Check if this is the "5" in "Year 5" and replace with count value
-        const isYearNumber = text.toLowerCase().includes('year 5') && 
-          index === text.toLowerCase().indexOf('year 5') + 5 // Position of "5" in "Year 5"
-        
+        const isUXChar = hasUX && index >= uxIndex && index < uxIndex + 2
+        const isYearNumber = hasYear5 && index === year5Index + 5
         const displayChar = isYearNumber ? countValue.toString() : char
         
         return (
