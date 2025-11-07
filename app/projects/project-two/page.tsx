@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import Link from 'next/link'
 import ScrollRevealText from '../../../components/ScrollRevealText'
-import AnimatedRichText from '../../../components/AnimatedRichText'
 import styles from './case-study.module.css'
 
 export default function ProjectTwoCaseStudy() {
@@ -65,7 +64,7 @@ export default function ProjectTwoCaseStudy() {
               <h3 className={styles.blockTitle}>Who is this for</h3>
               <p className={styles.blockText}>
                 People trying to build fitness habits—beginners who need motivation, 
-                busy professionals who want quick check-ins, and people who've abandoned 
+                busy professionals who want quick check-ins, and people who&apos;ve abandoned 
                 fitness apps before. Not professional athletes. Regular people with irregular schedules.
               </p>
             </div>
@@ -80,7 +79,7 @@ export default function ProjectTwoCaseStudy() {
             <div className={styles.contentBlock}>
               <h3 className={styles.blockTitle}>Why I was asked</h3>
               <p className={styles.blockText}>
-                Personal project to solve my own frustration. I'd downloaded 5 fitness apps 
+                Personal project to solve my own frustration. I&apos;d downloaded 5 fitness apps 
                 and abandoned all within 2 weeks. Wanted to build something that actually 
                 kept people engaged by respecting their time and motivation patterns.
               </p>
@@ -203,7 +202,7 @@ export default function ProjectTwoCaseStudy() {
                   <span className={styles.insightBullet}>•</span>
                   <p className={styles.insightText}>
                     <strong>73% of users</strong> wanted visual progress, not charts. 
-                    They wanted to "feel" progress, not analyze it.
+                    They wanted to &quot;feel&quot; progress, not analyze it.
                   </p>
                 </div>
                 <div className={styles.insight}>
@@ -216,7 +215,7 @@ export default function ProjectTwoCaseStudy() {
                 <div className={styles.insight}>
                   <span className={styles.insightBullet}>•</span>
                   <p className={styles.insightText}>
-                    <strong>88% of abandoners</strong> cited "too complicated" as primary reason. 
+                    <strong>88% of abandoners</strong> cited &quot;too complicated&quot; as primary reason. 
                     Not lack of features—too many features.
                   </p>
                 </div>
@@ -355,7 +354,7 @@ export default function ProjectTwoCaseStudy() {
               <div className={styles.solutionContent}>
                 <h3 className={styles.solutionTitle}>Simplified Daily View</h3>
                 <p className={styles.solutionText}>
-                  Single-screen dashboard showing today's progress at a glance. Large visual 
+                  Single-screen dashboard showing today&apos;s progress at a glance. Large visual 
                   progress rings replace complex charts. Log activities with one tap.
                 </p>
                 <p className={styles.solutionCaption}>
@@ -461,13 +460,13 @@ export default function ProjectTwoCaseStudy() {
               <h3 className={styles.validationTitle}>Qualitative</h3>
               <div className={styles.validationQuotes}>
                 <p className={styles.quote}>
-                  "Finally, an app that doesn't make me feel guilty for missing a day."
+                  &quot;Finally, an app that doesn&apos;t make me feel guilty for missing a day.&quot;
                 </p>
                 <p className={styles.quote}>
-                  "I can actually see my progress without digging through charts."
+                  &quot;I can actually see my progress without digging through charts.&quot;
                 </p>
                 <p className={styles.quote}>
-                  "Logging takes seconds, not minutes. I actually use it daily now."
+                  &quot;Logging takes seconds, not minutes. I actually use it daily now.&quot;
                 </p>
               </div>
             </div>
@@ -518,19 +517,19 @@ export default function ProjectTwoCaseStudy() {
               <h3 className={styles.reflectionTitle}>What Worked</h3>
               <p className={styles.reflectionText}>
                 Removing features was harder than adding them, but essential. Visual progress 
-                stories created emotional connections that data couldn't match. One-tap logging 
+                stories created emotional connections that data couldn&apos;t match. One-tap logging 
                 removed friction that was killing engagement.
               </p>
             </div>
             <div className={styles.reflectionCard}>
-              <h3 className={styles.reflectionTitle}>What I'd Change</h3>
+              <h3 className={styles.reflectionTitle}>What I&apos;d Change</h3>
               <p className={styles.reflectionText}>
                 Should have tested gestures earlier. Some users took time to discover swipe actions. 
                 Would have added onboarding hints or made gestures more discoverable initially.
               </p>
             </div>
             <div className={styles.reflectionCard}>
-              <h3 className={styles.reflectionTitle}>What's Next</h3>
+              <h3 className={styles.reflectionTitle}>What&apos;s Next</h3>
               <p className={styles.reflectionText}>
                 Analytics show smart suggestions are underutilized. Need to improve timing and 
                 personalization. Also evaluating social features that respect privacy—users want 
@@ -547,7 +546,7 @@ export default function ProjectTwoCaseStudy() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>Interested in working together?</h2>
             <p className={styles.ctaText}>
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+              I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
             </p>
             <div className={styles.ctaButtons}>
               <Link href="/contact" className={styles.ctaButton}>

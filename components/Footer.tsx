@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import styles from './Footer.module.css'
 
 export default function Footer() {
@@ -9,7 +10,7 @@ export default function Footer() {
       <div className={styles.inner}>
         <div className={styles.leftSection}>
           <Link href="/" className={styles.logoDiv}>
-            <img src="/RSD.png" alt="Logo" className={styles.logo} />
+            <Image src="/RSD.png" alt="Logo" width={40} height={40} className={styles.logo} />
           </Link>
           <div className={styles.brandInfo}>
             <h3 className={styles.brandName}>Russell Saw Design</h3>

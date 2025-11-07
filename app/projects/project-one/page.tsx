@@ -653,7 +653,7 @@ export default function ProjectOneCaseStudy() {
           
           <div className={styles.contentBlock}>
             <p className={styles.blockText}>
-              SalesIQ transformed Oriental Merchant's global ordering operations from an entirely offline process to a scalable digital platform serving customers across five countries. By prioritizing <strong>familiar patterns, clear promotional visibility, and workflow efficiency</strong> over visual experimentation, we created a tool that served both small independent grocers and major national chains.
+              SalesIQ transformed Oriental Merchant&apos;s global ordering operations from an entirely offline process to a scalable digital platform serving customers across five countries. By prioritizing <strong>familiar patterns, clear promotional visibility, and workflow efficiency</strong> over visual experimentation, we created a tool that served both small independent grocers and major national chains.
             </p>
             <p className={styles.blockText}>
               The project reinforced a fundamental UX principle: <strong>understanding user context and mental models matters far more than interface innovation for its own sake</strong>.
@@ -668,7 +668,7 @@ export default function ProjectOneCaseStudy() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>Interested in working together?</h2>
             <p className={styles.ctaText}>
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+              I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
             </p>
             <div className={styles.ctaButtons}>
               <Link href="/contact" className={styles.ctaButton}>

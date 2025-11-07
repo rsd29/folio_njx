@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import Link from 'next/link'
 import ScrollRevealText from '../../../components/ScrollRevealText'
-import AnimatedRichText from '../../../components/AnimatedRichText'
 import styles from './case-study.module.css'
 
 export default function ProjectThreeCaseStudy() {
@@ -88,7 +87,7 @@ export default function ProjectThreeCaseStudy() {
             <div className={styles.contentBlock}>
               <h3 className={styles.blockTitle}>Constraints</h3>
               <p className={styles.blockText}>
-                Needed to work with existing tech stack (React/TypeScript). Couldn't break 
+                Needed to work with existing tech stack (React/TypeScript). Couldn&apos;t break 
                 production features during migration. Limited design system team (2 people). 
                 8-month timeline with ongoing feature work. Needed to gain buy-in from 12 teams.
               </p>
@@ -210,7 +209,7 @@ export default function ProjectThreeCaseStudy() {
                   <span className={styles.insightBullet}>•</span>
                   <p className={styles.insightText}>
                     Developers spent <strong>15-20 hours per sprint</strong> building components 
-                    that already existed elsewhere because they couldn't find them.
+                    that already existed elsewhere because they couldn&apos;t find them.
                   </p>
                 </div>
                 <div className={styles.insight}>
@@ -250,7 +249,7 @@ export default function ProjectThreeCaseStudy() {
             </p>
             <p className={styles.reframeText}>
               <strong>Reality:</strong> Teams needed tools that made consistency easier than 
-              inconsistency. Guidelines weren't enough—they needed components they could use 
+              inconsistency. Guidelines weren&apos;t enough—they needed components they could use 
               immediately. Documentation was critical for discoverability.
             </p>
             <p className={styles.reframeText}>
@@ -461,13 +460,13 @@ export default function ProjectThreeCaseStudy() {
               <h3 className={styles.validationTitle}>Qualitative</h3>
               <div className={styles.validationQuotes}>
                 <p className={styles.quote}>
-                  "I can ship features faster now. No more rebuilding buttons."
+                  &quot;I can ship features faster now. No more rebuilding buttons.&quot;
                 </p>
                 <p className={styles.quote}>
-                  "Documentation is actually useful. I can find what I need in seconds."
+                  &quot;Documentation is actually useful. I can find what I need in seconds.&quot;
                 </p>
                 <p className={styles.quote}>
-                  "Finally, consistent experiences across all our products."
+                  &quot;Finally, consistent experiences across all our products.&quot;
                 </p>
               </div>
             </div>
@@ -519,12 +518,12 @@ export default function ProjectThreeCaseStudy() {
               <h3 className={styles.reflectionTitle}>What Worked</h3>
               <p className={styles.reflectionText}>
                 Making the system easier to use than building custom components drove adoption. 
-                Excellent documentation was essential—good components with bad docs don't get used. 
+                Excellent documentation was essential—good components with bad docs don&apos;t get used. 
                 Starting with atomic components allowed incremental adoption.
               </p>
             </div>
             <div className={styles.reflectionCard}>
-              <h3 className={styles.reflectionTitle}>What I'd Change</h3>
+              <h3 className={styles.reflectionTitle}>What I&apos;d Change</h3>
               <p className={styles.reflectionText}>
                 Should have involved engineering earlier in token system design. Some API decisions 
                 required refactoring later. Would have saved 3 weeks with better collaboration upfront. 
@@ -532,7 +531,7 @@ export default function ProjectThreeCaseStudy() {
               </p>
             </div>
             <div className={styles.reflectionCard}>
-              <h3 className={styles.reflectionTitle}>What's Next</h3>
+              <h3 className={styles.reflectionTitle}>What&apos;s Next</h3>
               <p className={styles.reflectionText}>
                 Analytics show some components are underutilized. Need to improve discoverability 
                 and add more examples. Also evaluating automated accessibility testing in CI/CD 
@@ -549,7 +548,7 @@ export default function ProjectThreeCaseStudy() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>Interested in working together?</h2>
             <p className={styles.ctaText}>
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+              I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
             </p>
             <div className={styles.ctaButtons}>
               <Link href="/contact" className={styles.ctaButton}>
