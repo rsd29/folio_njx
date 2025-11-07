@@ -1,9 +1,8 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import Link from 'next/link'
 import ScrollRevealText from '../../../components/ScrollRevealText'
-import AnimatedRichText from '../../../components/AnimatedRichText'
 import styles from './case-study.module.css'
 
 export default function ProjectOneCaseStudy() {
@@ -63,7 +62,7 @@ export default function ProjectOneCaseStudy() {
           
           <div className={styles.contentBlock}>
             <p className={styles.blockText}>
-              Oriental Merchant, one of the world's largest Asian grocery importers, serves everyone from independent family grocers to major national chains like <strong>Coles and Woolworths</strong>. Despite this scale, their entire ordering process was offline—phone calls, paper catalogs, and field reps manually processing orders.
+              Oriental Merchant, one of the world&apos;s largest Asian grocery importers, serves everyone from independent family grocers to major national chains like <strong>Coles and Woolworths</strong>. Despite this scale, their entire ordering process was offline—phone calls, paper catalogs, and field reps manually processing orders.
             </p>
             <p className={styles.blockText}>
               Store owners had no visibility into <strong>real-time pricing or stock</strong>. Promotions were confusing, often with complex tier structures that required rep interpretation. Every order risked miscommunication and data entry errors. For customers ordering weekly, there was no way to save patterns or access purchase history.
@@ -87,7 +86,7 @@ export default function ProjectOneCaseStudy() {
           
           <div className={styles.contentBlock}>
             <p className={styles.blockText}>
-              <strong>SalesIQ</strong> is a global B2B e-commerce platform that provides a modern self-service ordering experience for wholesale customers. What started as a single-region pilot rapidly expanded to become the core ordering tool across all of Oriental Merchant's international operations.
+              <strong>SalesIQ</strong> is a global B2B e-commerce platform that provides a modern self-service ordering experience for wholesale customers. What started as a single-region pilot rapidly expanded to become the core ordering tool across all of Oriental Merchant&apos;s international operations.
             </p>
             <p className={styles.blockText}>
               The platform handles <strong>region-specific product catalogs, dynamic pricing, live stock visibility, sophisticated promotional structures, and multiple languages</strong>—all while maintaining the familiar shopping patterns users already know from mainstream platforms.
@@ -221,7 +220,7 @@ export default function ProjectOneCaseStudy() {
               A consistent message surfaced across all research: users were not concerned about beautiful visuals or innovative interactions. They cared about <strong>speed, clarity, and access</strong>.
             </p>
             <p className={styles.blockText} style={{ fontStyle: 'italic', fontSize: '1.1rem', color: '#ccc' }}>
-              "Let me place accurate orders quickly, and show me what discounts or promos I qualify for."
+              &quot;Let me place accurate orders quickly, and show me what discounts or promos I qualify for.&quot;
             </p>
           </div>
 
@@ -524,7 +523,7 @@ export default function ProjectOneCaseStudy() {
           
           <div className={styles.contentBlock}>
             <p className={styles.blockText}>
-              SalesIQ became the core ordering tool for Oriental Merchant's global operations, delivering measurable value across multiple dimensions:
+              SalesIQ became the core ordering tool for Oriental Merchant&apos;s global operations, delivering measurable value across multiple dimensions:
             </p>
           </div>
 

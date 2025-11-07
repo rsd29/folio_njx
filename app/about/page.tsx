@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import AnimatedRichText from '../../components/AnimatedRichText'
 import ScrollRevealText from '../../components/ScrollRevealText'
 import AnimatedFrame from '../../components/AnimatedFrame'
@@ -500,10 +501,11 @@ export default function Page() {
                     background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2) 50%, transparent)',
                     zIndex: 1
                   }} />
-                  <img 
+                  <Image 
                     src="/portrait1-min.jpg" 
                     alt="Portrait 1"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }}
+                    fill
+                    style={{ objectFit: 'cover', borderRadius: '8px' }}
                   />
                 </div>
               </div>
@@ -589,10 +591,11 @@ export default function Page() {
                     background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2) 50%, transparent)',
                     zIndex: 1
                   }} />
-                  <img 
+                  <Image 
                     src="/portrait3-min.jpg" 
                     alt="Portrait 3"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }}
+                    fill
+                    style={{ objectFit: 'cover', borderRadius: '8px' }}
                   />
                 </div>
               </div>
@@ -714,10 +717,11 @@ export default function Page() {
                     background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2) 50%, transparent)',
                     zIndex: 1
                   }} />
-                  <img 
+                  <Image 
                     src="/portrait2-min.jpg" 
                     alt="Portrait 2"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }}
+                    fill
+                    style={{ objectFit: 'cover', borderRadius: '8px' }}
                   />
                 </div>
               </div>
@@ -800,10 +804,11 @@ export default function Page() {
                     background: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2) 50%, transparent)',
                     zIndex: 1
                   }} />
-                  <img 
+                  <Image 
                     src="/portrait4-min.jpg" 
                     alt="Portrait 4"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }}
+                    fill
+                    style={{ objectFit: 'cover', borderRadius: '8px' }}
                   />
                 </div>
               </div>
