@@ -12,6 +12,102 @@
   padding: 0 40px;
 }
 
+.contentShell {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px 120px;
+}
+
+.sectionsColumn {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 0;
+  max-width: 100%;
+}
+
+.tableOfContents {
+  position: relative;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: var(--font-body);
+  z-index: 5;
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+  align-self: flex-start;
+}
+
+@media (max-width: 1024px) {
+  .contentShell {
+    grid-template-columns: 1fr;
+    padding: 0 20px 80px;
+  }
+
+  .tableOfContents {
+    display: none;
+  }
+}
+
+.tocList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tocItem {
+  margin: 0;
+}
+
+.tocLink {
+  color: #5a5a5a;
+  text-decoration: none;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-weight: 300;
+  transition: color 0.2s ease;
+}
+
+.tocLink:hover {
+  color: #d0d0d0;
+}
+
+.tocLinkActive {
+  color: #ffffff;
+  font-weight: 400;
+}
+
+@media (max-width: 1200px) {
+  .contentShell {
+    grid-template-columns: minmax(0, 1fr) 200px;
+    gap: 60px;
+  }
+
+  .tableOfContents {
+    width: 200px;
+  }
+
+}
+
+@media (max-width: 1024px) {
+  .contentShell {
+    grid-template-columns: 1fr;
+    padding: 0 20px 80px;
+  }
+
+  .tableOfContents {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 0 20px;
@@ -31,8 +127,9 @@
 
 .heroContent {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
+  padding: 0 40px;
 }
 
 .backLink {

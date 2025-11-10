@@ -6,6 +6,12 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import styles from './Header.module.css'
 import { Link2Icon } from '@radix-ui/react-icons'
+import { gsap } from 'gsap'
+import { ScrollSmoother } from 'gsap/ScrollSmoother'
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollSmoother)
+}
 
 const navItems = [
   { label: 'Projects', href: '/' },
@@ -39,7 +45,9 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY
+      // Get scroll position from GSAP ScrollSmoother if available
+      const smoother = ScrollSmoother.get()
+      const scrollY = smoother ? smoother.scrollTop() : window.scrollY
       const videoHeight = window.innerHeight * 0.5
       
       setIsOverVideo(scrollY < videoHeight)
@@ -51,8 +59,18 @@ export default function Header() {
     }
 
     handleScroll()
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    
+    // Use GSAP ticker if ScrollSmoother is available, otherwise use native scroll
+    const smoother = ScrollSmoother.get()
+    if (smoother) {
+      const ticker = gsap.ticker.add(handleScroll)
+      return () => {
+        gsap.ticker.remove(ticker)
+      }
+    } else {
+      window.addEventListener('scroll', handleScroll)
+      return () => window.removeEventListener('scroll', handleScroll)
+    }
   }, [pathname])
 
   const getNavItemStyle = (itemHref: string) => {

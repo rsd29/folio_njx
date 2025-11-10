@@ -64,14 +64,8 @@ p, b, strong {
 
 /* Hide scrollbars */
 html, body {
-  overflow: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 strong{
