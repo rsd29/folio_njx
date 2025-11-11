@@ -11,6 +11,7 @@ interface ScrollRevealTextProps {
   letterSpacing?: string
   className?: string
   isStrong?: boolean
+  style?: React.CSSProperties
 }
 
 export default function ScrollRevealText({
@@ -20,7 +21,8 @@ export default function ScrollRevealText({
   lineHeight = 1.2,
   letterSpacing = '-0.01em',
   className = '',
-  isStrong = false
+  isStrong = false,
+  style = {}
 }: ScrollRevealTextProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
@@ -61,7 +63,8 @@ export default function ScrollRevealText({
         fontWeight: isStrong ? 400 : fontWeight,
         lineHeight,
         letterSpacing,
-        textShadow
+        textShadow,
+        ...style
       }}
     >
       {text}

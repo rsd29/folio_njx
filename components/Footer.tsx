@@ -8,44 +8,37 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
-        <div className={styles.leftSection}>
-          <Link href="/" className={styles.logoDiv}>
-            <Image src="/RSD.png" alt="Logo" width={40} height={40} className={styles.logo} />
-          </Link>
-          <div className={styles.brandInfo}>
-            <h3 className={styles.brandName}>Russell Saw Design</h3>
-            <p className={styles.brandTagline}>UX Designer & Developer</p>
+        <div className={styles.topSection}>
+          <div className={styles.leftGroup}>
+            <Link href="/" className={styles.logoDiv}>
+              <Image src="/RSD.png" alt="Logo" width={35} height={35} className={styles.logo} />
+            </Link>
+            <div className={styles.brandInfo}>
+              <h3 className={styles.brandName}>Russell Saw</h3>
+              <p className={styles.brandTagline}>UX Designer / Front-End Dev</p>
+            </div>
           </div>
-        </div>
 
-        <div className={styles.centerSection}>
           <nav className={styles.nav}>
-            <Link href="/projects" className={styles.navLink}>
-              <span>Projects</span>
-            </Link>
-            <Link href="/about" className={styles.navLink}>
-              <span>About</span>
-            </Link>
-            <Link href="/contact" className={styles.navLink}>
-              <span>Contact</span>
-            </Link>
-            <Link href="/off-the-clock" className={styles.navLink}>
-              <span>Off the Clock</span>
-            </Link>
+            <Link href="/" className={styles.navLink}>Projects</Link>
+            <Link href="/about" className={styles.navLink}>About</Link>
+            <Link href="/contact" className={styles.navLink}>Contact</Link>
+            <Link href="/off-the-clock" className={styles.navLink}>Off the Clock</Link>
           </nav>
-        </div>
 
-        <div className={styles.rightSection}>
           <div className={styles.socialLinks}>
             <a href="mailto:hello@russellsaw.design" className={styles.socialLink}>
               Email
             </a>
-            <a href="https://linkedin.com/in/russellsaw" className={styles.socialLink}>
+            <a href="https://linkedin.com/in/russellsaw" target="_blank" rel="noopener noreferrer" className={styles.socialLink}>
               LinkedIn
             </a>
           </div>
-          <div className={styles.rights}>
-            Copyright Russell Saw Designs 2025 ©
+        </div>
+
+        <div className={styles.bottomSection}>
+          <div className={styles.copyright}>
+            © 2025 Russell Saw Design
           </div>
         </div>
       </div>

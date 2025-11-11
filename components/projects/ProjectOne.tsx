@@ -1,14 +1,35 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import styles from './ProjectLayout.module.css'
 
 export default function ProjectOne() {
   return (
     <Link href="/projects/project-one" style={{ textDecoration: 'none', color: 'inherit' }}>
       <div className={styles.outerContainer}>
-        <div className={styles.innerContainer} data-cursor-text="View Project">
+        <div className={styles.innerContainer}>
           <div className={styles.innerContentDiv}>
+            {/* Background Image */}
+            <Image
+              src="/case_study_1/cs1_productpage2.jpeg"
+              alt="SalesIQ Product Page Interface"
+              fill
+              style={{
+                objectFit: 'cover',
+                objectPosition: 'center',
+                zIndex: 1
+              }}
+            />
+            
+            {/* Dark Overlay for better text readability */}
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%)',
+              zIndex: 2
+            }} />
+            
             {/* Text Overlay */}
             <div style={{
               position: 'absolute',
@@ -33,7 +54,7 @@ export default function ProjectOne() {
                 fontFamily: 'Funnel Sans, sans-serif',
                 letterSpacing: '0',
                 lineHeight: 1.2,
-                opacity: 0.7
+                opacity: 0.9
               }}>
                 UX Design • Oriental Merchant • 2023-2024
               </div>

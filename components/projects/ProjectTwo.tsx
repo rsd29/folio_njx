@@ -7,7 +7,7 @@ export default function ProjectTwo() {
   return (
     <Link href="/projects/project-two" style={{ textDecoration: 'none', color: 'inherit' }}>
       <div className={styles.outerContainer}>
-        <div className={styles.innerContainer} data-cursor-text="View Project">
+        <div className={styles.innerContainer}>
           <div className={styles.innerContentDiv}>
             {/* Text Overlay */}
             <div style={{

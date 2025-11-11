@@ -14,10 +14,12 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   line-height: 1.6;
+  cursor: none;
 }
 
 * {
   box-sizing: border-box;
+  cursor: none !important;
 }
 
 /* Typography Reset for consistency */

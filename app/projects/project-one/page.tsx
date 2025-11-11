@@ -192,6 +192,20 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                From Phone Orders to Digital at Scale
+              </p>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
@@ -199,24 +213,31 @@ export default function ProjectOneCaseStudy() {
                   grocery importers, serves everyone from independent family
                   grocers to major national chains like{" "}
                   <strong>Coles and Woolworths</strong>. Despite this scale,
-                  their entire ordering process was offline—phone calls, paper
-                  catalogs, and field reps manually processing orders.
+                  their entire ordering process was offline: phone calls, paper
+                  catalogs, and field reps manually processing every order.
                 </p>
                 <p className={styles.blockText}>
                   Store owners had no visibility into{" "}
-                  <strong>real-time pricing or stock</strong>. Promotions were
-                  confusing, often with complex tier structures that required
-                  rep interpretation. Every order risked miscommunication and
-                  data entry errors. For customers ordering weekly, there was no
-                  way to save patterns or access purchase history.
+                  <strong>real-time pricing or stock</strong>. Promotions with
+                  complex tier structures required rep interpretation. Every
+                  order risked miscommunication and data entry errors, and
+                  customers had no way to save patterns or access history.
                 </p>
                 <p className={styles.blockText}>
                   The business needed a{" "}
                   <strong>
-                    digital transformation that could scale globally
+                    scalable digital platform
                   </strong>{" "}
-                  while making complex promotional logic feel simple at the
-                  interface.
+                  that could make complex promotional logic feel simple.
+                </p>
+                <p className={styles.blockText}>
+                  The platform also needed to serve two distinct use cases
+                  simultaneously. Sales reps required speed to process orders
+                  quickly on behalf of customers, while end users expected a
+                  polished commercial experience. Staff accounts operated with a
+                  second authorization tier, allowing them to log into any store
+                  and instantly access that customer&apos;s specific pricing,
+                  product catalog, and promotional structures.
                 </p>
               </div>
             </div>
@@ -231,24 +252,37 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                What We Built
+              </p>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
                   <strong>SalesIQ</strong> is a global B2B e-commerce platform
-                  that provides a modern self-service ordering experience for
-                  wholesale customers. What started as a single-region pilot
-                  rapidly expanded to become the core ordering tool across all
-                  of Oriental Merchant&apos;s international operations.
+                  that provides self-service ordering for wholesale customers.
+                  What started as a single-region pilot rapidly expanded to
+                  become the core ordering tool across all of Oriental
+                  Merchant&apos;s international operations.
                 </p>
                 <p className={styles.blockText}>
                   The platform handles{" "}
                   <strong>
-                    region-specific product catalogs, dynamic pricing, live
-                    stock visibility, sophisticated promotional structures, and
-                    multiple languages
+                    region-specific catalogs, dynamic pricing, live stock
+                    visibility, tiered promotions, and multiple languages
                   </strong>
-                  —all while maintaining the familiar shopping patterns users
-                  already know from mainstream platforms.
+                  , while maintaining familiar shopping patterns users already
+                  know.
                 </p>
               </div>
 
@@ -292,30 +326,39 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                What Success Looked Like
+              </p>
 
               <div className={styles.contentBlock}>
-                <p className={styles.blockText}>
-                  The transformation from offline to digital ordering
-                  represented a major operational leap. Success meant:
-                </p>
                 <ul className={styles.blockList}>
                   <li>
-                    Enable <strong>self-service digital ordering</strong> for
-                    all customer segments
+                    Enable <strong>self-service ordering</strong> across all
+                    customer segments
                   </li>
-                  <li>Reduce dependency on field reps for order entry</li>
+                  <li>Reduce field rep dependency for order entry</li>
                   <li>Eliminate pricing and data entry errors</li>
                   <li>
-                    Create <strong>scalable infrastructure</strong> across all
-                    regions
+                    Build <strong>scalable infrastructure</strong> for global
+                    expansion
                   </li>
                   <li>
-                    Support complex promotional logic without manual
-                    intervention
+                    Automate complex promotional logic
                   </li>
-                  <li>Drive promotional participation and uptake</li>
+                  <li>Increase promotional participation</li>
                   <li>
-                    Improve overall order volume and platform accessibility
+                    Improve order volume and accessibility
                   </li>
                 </ul>
               </div>
@@ -331,6 +374,20 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                Who We Were Designing For
+              </p>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
@@ -396,38 +453,46 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                Understanding the Real Workflow
+              </p>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  To understand realities across different regions and user
-                  types, I employed multiple research methods:
+                  To understand needs across regions and user types, I used:
                 </p>
                 <ul className={styles.blockList}>
                   <li>
-                    <strong>User interviews</strong> with store owners and
-                    operators
+                    User interviews with store owners and operators
                   </li>
                   <li>
-                    <strong>Task shadowing</strong> in retail environments
+                    Task shadowing in retail environments
                   </li>
                   <li>
-                    <strong>Internal stakeholder interviews</strong> with sales
-                    reps and regional managers
+                    Stakeholder interviews with sales reps and regional managers
                   </li>
                   <li>
-                    <strong>Legacy workflow audits</strong> to map existing
-                    processes
+                    Legacy workflow audits
                   </li>
                   <li>
-                    <strong>Surveys</strong> to gather broader feedback
+                    Surveys for broader feedback
                   </li>
                   <li>
-                    <strong>Sandbox testing</strong> with stakeholder groups
-                    pre-launch
+                    Sandbox testing with stakeholder groups pre-launch
                   </li>
                   <li>
-                    <strong>Usage analytics and logging</strong> post-launch for
-                    continuous refinement
+                    Usage analytics post-launch for continuous refinement
                   </li>
                 </ul>
               </div>
@@ -435,9 +500,8 @@ export default function ProjectOneCaseStudy() {
               <div className={styles.insightsSection}>
                 <h3 className={styles.insightsTitle}>What We Learned</h3>
                 <p className={styles.blockText}>
-                  A consistent message surfaced across all research: users were
-                  not concerned about beautiful visuals or innovative
-                  interactions. They cared about{" "}
+                  One message emerged consistently: users didn&apos;t want
+                  beautiful visuals or innovative interactions. They wanted{" "}
                   <strong>speed, clarity, and access</strong>.
                 </p>
                 <p
@@ -449,7 +513,7 @@ export default function ProjectOneCaseStudy() {
                   }}
                 >
                   &quot;Let me place accurate orders quickly, and show me what
-                  discounts or promos I qualify for.&quot;
+                  discounts I qualify for.&quot;
                 </p>
               </div>
 
@@ -460,38 +524,35 @@ export default function ProjectOneCaseStudy() {
                     <span className={styles.insightBullet}>•</span>
                     <p className={styles.insightText}>
                       <strong>Familiarity matters:</strong> Users already shop
-                      on mainstream grocer platforms—leverage those mental
-                      models
+                      on mainstream platforms, so leverage those mental models
                     </p>
                   </div>
                   <div className={styles.insight}>
                     <span className={styles.insightBullet}>•</span>
                     <p className={styles.insightText}>
                       <strong>Promotional visibility drives behavior:</strong>{" "}
-                      Seeing discounts and tier progress directly influenced
-                      purchasing decisions
+                      Seeing tier progress directly influenced purchasing
                     </p>
                   </div>
                   <div className={styles.insight}>
                     <span className={styles.insightBullet}>•</span>
                     <p className={styles.insightText}>
-                      <strong>Time efficiency over ornamentation:</strong>{" "}
-                      Workflow speed was valued far above aesthetic polish
+                      <strong>Speed over polish:</strong> Workflow efficiency
+                      was valued far above aesthetic refinement
                     </p>
                   </div>
                   <div className={styles.insight}>
                     <span className={styles.insightBullet}>•</span>
                     <p className={styles.insightText}>
-                      <strong>Repeat patterns are consistent:</strong> Order
-                      templates would save significant time for the majority of
-                      users
+                      <strong>Repeat patterns dominate:</strong> Order templates
+                      would save time for most users
                     </p>
                   </div>
                   <div className={styles.insight}>
                     <span className={styles.insightBullet}>•</span>
                     <p className={styles.insightText}>
                       <strong>Mobile and tablet are critical:</strong> Many
-                      customers order while physically in their store
+                      customers order while on the shop floor
                     </p>
                   </div>
                   <div className={styles.insight}>
@@ -515,6 +576,20 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                The Two-Pillar Strategy
+              </p>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
@@ -528,12 +603,12 @@ export default function ProjectOneCaseStudy() {
                     1. Follow Mental Models Users Already Know
                   </h3>
                   <p className={styles.blockText}>
-                    We intentionally designed flows that resembled{" "}
+                    We designed flows that resembled{" "}
                     <strong>
-                      Coles and Woolworths online shopping experiences
+                      Coles and Woolworths online shopping
                     </strong>
-                    . This meant users could focus on accomplishing tasks rather
-                    than learning new patterns or interface conventions.
+                    , allowing users to focus on tasks rather than learning new
+                    patterns.
                   </p>
                 </div>
                 <div className={styles.contentBlock}>
@@ -541,11 +616,11 @@ export default function ProjectOneCaseStudy() {
                     2. Make Complex Business Logic Feel Simple
                   </h3>
                   <p className={styles.blockText}>
-                    Behind the familiar interface sat sophisticated multi-region
-                    catalog management, dynamic promotional tiers, and complex
-                    pricing structures. The UX needed to{" "}
+                    Behind the familiar interface: multi-region catalog
+                    management, dynamic promotional tiers, and complex pricing.
+                    The UX{" "}
                     <strong>
-                      expose only what users needed, when they needed it
+                      exposed only what users needed, when they needed it
                     </strong>
                     .
                   </p>
@@ -554,9 +629,9 @@ export default function ProjectOneCaseStudy() {
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  The result: navigation models, page structures, and product
-                  layouts that felt immediately familiar, but supported far more
-                  sophisticated back-end logic than typical consumer platforms.
+                  The result: navigation, page structures, and layouts that felt
+                  immediately familiar but supported far more sophisticated
+                  logic than typical consumer platforms.
                 </p>
               </div>
             </div>
@@ -571,6 +646,20 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                Platform Capabilities
+              </p>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
@@ -603,12 +692,12 @@ export default function ProjectOneCaseStudy() {
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Promotional System</h3>
                   <ul className={styles.blockList}>
-                    <li>
-                      <strong>Custom promotional selector:</strong> One of the
-                      most impactful features—users could combine multiple SKUs
-                      within a promo family to hit thresholds without rep
-                      intervention
-                    </li>
+                  <li>
+                    <strong>Custom promotional selector:</strong> One of the
+                    most impactful features. Users could combine multiple SKUs
+                    within a promo family to hit thresholds without rep
+                    intervention
+                  </li>
                     <li>
                       Promotional tier visual system showing progress toward
                       discounts
@@ -639,6 +728,20 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                Structuring the Experience
+              </p>
 
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Core User Flows</h3>
@@ -712,18 +815,31 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                Commercial and Clean
+              </p>
 
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Design Principles</h3>
                 <p className={styles.blockText}>
-                  The visual goal was <strong>commercial and clean</strong>
-                  —professional enough for enterprise buyers, but familiar
-                  enough to feel approachable.
+                  The visual goal was <strong>commercial and clean</strong>:
+                  professional enough for enterprise buyers, familiar enough to
+                  feel approachable.
                 </p>
                 <p className={styles.blockText}>
-                  We used <strong>Ng Zorro</strong> as a component foundation
-                  but created custom styling and UX patterns where necessary,
-                  particularly around:
+                  We used <strong>Ng Zorro</strong> as a foundation but created
+                  custom styling for:
                 </p>
                 <ul className={styles.blockList}>
                   <li>Promotional tags and tier indicators</li>
@@ -735,13 +851,12 @@ export default function ProjectOneCaseStudy() {
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Intentional Density</h3>
                 <p className={styles.blockText}>
-                  The UI is intentionally more compact than typical consumer
-                  e-commerce. Users can see significantly more line items at
-                  once, which helps large wholesale buyers build orders quickly
-                  without excessive scrolling.
+                  The UI is more compact than typical consumer e-commerce. Users
+                  see more line items at once, helping wholesale buyers build
+                  orders quickly without excessive scrolling.
                 </p>
                 <p className={styles.blockText}>
-                  This decision came directly from research:{" "}
+                  This came directly from research:{" "}
                   <strong>
                     time-poor users valued information density over whitespace
                   </strong>
@@ -760,12 +875,25 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                Building at Scale
+              </p>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  SalesIQ required tight collaboration between design and
-                  engineering. The platform needed to function differently
-                  across regions while maintaining a unified experience.
+                  The platform needed to function differently across regions
+                  while maintaining a unified experience.
                 </p>
               </div>
 
@@ -774,25 +902,24 @@ export default function ProjectOneCaseStudy() {
                 <ul className={styles.blockList}>
                   <li>
                     <strong>Regional variation:</strong> Each region had
-                    different promotional rules, pricing structures, and product
+                    different promotional rules, pricing, and product
                     availability
                   </li>
                   <li>
                     <strong>Evolving requirements:</strong> Data structures
-                    evolved while business requirements were still being
-                    discovered
+                    evolved as business requirements were discovered
                   </li>
                   <li>
                     <strong>Multi-language complexity:</strong> Interface
-                    translation plus right-to-left considerations
+                    translation and right-to-left considerations
                   </li>
                   <li>
                     <strong>Performance:</strong> Heavy data payloads from
-                    comprehensive product catalogs
+                    comprehensive catalogs
                   </li>
                   <li>
-                    <strong>Distributed architecture:</strong> Backend services
-                    were region-hosted, but master data lived in Australia
+                    <strong>Distributed architecture:</strong> Region-hosted
+                    backend services with master data in Australia
                   </li>
                 </ul>
               </div>
@@ -805,15 +932,14 @@ export default function ProjectOneCaseStudy() {
                     code duplication
                   </li>
                   <li>
-                    Global yet flexible design patterns that could adapt to
-                    local needs
+                    Flexible design patterns that adapted to local needs
                   </li>
                   <li>
-                    Reusable visual components that maintained consistency
-                    across regions
+                    Reusable components that maintained consistency across
+                    regions
                   </li>
                   <li>
-                    Ongoing performance optimization to handle large catalogs
+                    Ongoing performance optimization for large catalogs
                   </li>
                 </ul>
               </div>
@@ -829,6 +955,20 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                Navigating Complexity
+              </p>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
@@ -837,9 +977,9 @@ export default function ProjectOneCaseStudy() {
                   </h3>
                   <p className={styles.blockText}>
                     Each region operated different promotional structures. We
-                    created a <strong>flexible visual system</strong> that could
-                    represent various tier types and discount models without
-                    requiring region-specific UI.
+                    created a <strong>flexible visual system</strong> that
+                    represented various tier types and discount models without
+                    region-specific UI.
                   </p>
                 </div>
                 <div className={styles.contentBlock}>
@@ -848,8 +988,8 @@ export default function ProjectOneCaseStudy() {
                   </h3>
                   <p className={styles.blockText}>
                     Requirements were discovered during development. We stayed
-                    agile, iterating on both backend and frontend simultaneously
-                    rather than following rigid waterfall phases.
+                    agile, iterating on backend and frontend simultaneously
+                    rather than following rigid phases.
                   </p>
                 </div>
                 <div className={styles.contentBlock}>
@@ -857,9 +997,9 @@ export default function ProjectOneCaseStudy() {
                     Unexpected global rollout
                   </h3>
                   <p className={styles.blockText}>
-                    What started as a single-region pilot became a global
-                    platform faster than anticipated. This increased maintenance
-                    load but validated our architectural decisions.
+                    What started as a single-region pilot became global faster
+                    than anticipated. This increased maintenance load but
+                    validated our architectural decisions.
                   </p>
                 </div>
                 <div className={styles.contentBlock}>
@@ -867,9 +1007,9 @@ export default function ProjectOneCaseStudy() {
                     Small team, global support
                   </h3>
                   <p className={styles.blockText}>
-                    We handled internal support and training across multiple
-                    time zones with a lean team, requiring clear documentation
-                    and intuitive design.
+                    We handled support and training across multiple time zones
+                    with a lean team, requiring clear documentation and
+                    intuitive design.
                   </p>
                 </div>
               </div>
@@ -885,14 +1025,20 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
-
-              <div className={styles.contentBlock}>
-                <p className={styles.blockText}>
-                  SalesIQ became the core ordering tool for Oriental
-                  Merchant&apos;s global operations, delivering measurable value
-                  across multiple dimensions:
-                </p>
-              </div>
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                Measurable Outcomes
+              </p>
 
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Business Outcomes</h3>
@@ -907,23 +1053,21 @@ export default function ProjectOneCaseStudy() {
                         fontSize: "0.95rem",
                       }}
                     >
-                      Example: Netherlands grew from approximately $400K to
-                      $1.9M in one year following adoption
+                      Example: Netherlands grew from ~$400K to $1.9M in one
+                      year
                     </span>
                   </li>
                   <li>
                     <strong>Reduced rep workload:</strong> Field reps freed from
-                    order entry to focus on relationship building and sales
-                    expansion
+                    order entry to focus on relationships and sales
                   </li>
                   <li>
                     <strong>Higher promotional participation:</strong> Clear
-                    visibility drove increased engagement with promotional
-                    offers
+                    visibility drove increased engagement
                   </li>
                   <li>
                     <strong>Increased order accuracy:</strong> Eliminated
-                    miscommunication and manual entry errors
+                    miscommunication and manual errors
                   </li>
                   <li>
                     <strong>Faster ordering cycles:</strong> Saved orders and
@@ -931,7 +1075,7 @@ export default function ProjectOneCaseStudy() {
                   </li>
                   <li>
                     <strong>Improved customer satisfaction:</strong> Positive
-                    feedback from both independent grocers and major chains
+                    feedback from independent grocers and major chains
                   </li>
                 </ul>
               </div>
@@ -939,11 +1083,10 @@ export default function ProjectOneCaseStudy() {
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>External Validation</h3>
                 <p className={styles.blockText}>
-                  External QA feedback specifically noted that the new UI was{" "}
-                  <strong>professional and polished</strong>. This was deeply
-                  validating because we were a young internal team building an
-                  enterprise-level product that competed with established B2B
-                  platforms.
+                  External QA feedback noted the UI was{" "}
+                  <strong>professional and polished</strong>. This was
+                  validating for a young internal team building an enterprise
+                  product competing with established B2B platforms.
                 </p>
               </div>
             </div>
@@ -958,15 +1101,20 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
-
-              <div className={styles.contentBlock}>
-                <p className={styles.blockText}>
-                  Looking back, the team made strong decisions with limited
-                  future context. The platform scaled far beyond original
-                  expectations, which validated our early architectural and UX
-                  choices.
-                </p>
-              </div>
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                What Worked and What Didn&apos;t
+              </p>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
@@ -974,22 +1122,19 @@ export default function ProjectOneCaseStudy() {
                   <ul className={styles.blockList}>
                     <li>
                       <strong>Familiar mental models:</strong> Leveraging
-                      existing shopping patterns accelerated adoption and
-                      reduced training needs
+                      existing shopping patterns accelerated adoption
                     </li>
                     <li>
-                      <strong>Promotional visibility:</strong> Making discounts
-                      and tier progress clear directly influenced purchasing
-                      behavior
+                      <strong>Promotional visibility:</strong> Clear discounts
+                      and tier progress directly influenced purchasing
                     </li>
                     <li>
                       <strong>High-density UI:</strong> Information-rich layouts
-                      served wholesale buyers better than spacious consumer
-                      designs
+                      served wholesale buyers better than spacious designs
                     </li>
                     <li>
                       <strong>Multi-device support:</strong> Tablet and mobile
-                      ordering from the shop floor became heavily used scenarios
+                      ordering became heavily used scenarios
                     </li>
                   </ul>
                 </div>
@@ -1000,23 +1145,21 @@ export default function ProjectOneCaseStudy() {
                   <ul className={styles.blockList}>
                     <li>
                       <strong>Promotional data standardization:</strong>{" "}
-                      Standardizing promotional data structures earlier would
-                      have prevented downstream maintenance complexity
+                      Earlier standardization would have prevented maintenance
+                      complexity
                     </li>
                     <li>
                       <strong>Feature prioritization:</strong> Some features saw
-                      little use (promotional banners, bulk upload). More
-                      ruthless prioritization would have been valuable
+                      little use. More ruthless prioritization would have been
+                      valuable
                     </li>
                     <li>
                       <strong>Visual restraint:</strong> A more utilitarian
-                      visual direction might have been sufficient, since users
-                      valued workflow speed above aesthetic polish
+                      direction might have been sufficient
                     </li>
                     <li>
-                      <strong>Backend performance:</strong> Pushing harder for
-                      faster backend responses would have improved perceived
-                      platform performance
+                      <strong>Backend performance:</strong> Faster responses
+                      would have improved perceived performance
                     </li>
                   </ul>
                 </div>
@@ -1033,31 +1176,41 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                In Hindsight
+              </p>
 
               <div className={styles.contentBlock}>
-                <p className={styles.blockText}>
-                  Given another opportunity, I would:
-                </p>
                 <ol
                   className={styles.blockList}
                   style={{ listStyleType: "decimal", paddingLeft: "24px" }}
                 >
                   <li>
                     <strong>
-                      Define strict promotional data structures before
-                      development
+                      Define strict promotional data structures early
                     </strong>{" "}
                     to avoid technical debt
                   </li>
                   <li>
-                    <strong>Reduce scope of low-value features</strong>{" "}
-                    identified through early analytics
+                    <strong>Cut low-value features sooner</strong> based on
+                    early analytics
                   </li>
                   <li>
                     <strong>
-                      Bias even harder toward repeat-order workflows
+                      Bias harder toward repeat-order workflows
                     </strong>{" "}
-                    since they represented the majority use case
+                    (the majority use case)
                   </li>
                   <li>
                     <strong>Push for faster backend response times</strong> to
@@ -1065,9 +1218,9 @@ export default function ProjectOneCaseStudy() {
                   </li>
                   <li>
                     <strong>
-                      Build more comprehensive design documentation
+                      Build comprehensive design documentation earlier
                     </strong>{" "}
-                    to support the unexpected global rollout
+                    to support global rollout
                   </li>
                 </ol>
               </div>
@@ -1083,31 +1236,41 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                Where This Could Go Next
+              </p>
 
               <div className={styles.contentBlock}>
-                <p className={styles.blockText}>
-                  Potential directions for continued platform evolution:
-                </p>
                 <ul className={styles.blockList}>
                   <li>
-                    <strong>Streamlined onboarding:</strong> Reduce dependency
-                    on development team for new customer setup
+                    <strong>Streamlined onboarding:</strong> Reduce development
+                    dependency for new customer setup
                   </li>
                   <li>
-                    <strong>Continued performance optimization:</strong>{" "}
-                    Particularly for large catalog loading
+                    <strong>Performance optimization:</strong> Faster catalog
+                    loading
                   </li>
                   <li>
-                    <strong>Intelligent reorder suggestions:</strong> Machine
-                    learning-based recommendations from order history
+                    <strong>Intelligent reorder suggestions:</strong> ML-based
+                    recommendations from order history
                   </li>
                   <li>
                     <strong>Simplified promotional management:</strong>{" "}
-                    Self-service tools for regional teams to configure
-                    promotions
+                    Self-service tools for regional teams
                   </li>
                   <li>
-                    <strong>Region-level configuration:</strong> Enable regional
+                    <strong>Region-level configuration:</strong> Enable
                     customization without engineering involvement
                   </li>
                 </ul>
@@ -1124,25 +1287,38 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={300}
                 className={styles.sectionTitle}
               />
+              <p
+                className={styles.blockText}
+                style={{
+                  fontSize: "1.4rem",
+                  color: "#999",
+                  marginTop: "-1.5rem",
+                  marginBottom: "3rem",
+                  fontStyle: "italic",
+                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
+                  fontWeight: 400,
+                }}
+              >
+                The Bigger Picture
+              </p>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
                   SalesIQ transformed Oriental Merchant&apos;s global ordering
-                  operations from an entirely offline process to a scalable
-                  digital platform serving customers across five countries. By
-                  prioritizing{" "}
+                  from an entirely offline process to a scalable digital
+                  platform serving five countries. By prioritizing{" "}
                   <strong>
-                    familiar patterns, clear promotional visibility, and
-                    workflow efficiency
+                    familiar patterns, promotional visibility, and workflow
+                    efficiency
                   </strong>{" "}
                   over visual experimentation, we created a tool that served
-                  both small independent grocers and major national chains.
+                  both independent grocers and national chains.
                 </p>
                 <p className={styles.blockText}>
-                  The project reinforced a fundamental UX principle:{" "}
+                  The project reinforced a principle:{" "}
                   <strong>
-                    understanding user context and mental models matters far
-                    more than interface innovation for its own sake
+                    understanding user context and mental models matters more
+                    than interface innovation for its own sake
                   </strong>
                   .
                 </p>
