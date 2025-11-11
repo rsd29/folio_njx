@@ -146,11 +146,11 @@ export default function HomePage() {
           <AnimatedRichText
             className="heroSubtext"
             segments={[
-              { text: 'Design thinker.', isStrong: true },
-              { text: ' Code tinkerer.' },
+              { text: 'I\'m a UX Designer that loves to code.', isStrong: true },
+              { text: ' Melbourne.' },
             ]}
             useFlickerEffect={false}
-            fontSize="4rem"
+            fontSize="3rem"
             fontWeight={300}
             lineHeight={0.9}
           />

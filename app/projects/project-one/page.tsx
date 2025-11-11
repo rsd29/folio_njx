@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import ScrollRevealText from "../../../components/ScrollRevealText";
 import styles from "./case-study.module.css";
 import { gsap } from "gsap";
@@ -51,7 +52,7 @@ export default function ProjectOneCaseStudy() {
     const pinTrigger = ScrollTrigger.create({
       trigger: sectionsColumn,
       pin: toc,
-      start: "top 90px",
+      start: "top 40px",
       end: "bottom bottom",
       pinSpacing: false,
     });
@@ -143,7 +144,44 @@ export default function ProjectOneCaseStudy() {
         </div>
       </section>
 
+      {/* Hero Image */}
+      <section className={styles.heroImageSection}>
+        <div className={styles.heroImageContainer}>
+          <Image
+            src="/case_study_1/cs1_productpage2.jpeg"
+            alt="SalesIQ Product Page Interface"
+            width={1920}
+            height={1080}
+            className={styles.heroImage}
+            priority
+          />
+        </div>
+      </section>
+
       <div className={styles.contentShell}>
+        <nav
+          ref={tocRef}
+          className={styles.tableOfContents}
+          aria-label="Case study sections"
+        >
+          <ul className={styles.tocList}>
+            {CASE_STUDY_SECTIONS.map(({ id, label }) => (
+              <li key={id} className={styles.tocItem}>
+                <a
+                  href={`#${id}`}
+                  onClick={handleSectionClick(id)}
+                  className={`${styles.tocLink} ${
+                    activeSection === id ? styles.tocLinkActive : ""
+                  }`}
+                  aria-current={activeSection === id ? "true" : undefined}
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
         <div className={styles.sectionsColumn} ref={sectionsColumnRef}>
           {/* The Challenge */}
           <section id="the-challenge" className={styles.section}>
@@ -1112,29 +1150,6 @@ export default function ProjectOneCaseStudy() {
             </div>
           </section>
         </div>
-
-        <nav
-          ref={tocRef}
-          className={styles.tableOfContents}
-          aria-label="Case study sections"
-        >
-          <ul className={styles.tocList}>
-            {CASE_STUDY_SECTIONS.map(({ id, label }) => (
-              <li key={id} className={styles.tocItem}>
-                <a
-                  href={`#${id}`}
-                  onClick={handleSectionClick(id)}
-                  className={`${styles.tocLink} ${
-                    activeSection === id ? styles.tocLinkActive : ""
-                  }`}
-                  aria-current={activeSection === id ? "true" : undefined}
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </div>
 
       {/* CTA Section */}
