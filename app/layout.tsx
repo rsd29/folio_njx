@@ -5,7 +5,7 @@ import SmoothScroll from '../components/SmoothScroll'
 import Footer from '../components/Footer'
 import NegativeCursor from '../components/NegativeCursor'
 import ClientPageTransition from '../components/ClientPageTransition'
-import PasswordGate from '../components/PasswordGate'
+// import PasswordGate from '../components/PasswordGate' // Disabled for now - uncomment to re-enable
 import { Analytics } from "@vercel/analytics/next"
 import { Funnel_Display, Funnel_Sans, UnifrakturMaguntia } from 'next/font/google'
 
@@ -45,7 +45,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${funnelDisplay.variable} ${funnelSans.variable} ${unifrakturMaguntia.variable}`}>
       <body className={dmSans.className}>
         <Analytics />
-        <PasswordGate>
+        {/* <PasswordGate> - Disabled for now - uncomment to re-enable */}
           <NegativeCursor />
           <Header />
           <SmoothScroll />
@@ -98,7 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Footer />
             </div>
           </div>
-        </PasswordGate>
+        {/* </PasswordGate> - Disabled for now - uncomment to re-enable */}
       </body>
     </html>
   )

@@ -177,7 +177,7 @@ export default function ProjectOneCaseStudy() {
                 >
                   {label}
                 </a>
-              </li>
+              </li> 
             ))}
           </ul>
         </nav>
