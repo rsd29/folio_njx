@@ -23,7 +23,7 @@ export default function ProjectTwoCaseStudy() {
             <ScrollRevealText
               text="Fitness Tracker Mobile App Redesign"
               fontSize="clamp(2.5rem, 5vw, 4.5rem)"
-              fontWeight={300}
+              fontWeight={400}
               lineHeight={1.1}
               letterSpacing="-0.02em"
               className={styles.heroTitle}
@@ -56,7 +56,7 @@ export default function ProjectTwoCaseStudy() {
           <ScrollRevealText
             text="Context"
             fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={300}
+            fontWeight={400}
             className={styles.sectionTitle}
           />
           <div className={styles.contentGrid}>
@@ -99,10 +99,10 @@ export default function ProjectTwoCaseStudy() {
       {/* Problem Definition */}
       <section className={styles.section}>
         <div className={styles.container}>
-          <ScrollRevealText
+        <ScrollRevealText
             text="Business + User Problem"
             fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={300}
+          fontWeight={400}
             className={styles.sectionTitle}
           />
           
@@ -128,10 +128,10 @@ export default function ProjectTwoCaseStudy() {
       {/* Hypothesis */}
       <section className={styles.section}>
         <div className={styles.container}>
-          <ScrollRevealText
+        <ScrollRevealText
             text="Hypothesis"
             fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={300}
+          fontWeight={400}
             className={styles.sectionTitle}
           />
           
@@ -152,10 +152,10 @@ export default function ProjectTwoCaseStudy() {
       {/* Research */}
       <section className={styles.section}>
         <div className={styles.container}>
-          <ScrollRevealText
+        <ScrollRevealText
             text="Research"
             fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={300}
+          fontWeight={400}
             className={styles.sectionTitle}
           />
           
@@ -235,10 +235,10 @@ export default function ProjectTwoCaseStudy() {
       {/* Problem Reframing */}
       <section className={styles.section}>
         <div className={styles.container}>
-          <ScrollRevealText
+        <ScrollRevealText
             text="Problem Reframing"
             fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={300}
+          fontWeight={400}
             className={styles.sectionTitle}
           />
           
@@ -263,10 +263,10 @@ export default function ProjectTwoCaseStudy() {
       {/* Design Options + Rationale */}
       <section className={styles.section}>
         <div className={styles.container}>
-          <ScrollRevealText
+        <ScrollRevealText
             text="Design Options + Decision Rationale"
             fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={300}
+          fontWeight={400}
             className={styles.sectionTitle}
           />
 
@@ -337,10 +337,10 @@ export default function ProjectTwoCaseStudy() {
       {/* Final Solution */}
       <section className={styles.section}>
         <div className={styles.container}>
-          <ScrollRevealText
+        <ScrollRevealText
             text="Final Solution"
             fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={300}
+          fontWeight={400}
             className={styles.sectionTitle}
           />
 
@@ -427,10 +427,10 @@ export default function ProjectTwoCaseStudy() {
       {/* Validation */}
       <section className={styles.section}>
         <div className={styles.container}>
-          <ScrollRevealText
+        <ScrollRevealText
             text="Validation"
             fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={300}
+          fontWeight={400}
             className={styles.sectionTitle}
           />
 
@@ -477,10 +477,10 @@ export default function ProjectTwoCaseStudy() {
       {/* Outcome */}
       <section className={styles.section}>
         <div className={styles.container}>
-          <ScrollRevealText
+        <ScrollRevealText
             text="Outcome"
             fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={300}
+          fontWeight={400}
             className={styles.sectionTitle}
           />
 
@@ -508,7 +508,7 @@ export default function ProjectTwoCaseStudy() {
           <ScrollRevealText
             text="Reflection"
             fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={300}
+          fontWeight={400}
             className={styles.sectionTitle}
           />
 

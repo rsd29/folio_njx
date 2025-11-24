@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
+import Link from 'next/link'
 import styles from './home.module.css'
 import AnimatedRichText from '../components/AnimatedRichText'
 import ScrollRevealText from '../components/ScrollRevealText'
@@ -21,8 +22,6 @@ const taglines = [
 ]
 
 export default function HomePage() {
-  const breakRef = useRef<HTMLDivElement>(null)
-
   const [displayed, setDisplayed] = useState('')
   const [fullTagline, setFullTagline] = useState('')
   const [charIndex, setCharIndex] = useState(0)
@@ -57,56 +56,9 @@ export default function HomePage() {
     loadNewTagline()
   }, [loadNewTagline])
 
-  useEffect(() => {
-    const el = breakRef.current
-    if (!el) return
-
-    let targetX = 50
-    let currentX = 50
-    let animationId: number | null = null
-    let lastUpdate = 0
-    const throttleMs = 16
-
-    const rectCache = { width: 0, left: 0 }
-    let rectCacheValid = false
-
-    const animate = (timestamp: number) => {
-      if (timestamp - lastUpdate >= throttleMs) {
-        currentX += (targetX - currentX) * 0.12
-        el.style.backgroundImage = `radial-gradient(circle at ${currentX}% 100%, white 0%, rgba(175, 175, 175, 0.1) 90%, rgba(255, 255, 255, 0.05) 100%, transparent 95%)`
-        lastUpdate = timestamp
-      }
-      animationId = requestAnimationFrame(animate)
-    }
-
-    const handleMouse = (e: MouseEvent) => {
-      if (!rectCacheValid) {
-        const rect = el.getBoundingClientRect()
-        rectCache.width = rect.width
-        rectCache.left = rect.left
-        rectCacheValid = true
-      }
-      const relX = ((e.clientX - rectCache.left) / rectCache.width) * 100
-      targetX = relX
-      
-      if (Math.abs(e.clientX - (rectCache.left + rectCache.width / 2)) > rectCache.width * 0.1) {
-        rectCacheValid = false
-      }
-    }
-
-    window.addEventListener('mousemove', handleMouse, { passive: true })
-    animationId = requestAnimationFrame(animate)
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouse)
-      if (animationId) cancelAnimationFrame(animationId)
-    }
-  }, [])
-
   return (
     <main style={{ maxWidth: '100%' }}>
       <section className={`${styles.fullWidthSection} ${styles.heroSection}`}>
-        {/* Background Video - Optimized */}
         <div className={styles.videoBackground}>
           <video
             autoPlay
@@ -122,67 +74,99 @@ export default function HomePage() {
             <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.webm" type="video/webm" />
             <source src="https://cdn.prod.website-files.com/6568e5c693ac2a6aade3ad99%2F66abd5153122bb677020b0c8_bg-landing-transcode.mp4" type="video/mp4" />
           </video>
-          
-          {/* Text inside video frame */}
-          <div className={styles.heroTextTop}>
-            <AnimatedRichText
-              className="heroSubtext"
-              segments={[
+        </div>
 
-                { text: "Hi, I'm ", color: "#ffffff", opacity: .5, isStrong: true },
-                { text: "Russell Saw", color: "#ffffff", opacity: 1, isStrong: true }
+        <div className={styles.heroSignatureWrapper}>
+          <div className={styles.heroSignature}>
+            <span className={styles.heroSignatureName}>Russell Saw</span>
+            <span className={styles.heroSignatureDivider} />
+            <span className={styles.heroSignatureRole}>UX</span>
+          </div>
+        </div>
+
+        <div className={styles.heroContentWrapper}>
+        <div className={styles.heroContent}>
+          <div className={styles.heroPrimary}>
+
+            <AnimatedRichText
+              className={styles.heroLead}
+              segments={[
+                { text: 'Designing calm, credible product experiences ' },
+                { text: 'for teams that can’t afford to break things.', isStrong: true }
               ]}
               useFlickerEffect={false}
-              fontSize="8rem"
-              fontWeight={300}
-              lineHeight={0.9}
-              letterSpacing="-0.06em"
+              fontSize="clamp(2.2rem, 4vw, 3.5rem)"
+              fontWeight={400}
+              lineHeight={1.1}
+              letterSpacing="-0.02em"
             />
+            <p className={styles.heroDescription}>
+              I lead UX and front-end delivery for enterprise platforms—translating messy requirements into systems,
+              rituals, and UI that feel intentional, premium, and scalable.
+            </p>
+            <div className={styles.heroTagList}>
+              {['Enterprise UX', 'Design Systems', 'Frontend Dev', 'Research Ops'].map((tag) => (
+                <span key={tag} className={styles.heroTag}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div className={styles.heroTicker}>
+              <span className={styles.heroTickerText}>Based in Melbourne — {displayed}</span>
+              <button type="button" className={styles.heroTickerButton} onClick={loadNewTagline}>
+                Shuffle line
+              </button>
+            </div>
+            <div className={styles.heroActions}>
+              <Link href="/projects/project-one" className={styles.heroButtonPrimary}>
+                View case studies
+              </Link>
+              <a
+                href="/rs-resume-q3-2025-v2.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.heroButtonSecondary}
+              >
+                Download resume
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Text below video frame */}
-        <div className={styles.heroTextBottom}>
-          <AnimatedRichText
-            className="heroSubtext"
-            segments={[
-              { text: 'I\'m a UX Designer that loves to code.', isStrong: true },
-              { text: ' Melbourne.' },
-            ]}
-            useFlickerEffect={false}
-            fontSize="3rem"
-            fontWeight={300}
-            lineHeight={0.9}
-          />
-        </div>
-
-        <div className={styles.heroBreakDivContainer}>
-          <div className={styles.heroBreakDiv} ref={breakRef}>
-            <h4 className="heroSubtext2">Based in Melbourne, {displayed}</h4>
-            <h4 className="heroSubtext3" onClick={loadNewTagline}>Want another?</h4>
-          </div>
+        <div className={styles.heroGlowRail} />
         </div>
       </section>
 
       {/* Animated Text Section */}
       <section className={styles.animatedTextSection}>
         <div className={styles.animatedTextContainer}>
-          <ScrollRevealText
-            text="Year 5 of UX."
-            fontSize="3.5rem"
-            fontWeight={300}
-            lineHeight={1.2}
-            letterSpacing="-0.01em"
-            className="scrollRevealText"
-          />
-          <ScrollRevealText
-            text="Currently leading product design across enterprise platforms at Oriental Merchant."
-            fontSize="2.5rem"
-            fontWeight={300}
-            lineHeight={1.2}
-            letterSpacing="-0.01em"
-            className="scrollRevealText"
-          />
+          <div className={styles.contentGrid}>
+            <div className={styles.mainTitle}>
+            <ScrollRevealText
+              text="Year 5 of UX."
+              fontSize="var(--font-display)"
+              fontWeight={400}
+              lineHeight={1.1}
+              letterSpacing="var(--letter-spacing-tight)"
+              className="scrollRevealText"
+            />
+              <div className={styles.disclaimer}>
+                Currently seeking new opportunities.
+                <span className={styles.availabilityIndicator}></span>
+              </div>
+            </div>
+            <div className={styles.descriptionBlock}>
+              <div className={styles.roleLabel}>Current Role</div>
+              <ScrollRevealText
+                text="Leading product design across enterprise platforms at Oriental Merchant, while building front-end experiences."
+                fontSize="var(--font-heading-m)"
+                fontWeight={400}
+                lineHeight={1.4}
+                letterSpacing="var(--letter-spacing-normal)"
+                className="scrollRevealText"
+              />
+            </div>
+          </div>
         </div>
       </section>
 

@@ -159,7 +159,7 @@ export default function Page() {
               <span 
                 onClick={() => handleSkillClick(skill)}
                 style={{
-                  fontSize: '2.8rem',
+                  fontSize: 'var(--font-heading-l)',
                   fontWeight: 300,
                   color: '#aaa',
                   fontFamily: 'var(--font-body)',
@@ -197,7 +197,7 @@ export default function Page() {
               </div>
               <div 
                 style={{
-                  fontSize: '2.8rem',
+                  fontSize: 'var(--font-heading-l)',
                   lineHeight: '1.2',
                   fontFamily: 'var(--font-body)',
                   fontWeight: 300,
@@ -354,7 +354,7 @@ export default function Page() {
               ]}
               useFlickerEffect={false}
               fontSize="clamp(2rem, 3.5vw, 3.2rem)"
-              fontWeight={300}
+              fontWeight={400}
               lineHeight={1.2}
               letterSpacing="-0.01em"
               animationSpeed={4}
@@ -367,7 +367,7 @@ export default function Page() {
               ]}
               useFlickerEffect={false}
               fontSize="clamp(2.5rem, 4.5vw, 4rem)"
-              fontWeight={300}
+              fontWeight={400}
               lineHeight={1.1}
               letterSpacing="-0.01em"
               animationSpeed={4}
@@ -413,23 +413,22 @@ export default function Page() {
             justifyContent: 'center'
           }}>
             <div style={{ height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <ScrollRevealText
-                text="Behind the work"
-                fontSize="2.6rem"
-                fontWeight={300}
-                lineHeight={1.1}
-                letterSpacing="-0.01em"
-                className="scrollRevealText"
-              />
+            <ScrollRevealText
+              text="Behind the work"
+              fontSize="var(--font-heading-l)"
+              fontWeight={400}
+              lineHeight={1.1}
+              letterSpacing="var(--letter-spacing-normal)"
+              className="scrollRevealText"
+            />
             </div>
             <p style={{
-        fontSize: '1.3rem',
+              fontSize: 'var(--font-body-l)',
               fontWeight: 300,
-              lineHeight: 1.6,
+              lineHeight: 'var(--line-height-relaxed)',
               color: 'white',
               marginTop: '24px',
               maxWidth: '100%',
-         
               marginRight: 'auto',
               fontFamily: 'var(--font-body)',
               textAlign: 'left'
@@ -513,7 +512,7 @@ export default function Page() {
 
             {/* Story Text 2 - Left side */}
             <div className="story-text-card" style={{
-              fontSize: '1.2rem',
+              fontSize: 'var(--font-body-l)',
               color: '#ccc',
               fontFamily: 'var(--font-body)',
               fontWeight: 300,
@@ -530,12 +529,12 @@ export default function Page() {
               cursor: 'pointer'
             }}>
               <h3 style={{
-           fontSize: '1.3rem',
+                fontSize: 'var(--font-body-l)',
                 fontWeight: 300,
                 color: '#ffffff',
                 fontFamily: 'var(--font-body)',
                 margin: '0 0 16px 0',
-                lineHeight: '1.2'
+                lineHeight: 'var(--line-height-tight)'
               }}>Current Work</h3>
               At Oriental Merchant, I lead UX/UI design across enterprise platforms, transforming 
               intricate workflows into intuitive interfaces that people actually want to use.
@@ -602,7 +601,8 @@ export default function Page() {
             </AnimatedFrame>
                       {/* Story Text 4 - Left side */}
                       <div className="story-text-card" style={{
-      fontSize: '1.3rem',              color: '#ccc',
+              fontSize: 'var(--font-body-l)',
+              color: '#ccc',
               fontFamily: 'var(--font-body)',
               fontWeight: 300,
               lineHeight: '1.7',
@@ -618,7 +618,7 @@ export default function Page() {
               cursor: 'pointer'
             }}>
               <h3 style={{
-      fontSize: '1.3rem',
+              fontSize: 'var(--font-body-l)',
                 fontWeight: 300,
                 color: '#ffffff',
                 fontFamily: 'var(--font-body)',
@@ -639,7 +639,7 @@ export default function Page() {
           }}>
             {/* Story Text 1 - Starting at top right */}
             <div className="story-text-card" style={{
-              fontSize: '1.2rem',
+              fontSize: 'var(--font-body-l)',
               color: '#ccc',
               fontFamily: 'var(--font-body)',
               fontWeight: 300,
@@ -656,7 +656,7 @@ export default function Page() {
               cursor: 'pointer'
             }}>
               <h3 style={{
-           fontSize: '1.3rem',
+                   fontSize: 'var(--font-body-l)',
                 fontWeight: 300,
                 color: '#ffffff',
                 fontFamily: 'var(--font-body)',
@@ -729,7 +729,8 @@ export default function Page() {
             
                     {/* Story Text 3 */}
                     <div className="story-text-card" style={{
-      fontSize: '1.3rem',              color: '#ccc',
+              fontSize: 'var(--font-body-l)',
+              color: '#ccc',
               fontFamily: 'var(--font-body)',
               fontWeight: 300,
               lineHeight: '1.7',
@@ -745,7 +746,7 @@ export default function Page() {
               cursor: 'pointer'
             }}>
               <h3 style={{
-      fontSize: '1.3rem',                fontWeight: 300,
+              fontSize: 'var(--font-body-l)',                fontWeight: 300,
                 color: '#ffffff',
                 fontFamily: 'var(--font-body)',
                 margin: '0 0 16px 0',
@@ -823,7 +824,7 @@ export default function Page() {
         {/* Final Story Text */}
         <div style={{
           maxWidth: '100%',
-          fontSize: '1.3rem',          lineHeight: '1.7',
+                fontSize: 'var(--font-body-l)',          lineHeight: '1.7',
           fontFamily: 'var(--font-body)',
           fontWeight: 300,
           color: '#ccc',
@@ -867,10 +868,10 @@ export default function Page() {
           }}>
             <ScrollRevealText
               text="Experience"
-              fontSize="3.5rem"
-              fontWeight={300}
+              fontSize="var(--font-heading-xl)"
+              fontWeight={400}
               lineHeight={1.1}
-              letterSpacing="-0.01em"
+              letterSpacing="var(--letter-spacing-normal)"
               className="scrollRevealText"
             />
           </div>
@@ -880,7 +881,7 @@ export default function Page() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '60px', alignItems: 'start' }}>
               <div>
                 <div style={{
-                  fontSize: '2.2rem',
+                  fontSize: 'var(--font-heading-m)',
                   fontWeight: 300,
                   color: 'var(--foreground)',
                   marginBottom: '8px',
@@ -889,7 +890,7 @@ export default function Page() {
                   UX Designer 
                 </div>
                 <div style={{
-              fontSize: '1.3rem',
+                    fontSize: 'var(--font-body-l)',
                   color: '#aaa',
                   fontWeight: 300,
                   marginBottom: '8px'
@@ -897,7 +898,7 @@ export default function Page() {
                   Oriental Merchant
                 </div>
                 <div style={{
-                        fontSize: '1.3rem',
+                              fontSize: 'var(--font-body-l)',
                   color: '#888',
                   fontWeight: 300
                 }}>
@@ -905,7 +906,7 @@ export default function Page() {
                 </div>
               </div>
               <div style={{
-        fontSize: '1.3rem',
+              fontSize: 'var(--font-body-l)',
                 color: '#ccc',
                 lineHeight: 1.6,
                 fontWeight: 300
@@ -919,7 +920,7 @@ export default function Page() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '60px', alignItems: 'start' }}>
               <div>
                 <div style={{
-                  fontSize: '2.2rem',
+                  fontSize: 'var(--font-heading-m)',
                   fontWeight: 300,
                   color: 'var(--foreground)',
                   marginBottom: '8px',
@@ -928,7 +929,7 @@ export default function Page() {
                   Freelance 
                 </div>
                 <div style={{
-               fontSize: '1.3rem',
+                     fontSize: 'var(--font-body-l)',
                   color: '#aaa',
                   fontWeight: 300,
                   marginBottom: '8px'
@@ -936,7 +937,7 @@ export default function Page() {
                   Self-Employed
                 </div>
                 <div style={{
-                  fontSize: '1.3rem',
+                        fontSize: 'var(--font-body-l)',
                   color: '#888',
                   fontWeight: 300
                 }}>
@@ -944,7 +945,7 @@ export default function Page() {
                 </div>
               </div>
               <div style={{
-            fontSize: '1.3rem',
+                  fontSize: 'var(--font-body-l)',
                 color: '#ccc',
                 lineHeight: 1.6,
                 fontWeight: 300
@@ -957,7 +958,7 @@ export default function Page() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '60px', alignItems: 'start' }}>
               <div>
                 <div style={{
-                  fontSize: '2.2rem',
+                  fontSize: 'var(--font-heading-m)',
                   fontWeight: 300,
                   color: 'var(--foreground)',
                   marginBottom: '8px',
@@ -966,7 +967,7 @@ export default function Page() {
                   Junior Programmer
                 </div>
                 <div style={{
-                   fontSize: '1.3rem',
+                         fontSize: 'var(--font-body-l)',
                   color: '#aaa',
                   fontWeight: 300,
                   marginBottom: '8px'
@@ -974,7 +975,7 @@ export default function Page() {
                   Oriental Merchant
                 </div>
                 <div style={{
-                    fontSize: '1.3rem',
+                          fontSize: 'var(--font-body-l)',
                   color: '#888',
                   fontWeight: 300
                 }}>
@@ -982,7 +983,7 @@ export default function Page() {
                 </div>
               </div>
               <div style={{
-             fontSize: '1.3rem',
+                   fontSize: 'var(--font-body-l)',
                 color: '#ccc',
                 lineHeight: 1.6,
                 fontWeight: 300
@@ -1015,10 +1016,10 @@ export default function Page() {
           }}>
             <ScrollRevealText
               text="Deep in my bag"
-              fontSize="3.5rem"
-              fontWeight={300}
+              fontSize="var(--font-heading-xl)"
+              fontWeight={400}
               lineHeight={1.1}
-              letterSpacing="-0.01em"
+              letterSpacing="var(--letter-spacing-normal)"
               className="scrollRevealText"
             />
           </div>
@@ -1054,7 +1055,7 @@ export default function Page() {
               }}>
                 {(!selectedSkill || isTransitioning) && (
                   <h3 style={{
-                    fontSize: '1.2rem',
+                    fontSize: 'var(--font-body-l)',
                     fontWeight: 400,
                     color: '#888',
                     margin: '0',
@@ -1082,7 +1083,7 @@ export default function Page() {
               }}>
                 {(!selectedSkill || isTransitioning) && (
                   <h3 style={{
-                    fontSize: '1.2rem',
+                    fontSize: 'var(--font-body-l)',
                     fontWeight: 400,
                     color: '#888',
                     margin: '0',
@@ -1110,7 +1111,7 @@ export default function Page() {
               }}>
                 {(!selectedSkill || isTransitioning) && (
                   <h3 style={{
-                    fontSize: '1.2rem',
+                    fontSize: 'var(--font-body-l)',
                     fontWeight: 400,
                     color: '#888',
                     margin: '0',
@@ -1138,7 +1139,7 @@ export default function Page() {
               }}>
                 {(!selectedSkill || isTransitioning) && (
                   <h3 style={{
-                    fontSize: '1.2rem',
+                    fontSize: 'var(--font-body-l)',
                     fontWeight: 400,
                     color: '#888',
                     margin: '0',
@@ -1166,7 +1167,7 @@ export default function Page() {
               }}>
                 {(!selectedSkill || isTransitioning) && (
                   <h3 style={{
-                    fontSize: '1.2rem',
+                    fontSize: 'var(--font-body-l)',
                     fontWeight: 400,
                     color: '#888',
                     margin: '0',
@@ -1194,7 +1195,7 @@ export default function Page() {
               }}>
                 {(!selectedSkill || isTransitioning) && (
                   <h3 style={{
-                    fontSize: '1.2rem',
+                    fontSize: 'var(--font-body-l)',
                     fontWeight: 400,
                     color: '#888',
                     margin: '0',

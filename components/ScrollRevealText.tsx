@@ -17,7 +17,7 @@ interface ScrollRevealTextProps {
 export default function ScrollRevealText({
   text,
   fontSize = '2.5rem',
-  fontWeight = 300,
+  fontWeight = 400,
   lineHeight = 1.2,
   letterSpacing = '-0.01em',
   className = '',
@@ -60,7 +60,7 @@ export default function ScrollRevealText({
       className={`${styles.container} ${isVisible ? styles.visible : ''} ${className}`}
       style={{
         fontSize,
-        fontWeight: isStrong ? 400 : fontWeight,
+        fontWeight: isStrong ? 500 : fontWeight,
         lineHeight,
         letterSpacing,
         textShadow,

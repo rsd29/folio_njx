@@ -6,13 +6,6 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import styles from './Header.module.css'
 import { Link2Icon } from '@radix-ui/react-icons'
-import { gsap } from 'gsap'
-import { ScrollSmoother } from 'gsap/ScrollSmoother'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollSmoother)
-}
-
 const navItems = [
   { label: 'Projects', href: '/' },
   { label: 'About', href: '/about' },
@@ -28,7 +21,6 @@ export default function Header() {
   const pathname = usePathname()
   const navRefs = useRef<Record<string, HTMLAnchorElement | null>>({})
   const [dotStyle, setDotStyle] = useState<{ left: number | null }>({ left: null })
-  const [isOverVideo, setIsOverVideo] = useState(true)
   const [hoveredItem, setHoveredItem] = useState<string | null>(null)
 
   useEffect(() => {
@@ -43,48 +35,16 @@ export default function Header() {
     }
   }, [pathname])
 
-  useEffect(() => {
-    const handleScroll = () => {
-      // Get scroll position from GSAP ScrollSmoother if available
-      const smoother = ScrollSmoother.get()
-      const scrollY = smoother ? smoother.scrollTop() : window.scrollY
-      const videoHeight = window.innerHeight * 0.5
-      
-      setIsOverVideo(scrollY < videoHeight)
-    }
-
-    if (pathname !== '/') {
-      setIsOverVideo(false)
-      return
-    }
-
-    handleScroll()
-    
-    // Use GSAP ticker if ScrollSmoother is available, otherwise use native scroll
-    const smoother = ScrollSmoother.get()
-    if (smoother) {
-      const ticker = gsap.ticker.add(handleScroll)
-      return () => {
-        gsap.ticker.remove(ticker)
-      }
-    } else {
-      window.addEventListener('scroll', handleScroll)
-      return () => window.removeEventListener('scroll', handleScroll)
-    }
-  }, [pathname])
-
   const getNavItemStyle = (itemHref: string) => {
     const isActive = pathname === itemHref
     const isHovered = hoveredItem === itemHref
-    const baseColor = isOverVideo ? '#333333' : '#808080'
+    const baseColor = 'rgba(255, 255, 255, 0.65)'
     
     if (isActive) {
       return {
-        color: isOverVideo ? '#000000' : '#ffffff',
-        fontWeight: 400,
-        textShadow: isOverVideo 
-          ? '0 0 8px rgba(0, 0, 0, 0.5), 0 0 16px rgba(0, 0, 0, 0.3)' 
-          : '0 0 8px rgba(255, 255, 255, 0.8), 0 0 16px rgba(255, 255, 255, 0.5), 0 0 24px rgba(255, 255, 255, 0.3)',
+        color: '#ffffff',
+        fontWeight: 600,
+        textShadow: '0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.4)',
         filter: 'brightness(1.2)',
         transition: 'all 0.2s ease'
       }
@@ -92,8 +52,8 @@ export default function Header() {
     
     if (isHovered) {
       return {
-        color: isOverVideo ? '#000000' : '#ffffff',
-        fontWeight: 400,
+        color: '#ffffff',
+        fontWeight: 600,
         filter: 'brightness(1.4)',
         transition: 'all 0.2s ease'
       }
@@ -101,8 +61,9 @@ export default function Header() {
     
     return {
       color: baseColor,
-      fontWeight: 200,
-      filter: 'brightness(1)',
+      fontWeight: 600,
+      filter: 'none',
+      opacity: 0.85,
       transition: 'all 0.2s ease'
     }
   }
@@ -116,13 +77,11 @@ export default function Header() {
         <div className={styles.logoDescDiv}>
           <span 
             className={styles.logoDesc}
-            style={{ color: isOverVideo ? '#000000' : '#ffffff' }}
           >
             Russell Saw
           </span>
           <span 
             className={styles.logoDescSub}
-            style={{ color: isOverVideo ? '#333333' : '#cccccc' }}
           >
             UX Designer / Front-End Dev
           </span>

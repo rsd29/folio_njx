@@ -2,22 +2,77 @@
   width: 100%;
   padding: 0 20px;
   box-sizing: border-box;
-}
-.heroSection{
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
+}
+.heroSection{
   width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
   position: relative;
-  padding: 0 10%;
-  padding-top: 100px;
-  padding-bottom: 50px;
+  overflow: hidden;
+}
+
+.heroSignatureWrapper{
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+}
+
+.heroSignature{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0;
+  margin-left: -32px;
+  color: rgba(255, 255, 255, 0.98);
+}
+
+.heroSignatureName{
+  text-transform: none;
+  font-size: 15rem;
+  font-weight: 300;
+  line-height: 1.00;
+  white-space: nowrap;
+  letter-spacing: -0.07em;
+  color: rgba(29, 29, 29, 0.869);
+}
+
+.heroSignatureRole{
+  font-size: 15rem;
+  letter-spacing: -0.05em;
+  color: rgba(33, 33, 33, 0.54);
+  font-weight: 300;
+  line-height: 1.0;
+
+}
+
+.heroContentWrapper{
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  box-sizing: border-box;
 }
 @media (max-width: 768px) {
   .fullWidthSection {
-    padding: 16px;
+    padding: 0 20px;
   }
 }
 .heroBreakDivContainer{
@@ -30,11 +85,10 @@
 /* Video Background Styles */
 .videoBackground {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: 50vh;
-  z-index: 1;
+  height: 100%;
+  z-index: 0;
   overflow: hidden;
 }
 
@@ -47,48 +101,214 @@
   background-repeat: no-repeat;
   will-change: transform;
   transform: translateZ(0);
+  filter: saturate(1.05) contrast(1.05);
 }
 
-/* Hero Text Styles */
-.heroTextTop {
+.videoBackground::after{
+  content: '';
   position: absolute;
-  bottom: 40px;
-  left: 10%;
-  right: 10%;
-  z-index: 2;
-  display: flex;
-  align-items: flex-end;
-}
-
-.heroTextBottom {
-  position: absolute;
-  top: 50vh;
-  left: 10%;
-  right: 10%;
-  padding-top: 40px;
-  z-index: 1;
-  display: flex;
-  align-items: flex-start;
-}
-
-.heroBreakDiv {
-  width: 100%;
-  padding-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  background-size: 100% 2px;
-  background-repeat: no-repeat;
-  background-position: 50% 100%;
-  transition: background-position 0.1s ease;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(79, 79, 79, 0.6) 0%, rgba(12, 12, 12, 0.35) 40%, rgba(6, 6, 6, 0.9) 100%), radial-gradient(circle at 20% 20%, rgba(84, 155, 255, 0.35), transparent 45%);
   pointer-events: none;
-  will-change: background-position;
+}
+
+.heroContent{
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 5vw, 72px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 40px;
+  background: rgba(7, 7, 7, 0.65);
+  backdrop-filter: blur(28px);
+  box-shadow: 0 40px 140px rgba(0, 0, 0, 0.65);
+}
+
+.heroPrimary{
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.heroName{
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+}
+
+.heroLead{
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.heroDescription{
+  font-size: clamp(1rem, 1.1vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.78);
+  width: 100%;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.heroTagList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.heroTag{
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.heroActions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.heroButtonPrimary,
+.heroButtonSecondary{
+  min-width: 200px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.heroButtonPrimary{
+  background: linear-gradient(120deg, #ffffff, #b8d7ff);
+  color: #0b0b0b;
+  border: none;
+  box-shadow: 0 20px 40px rgba(184, 215, 255, 0.25);
+}
+
+.heroButtonPrimary:hover{
+  transform: translateY(-2px);
+}
+
+.heroButtonSecondary{
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.heroButtonSecondary:hover{
+  border-color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.heroTicker{
+  margin-top: 12px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.heroTickerText{
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.heroTickerButton{
+  border: none;
+  background: transparent;
+  color: #b8d7ff;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 6px 0;
+  transition: color 0.2s ease;
+}
+
+.heroTickerButton:hover{
+  color: #ffffff;
+}
+
+.heroGlowRail{
+  position: absolute;
+  bottom: 90px;
+  left: 20px;
+  right: 20px;
+  height: 90px;
+  border-radius: 120px;
+  background: radial-gradient(circle at 50% 100%, rgba(255, 255, 255, 0.7), transparent 60%);
+  filter: blur(50px);
+  opacity: 0.65;
+  z-index: 1;
+  pointer-events: none;
+}
+
+@media (max-width: 1200px) {
+  .heroSignatureWrapper{
+    min-height: 80vh;
+  }
+
+  .heroContentWrapper{
+
+
+  }
+}
+
+@media (max-width: 768px) {
+  .heroSignatureWrapper{
+    min-height: auto;
+    justify-content: center;
+  }
+
+  .heroSignature{
+    margin-bottom: 20px;
+  }
+
+  .heroSignatureDivider{
+    width: 24px;
+  }
+
+  .heroContentWrapper{
+    padding: 100px 20px 120px;
+  }
+
+  .heroContent{
+    padding: 32px;
+  }
+
+  .heroActions{
+    flex-direction: column;
+  }
+
+  .heroButtonPrimary,
+  .heroButtonSecondary{
+    width: 100%;
+    min-width: unset;
+  }
 }
 
 /* Animated Text Section */
 .animatedTextSection {
   width: 100%;
-  padding: 0 10%;
+  padding: 0 20px;
   margin: 200px 0 80px 0;
   box-sizing: border-box;
 }
@@ -101,4 +321,113 @@
   align-items: flex-start;
   min-height: 200px;
   gap: 0;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  width: 100%;
+  align-items: start;
+}
+
+.mainTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.descriptionBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  padding-top: 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 50px;
+}
+
+.roleLabel {
+  font-size: var(--font-body-s);
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  opacity: 0.4;
+  font-family: var(--font-heading);
+}
+
+.disclaimer {
+  font-size: var(--font-heading-s);
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: 0;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 18px 32px;
+  border-radius: 50px;
+  width: fit-content;
+  white-space: nowrap;
+}
+
+.availabilityIndicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: #22c55e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6), 0 0 16px rgba(34, 197, 94, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.95);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  
+  .descriptionBlock {
+    border-left: none;
+    padding-left: 0;
+    padding-top: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 40px;
+  }
+  
+  .yearNumber {
+    font-size: 6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .yearHeader {
+    margin-bottom: 50px;
+  }
+  
+  .yearNumber {
+    font-size: 4rem;
+  }
+  
+  .contentGrid {
+    gap: 40px;
+  }
+  
+  .descriptionBlock {
+    padding-top: 30px;
+  }
 }

@@ -113,7 +113,7 @@ export default function ProjectOneCaseStudy() {
             <ScrollRevealText
               text="SalesIQ B2B Ordering Platform"
               fontSize="clamp(2.5rem, 5vw, 4.5rem)"
-              fontWeight={300}
+              fontWeight={400}
               lineHeight={1.1}
               letterSpacing="-0.02em"
               className={styles.heroTitle}
@@ -189,28 +189,17 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="The Challenge"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 From Phone Orders to Digital at Scale
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
                   Oriental Merchant, one of the world&apos;s largest Asian
-                  grocery importers, serves everyone from independent family
+                  FMCG distributors, serves everyone from independent family
                   grocers to major national chains like{" "}
                   <strong>Coles and Woolworths</strong>. Despite this scale,
                   their entire ordering process was offline: phone calls, paper
@@ -239,6 +228,14 @@ export default function ProjectOneCaseStudy() {
                   and instantly access that customer&apos;s specific pricing,
                   product catalog, and promotional structures.
                 </p>
+                
+                <div className={styles.imagePlaceholder}>
+                  <div className={styles.placeholderIcon}>📞 → 💻</div>
+                  <h4 className={styles.placeholderTitle}>Before & After Workflow</h4>
+                  <p className={styles.placeholderDescription}>
+                    Split-screen comparison showing the old manual phone/paper ordering process on the left vs. the new digital self-service platform on the right. Include visual representations of order forms, catalogs, and the transformation to digital.
+                  </p>
+                </div>
               </div>
             </div>
           </section>
@@ -249,23 +246,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Project Overview"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 What We Built
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
@@ -323,23 +309,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Business Objectives"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 What Success Looked Like
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <ul className={styles.blockList}>
@@ -361,6 +336,9 @@ export default function ProjectOneCaseStudy() {
                     Improve order volume and accessibility
                   </li>
                 </ul>
+                <p className={styles.blockText} style={{ marginTop: "2rem" }}>
+                  Transform Oriental Merchant from <strong>high-touch analog</strong> to <strong>low-touch digital</strong> ordering while maintaining service quality. Enable <strong>customer independence</strong> with pricing accuracy and promotional automation at <strong>global scale</strong>.
+                </p>
               </div>
             </div>
           </section>
@@ -371,23 +349,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Understanding the Users"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 Who We Were Designing For
-              </p>
+              </div>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
@@ -450,23 +417,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Research & Discovery"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 Understanding the Real Workflow
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
@@ -563,6 +519,14 @@ export default function ProjectOneCaseStudy() {
                     </p>
                   </div>
                 </div>
+                
+                <div className={styles.imagePlaceholder}>
+                  <div className={styles.placeholderIcon}>🎯</div>
+                  <h4 className={styles.placeholderTitle}>Key Research Insights</h4>
+                  <p className={styles.placeholderDescription}>
+                    Visual summary of top 3-5 user insights from research. Could be presented as cards, quotes overlaid on photos of actual users, or a highlight reel showing pain points and needs discovered during interviews.
+                  </p>
+                </div>
               </div>
             </div>
           </section>
@@ -573,23 +537,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Defining the Experience"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 The Two-Pillar Strategy
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
@@ -643,23 +596,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Core Features & Functionality"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 Platform Capabilities
-              </p>
+              </div>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
@@ -716,6 +658,14 @@ export default function ProjectOneCaseStudy() {
                   </ul>
                 </div>
               </div>
+              
+              <div className={styles.imagePlaceholder}>
+                <div className={styles.placeholderIcon}>🖥️</div>
+                <h4 className={styles.placeholderTitle}>Core Product Screenshots</h4>
+                <p className={styles.placeholderDescription}>
+                  3-4 key product screens showing main features in action: catalog browsing with real-time pricing, cart with promotional pricing applied, order history, and account dashboard. Annotate key UX decisions.
+                </p>
+              </div>
             </div>
           </section>
 
@@ -725,23 +675,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Information Architecture"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 Structuring the Experience
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Core User Flows</h3>
@@ -803,6 +742,14 @@ export default function ProjectOneCaseStudy() {
                   ordering workflow.
                 </p>
               </div>
+              
+              <div className={styles.imagePlaceholder}>
+                <div className={styles.placeholderIcon}>🗺️</div>
+                <h4 className={styles.placeholderTitle}>Information Architecture Diagram</h4>
+                <p className={styles.placeholderDescription}>
+                  Sitemap or user flow diagram showing how customers navigate through the platform. Include primary paths for browsing, searching, ordering, and managing accounts. Use clear visual hierarchy to show priority flows.
+                </p>
+              </div>
             </div>
           </section>
 
@@ -812,23 +759,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Visual Design Direction"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 Commercial and Clean
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Design Principles</h3>
@@ -863,6 +799,14 @@ export default function ProjectOneCaseStudy() {
                   .
                 </p>
               </div>
+              
+              <div className={styles.imagePlaceholder}>
+                <div className={styles.placeholderIcon}>🎨</div>
+                <h4 className={styles.placeholderTitle}>Visual Design System</h4>
+                <p className={styles.placeholderDescription}>
+                  Component library or style guide showing typography, color palette, button styles, form elements, and key UI components. Demonstrate consistency across the platform with examples of components in use.
+                </p>
+              </div>
             </div>
           </section>
 
@@ -872,23 +816,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Technical Collaboration & Complexity"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 Building at Scale
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
@@ -952,23 +885,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Overcoming Challenges"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 Navigating Complexity
-              </p>
+              </div>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
@@ -1022,23 +944,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Results & Impact"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 Measurable Outcomes
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Business Outcomes</h3>
@@ -1089,6 +1000,14 @@ export default function ProjectOneCaseStudy() {
                   product competing with established B2B platforms.
                 </p>
               </div>
+              
+              <div className={styles.imagePlaceholder}>
+                <div className={styles.placeholderIcon}>📊</div>
+                <h4 className={styles.placeholderTitle}>Impact Metrics Dashboard</h4>
+                <p className={styles.placeholderDescription}>
+                  Visual presentation of key results and metrics. Show revenue growth charts, adoption rates, order volume increases, and user satisfaction scores. Use clean graphs and data visualizations to demonstrate measurable success.
+                </p>
+              </div>
             </div>
           </section>
 
@@ -1098,23 +1017,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Key Learnings"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 What Worked and What Didn&apos;t
-              </p>
+              </div>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
@@ -1173,23 +1081,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="What I Would Do Differently"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 In Hindsight
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <ol
@@ -1233,23 +1130,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Future Opportunities"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 Where This Could Go Next
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <ul className={styles.blockList}>
@@ -1284,23 +1170,12 @@ export default function ProjectOneCaseStudy() {
               <ScrollRevealText
                 text="Conclusion"
                 fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={300}
+                fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <p
-                className={styles.blockText}
-                style={{
-                  fontSize: "1.4rem",
-                  color: "#999",
-                  marginTop: "-1.5rem",
-                  marginBottom: "3rem",
-                  fontStyle: "italic",
-                  fontFamily: "'Space Grotesk', 'DM Sans', 'Outfit', system-ui, -apple-system, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
+              <div className={styles.sectionSubtext}>
                 The Bigger Picture
-              </p>
+              </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>

@@ -19,8 +19,8 @@ export default function ProjectThree() {
             }}>
               <div style={{
                 fontSize: '2rem',
-                fontWeight: 400,
-                fontFamily: 'Funnel Sans, sans-serif',
+                fontWeight: 600,
+                fontFamily: 'var(--font-heading)',
                 letterSpacing: '-0.02em',
                 lineHeight: 1.1,
                 marginBottom: '8px'
@@ -29,8 +29,8 @@ export default function ProjectThree() {
               </div>
               <div style={{
                 fontSize: '1rem',
-                fontWeight: 300,
-                fontFamily: 'Funnel Sans, sans-serif',
+                fontWeight: 400,
+                fontFamily: 'var(--font-body)',
                 letterSpacing: '0',
                 lineHeight: 1.2,
                 opacity: 0.7

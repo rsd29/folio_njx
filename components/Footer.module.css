@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-  font-size: 0.875rem;
+  font-size: var(--font-body-s);
 }
 
 .topSection {
@@ -47,7 +47,7 @@
 }
 
 .brandName {
-  font-size: 1rem;
+  font-size: var(--font-body-m);
   font-weight: 300;
   color: #ffffff;
   margin: 0;
@@ -92,7 +92,7 @@
   color: #999;
   text-decoration: none;
   font-weight: 300;
-  font-size: 0.875rem;
+  font-size: var(--font-body-s);
   transition: all 0.3s ease;
   position: relative;
   white-space: nowrap;
@@ -112,7 +112,7 @@
   color: #999;
   text-decoration: none;
   font-weight: 300;
-  font-size: 0.875rem;
+  font-size: var(--font-body-s);
   transition: all 0.3s ease;
   white-space: nowrap;
 }

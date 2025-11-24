@@ -1,5 +1,4 @@
 import './globals.css'
-import { DM_Sans } from 'next/font/google'
 import Header from '../components/Header'
 import SmoothScroll from '../components/SmoothScroll'
 import Footer from '../components/Footer'
@@ -7,24 +6,12 @@ import NegativeCursor from '../components/NegativeCursor'
 import ClientPageTransition from '../components/ClientPageTransition'
 // import PasswordGate from '../components/PasswordGate' // Disabled for now - uncomment to re-enable
 import { Analytics } from "@vercel/analytics/next"
-import { Funnel_Display, Funnel_Sans, UnifrakturMaguntia } from 'next/font/google'
+import { Figtree, UnifrakturMaguntia } from 'next/font/google'
 
-const dmSans = DM_Sans({
+const figtree = Figtree({
   subsets: ['latin'],
-  display: 'swap',
-})
-const funnelDisplay = Funnel_Display({
-  weight: ['300', '400', '500', '600', '700', '800'],
-  subsets: ['latin'],
-  variable: '--font-heading',
-  display: 'swap',
-})
-
-const funnelSans = Funnel_Sans({
-  weight: ['300', '400', '500', '600', '700', '800'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  variable: '--font-body',
+  variable: '--font-sans',
+  weight: ['300','400','500','600','700','800','900'],
   display: 'swap',
 })
 
@@ -42,8 +29,13 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${funnelDisplay.variable} ${funnelSans.variable} ${unifrakturMaguntia.variable}`}>
-      <body className={dmSans.className}>
+    <html lang="en" className={`${figtree.variable} ${unifrakturMaguntia.variable}`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+      </head>
+      <body className={figtree.className}>
         <Analytics />
         {/* <PasswordGate> - Disabled for now - uncomment to re-enable */}
           <NegativeCursor />

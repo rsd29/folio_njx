@@ -37,7 +37,7 @@ interface AnimatedRichTextProps {
 export default function AnimatedRichText({
   segments,
   fontSize = '2rem',
-  fontWeight = 300,
+  fontWeight = 400,
   lineHeight = 1.2,
   maxWidth = '100ch',
   className = '',
@@ -125,7 +125,7 @@ export default function AnimatedRichText({
         fontWeight,
         lineHeight,
         maxWidth,
-        fontFamily: 'Funnel Sans, sans-serif',
+        fontFamily: 'var(--font-heading)',
         flexWrap: 'wrap',
         letterSpacing,
         wordBreak: 'normal',
@@ -183,7 +183,7 @@ export default function AnimatedRichText({
                 }}
                 style={{
                   display: 'inline-block',
-                  fontWeight: isStrong ? 400 : fontWeight,
+                  fontWeight: isStrong ? 600 : fontWeight,
                   fontFamily: fontFamily || 'inherit',
                   fontSize: segmentFontSize || fontSize,
                   color: color || (useFlickerEffect
