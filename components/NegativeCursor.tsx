@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function NegativeCursor() {
   const cursorRef = useRef<HTMLDivElement>(null)
+  const [cursorVariant, setCursorVariant] = useState<'default' | 'view-project'>('default')
 
   useEffect(() => {
     const cursor = cursorRef.current
@@ -42,5 +43,38 @@ export default function NegativeCursor() {
     }
   }, [])
 
-  return <div ref={cursorRef} className="custom-cursor" />
+  useEffect(() => {
+    const handlePointerOver = (event: PointerEvent) => {
+      const target = (event.target as HTMLElement | null)?.closest('[data-cursor]')
+      const variant = target?.getAttribute('data-cursor') === 'view-project' ? 'view-project' : 'default'
+      setCursorVariant(variant)
+    }
+
+    const handlePointerLeave = () => {
+      setCursorVariant('default')
+    }
+
+    document.addEventListener('pointerover', handlePointerOver)
+    document.addEventListener('pointerleave', handlePointerLeave)
+
+    return () => {
+      document.removeEventListener('pointerover', handlePointerOver)
+      document.removeEventListener('pointerleave', handlePointerLeave)
+    }
+  }, [])
+
+  return (
+    <div
+      ref={cursorRef}
+      className={`custom-cursor${cursorVariant === 'view-project' ? ' custom-cursor--pill' : ''}`}
+      aria-hidden="true"
+    >
+      <span className="custom-cursor__label">
+        <span className="custom-cursor__text">View Project</span>
+        <span className="custom-cursor__arrow" aria-hidden="true">
+          →
+        </span>
+      </span>
+    </div>
+  )
 }

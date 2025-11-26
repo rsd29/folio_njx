@@ -12,9 +12,9 @@ const navItems = [
 ]
 
 const rightNavItems = [
-  { label: 'LinkedIn', href: '/contact' },
   { label: 'Off the Clock', href: '/off-the-clock' },
-  { label: 'Resume', href: '/rs-resume-q3-2025-v2.pdf' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/in/russellsaw', external: true },
+  { label: 'Resume', href: '/rs-resume-q3-2025-v2.pdf', external: true, download: true },
 ]
 
 export default function Header() {
@@ -39,11 +39,13 @@ export default function Header() {
     const isActive = pathname === itemHref
     const isHovered = hoveredItem === itemHref
     const baseColor = 'rgba(255, 255, 255, 0.65)'
+    const baseWeight = 400
+    const emphasisWeight = 500
     
     if (isActive) {
       return {
         color: '#ffffff',
-        fontWeight: 600,
+        fontWeight: emphasisWeight,
         textShadow: '0 0 8px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.4)',
         filter: 'brightness(1.2)',
         transition: 'all 0.2s ease'
@@ -53,7 +55,7 @@ export default function Header() {
     if (isHovered) {
       return {
         color: '#ffffff',
-        fontWeight: 600,
+        fontWeight: emphasisWeight,
         filter: 'brightness(1.4)',
         transition: 'all 0.2s ease'
       }
@@ -61,7 +63,7 @@ export default function Header() {
     
     return {
       color: baseColor,
-      fontWeight: 600,
+      fontWeight: baseWeight,
       filter: 'none',
       opacity: 0.85,
       transition: 'all 0.2s ease'
@@ -113,19 +115,20 @@ export default function Header() {
 
       <div className={styles.sideRight}>
         {rightNavItems.map((item) =>
-          item.label === 'Resume' ? (
+          item.external ? (
             <a
               key={item.href}
               href={item.href}
-              download
               target="_blank"
               rel="noopener noreferrer"
               className={styles.navItem}
               style={getNavItemStyle(item.href)}
               onMouseEnter={() => setHoveredItem(item.href)}
               onMouseLeave={() => setHoveredItem(null)}
+              download={item.download}
             >
-              {item.label} <Link2Icon style={{ marginLeft: 4, verticalAlign: 'middle' }} />
+              {item.label}
+              {item.download && <Link2Icon style={{ marginLeft: 4, verticalAlign: 'middle' }} />}
             </a>
           ) : (
             <Link

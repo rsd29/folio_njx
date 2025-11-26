@@ -8,7 +8,7 @@ export default function ProjectOne() {
   return (
     <Link href="/projects/project-one" style={{ textDecoration: 'none', color: 'inherit' }}>
       <div className={styles.outerContainer}>
-        <div className={styles.innerContainer}>
+        <div className={styles.innerContainer} data-cursor="view-project">
           <div className={styles.innerContentDiv}>
             {/* Background Image */}
             <Image

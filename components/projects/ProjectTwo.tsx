@@ -7,7 +7,7 @@ export default function ProjectTwo() {
   return (
     <Link href="/projects/project-two" style={{ textDecoration: 'none', color: 'inherit' }}>
       <div className={styles.outerContainer}>
-        <div className={styles.innerContainer}>
+        <div className={styles.innerContainer} data-cursor="view-project">
           <div className={styles.innerContentDiv}>
             {/* Text Overlay */}
             <div style={{
@@ -25,7 +25,7 @@ export default function ProjectTwo() {
                 lineHeight: 1.1,
                 marginBottom: '8px'
               }}>
-                Fitness Tracker Mobile App
+                OMIS ERP System
               </div>
               <div style={{
                 fontSize: '1rem',
@@ -33,9 +33,9 @@ export default function ProjectTwo() {
                 fontFamily: 'var(--font-body)',
                 letterSpacing: '0',
                 lineHeight: 1.2,
-                opacity: 0.7
+                opacity: 0.85
               }}>
-                Mobile UX Design • 2024
+                Unified internal platform • Oriental Merchant • Multi-region rollout
               </div>
             </div>
           </div>

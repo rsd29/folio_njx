@@ -1213,9 +1213,14 @@ export default function ProjectOneCaseStudy() {
               opportunities to be part of your vision.
             </p>
             <div className={styles.ctaButtons}>
-              <Link href="/contact" className={styles.ctaButton}>
+              <a
+                href="https://linkedin.com/in/russellsaw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.ctaButton}
+              >
                 Get in Touch
-              </Link>
+              </a>
               <Link href="/" className={styles.ctaButtonSecondary}>
                 View Other Projects
               </Link>

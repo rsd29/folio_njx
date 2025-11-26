@@ -1,27 +1,109 @@
-'use client'
+"use client";
 
-import { useRef } from 'react'
-import Link from 'next/link'
-import ScrollRevealText from '../../../components/ScrollRevealText'
-import styles from './case-study.module.css'
+import { useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import ScrollRevealText from "../../../components/ScrollRevealText";
+import styles from "./case-study.module.css";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+}
+
+const CASE_STUDY_SECTIONS = [
+  { id: "introduction", label: "Introduction" },
+  { id: "starting-point", label: "The Starting Point" },
+  { id: "why-omis-mattered", label: "Why OMIS Mattered" },
+  { id: "my-role", label: "My Role" },
+  { id: "who-omis-serves", label: "Who OMIS Serves" },
+  { id: "problems-we-needed-to-solve", label: "Problems We Needed to Solve" },
+  { id: "design-principles", label: "Design Principles" },
+  { id: "design-system", label: "The Design System" },
+  { id: "purchase-order-system", label: "Key Module: Purchase Order System" },
+  { id: "transport-management-system", label: "Key Module: Transport Management System" },
+  { id: "sales-ordering-program", label: "Key Module: Sales Ordering Program" },
+  { id: "regional-challenges", label: "Regional & Departmental Challenges" },
+  { id: "impact", label: "Impact" },
+  { id: "what-i-learned", label: "What I Learned" },
+  { id: "reflection", label: "Reflection" },
+];
 
 export default function ProjectTwoCaseStudy() {
-  const heroRef = useRef<HTMLDivElement>(null)
+  const tocRef = useRef<HTMLElement>(null);
+  const sectionsColumnRef = useRef<HTMLDivElement>(null);
+  const [activeSection, setActiveSection] = useState(
+    CASE_STUDY_SECTIONS[0]?.id ?? "",
+  );
+
+  useEffect(() => {
+    const toc = tocRef.current;
+    const sectionsColumn = sectionsColumnRef.current;
+    if (!toc || !sectionsColumn) return;
+
+    const pinTrigger = ScrollTrigger.create({
+      trigger: sectionsColumn,
+      pin: toc,
+      start: "top 40px",
+      end: "bottom bottom",
+      pinSpacing: false,
+    });
+
+    const sectionTriggers: ScrollTrigger[] = [];
+    CASE_STUDY_SECTIONS.forEach(({ id }) => {
+      const element = document.getElementById(id);
+      if (element) {
+        const st = ScrollTrigger.create({
+          trigger: element,
+          start: "top 33%",
+          end: "bottom 33%",
+          onToggle: (self) => {
+            if (self.isActive) {
+              setActiveSection(id);
+            }
+          },
+        });
+        sectionTriggers.push(st);
+      }
+    });
+
+    return () => {
+      pinTrigger.kill();
+      sectionTriggers.forEach((st) => st.kill());
+    };
+  }, []);
+
+  const handleSectionClick =
+    (id: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      const element = document.getElementById(id);
+      if (!element) return;
+
+      const smoother = ScrollSmoother.get();
+      if (smoother) {
+        smoother.scrollTo(element, true, "top top");
+      } else {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      setActiveSection(id);
+    };
 
   return (
     <main className={styles.caseStudy}>
-      {/* Hero Section */}
-      <section className={styles.heroSection} ref={heroRef}>
+      <section className={styles.heroSection}>
         <div className={styles.heroContent}>
           <div className={styles.backLink}>
             <Link href="/" className={styles.backButton}>
               ← Back to Projects
             </Link>
           </div>
-          
+
           <div className={styles.heroText}>
             <ScrollRevealText
-              text="Fitness Tracker Mobile App Redesign"
+              text="OMIS ERP System"
               fontSize="clamp(2.5rem, 5vw, 4.5rem)"
               fontWeight={400}
               lineHeight={1.1}
@@ -31,527 +113,672 @@ export default function ProjectTwoCaseStudy() {
             <div className={styles.heroMeta}>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Client</span>
-                <span className={styles.metaValue}>Personal Project</span>
+                <span className={styles.metaValue}>Oriental Merchant</span>
               </div>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Role</span>
-                <span className={styles.metaValue}>UX/UI Designer & Developer</span>
+                <span className={styles.metaValue}>
+                  Lead UX Designer & Front-End Developer
+                </span>
               </div>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Timeline</span>
-                <span className={styles.metaValue}>4 months</span>
+                <span className={styles.metaValue}>2023-2025</span>
               </div>
               <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>Year</span>
-                <span className={styles.metaValue}>2024</span>
+                <span className={styles.metaLabel}>Regions</span>
+                <span className={styles.metaValue}>Multiple regions & departments</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Context Section */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <ScrollRevealText
-            text="Context"
-            fontSize="clamp(2rem, 4vw, 3rem)"
-            fontWeight={400}
-            className={styles.sectionTitle}
+      <section className={styles.heroImageSection}>
+        <div className={styles.heroImageContainer}>
+          <Image
+            src="/case_study_1/cs1_productpage2.jpeg"
+            alt="OMIS ERP interface preview"
+            width={1920}
+            height={1080}
+            className={styles.heroImage}
+            priority
           />
-          <div className={styles.contentGrid}>
-            <div className={styles.contentBlock}>
-              <h3 className={styles.blockTitle}>Who is this for</h3>
-              <p className={styles.blockText}>
-                People trying to build fitness habits—beginners who need motivation, 
-                busy professionals who want quick check-ins, and people who&apos;ve abandoned 
-                fitness apps before. Not professional athletes. Regular people with irregular schedules.
-              </p>
-            </div>
-            <div className={styles.contentBlock}>
-              <h3 className={styles.blockTitle}>What was broken</h3>
-              <p className={styles.blockText}>
-                Fitness apps have 70%+ abandonment rates. They overwhelm users with data, 
-                force rigid routines, and feel like work rather than support. Most apps 
-                are designed for people who already love fitness, not people trying to start.
-              </p>
-            </div>
-            <div className={styles.contentBlock}>
-              <h3 className={styles.blockTitle}>Why I was asked</h3>
-              <p className={styles.blockText}>
-                Personal project to solve my own frustration. I&apos;d downloaded 5 fitness apps 
-                and abandoned all within 2 weeks. Wanted to build something that actually 
-                kept people engaged by respecting their time and motivation patterns.
-              </p>
-            </div>
-            <div className={styles.contentBlock}>
-              <h3 className={styles.blockTitle}>Constraints</h3>
-              <p className={styles.blockText}>
-                Solo designer/developer. 4-month timeline. No budget for user testing tools. 
-                Needed to validate quickly with simple prototypes. Prioritized core experience 
-                over feature completeness.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Problem Definition */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-        <ScrollRevealText
-            text="Business + User Problem"
-            fontSize="clamp(2rem, 4vw, 3rem)"
-          fontWeight={400}
-            className={styles.sectionTitle}
-          />
-          
-          <div className={styles.problemGrid}>
-            <div className={styles.problemCard}>
-              <h3 className={styles.problemTitle}>Business Problem</h3>
-              <p className={styles.problemText}>
-                High abandonment rates (70%+) mean low retention and reduced monetization. 
-                Users download with enthusiasm but stop using within weeks.
-              </p>
-            </div>
-            <div className={styles.problemCard}>
-              <h3 className={styles.problemTitle}>User Problem</h3>
-              <p className={styles.problemText}>
-                Too much data, too many features, too much friction. Users want quick check-ins 
-                but get overwhelmed by charts and complex logging workflows. Apps feel like work.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <div className={styles.contentShell}>
+        <nav
+          ref={tocRef}
+          className={styles.tableOfContents}
+          aria-label="Case study sections"
+        >
+          <ul className={styles.tocList}>
+            {CASE_STUDY_SECTIONS.map(({ id, label }) => (
+              <li key={id} className={styles.tocItem}>
+                <a
+                  href={`#${id}`}
+                  onClick={handleSectionClick(id)}
+                  className={`${styles.tocLink} ${
+                    activeSection === id ? styles.tocLinkActive : ""
+                  }`}
+                  aria-current={activeSection === id ? "true" : undefined}
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-      {/* Hypothesis */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-        <ScrollRevealText
-            text="Hypothesis"
-            fontSize="clamp(2rem, 4vw, 3rem)"
-          fontWeight={400}
-            className={styles.sectionTitle}
-          />
-          
-          <div className={styles.hypothesisCard}>
-            <p className={styles.hypothesisText}>
-              <strong>Simplifying information architecture + reducing logging friction 
-              to 2 taps maximum + focusing on visual progress over data will increase 
-              daily active usage by 50% and retention beyond 4 weeks.</strong>
-            </p>
-            <p className={styles.hypothesisSubtext}>
-              Our bet: Engagement comes from feeling progress, not seeing data. 
-              Motivation comes from ease, not complexity.
-            </p>
-          </div>
-        </div>
-      </section>
+        <div className={styles.sectionsColumn} ref={sectionsColumnRef}>
+          <section id="introduction" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Introduction"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                A unified internal platform for a global FMCG distributor
+              </div>
 
-      {/* Research */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-        <ScrollRevealText
-            text="Research"
-            fontSize="clamp(2rem, 4vw, 3rem)"
-          fontWeight={400}
-            className={styles.sectionTitle}
-          />
-          
-          <div className={styles.researchContent}>
-            <div className={styles.researchMethods}>
-              <div className={styles.methodCard}>
-                <h4 className={styles.methodTitle}>User Interviews</h4>
-                <p className={styles.methodDetails}>15 sessions</p>
-                <p className={styles.methodDescription}>
-                  Spoke with people who had abandoned fitness apps. Focused on why they 
-                  stopped and what would have kept them engaged.
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  Before OMIS existed, Oriental Merchant was running a multi-country
+                  supply chain on tools that were never designed to handle that
+                  level of complexity. Staff were juggling enormous Excel files,
+                  hand-built VBA tools, paper-based workflows, and long email
+                  chains to complete even the simplest tasks. Delivery routes were
+                  planned on printed maps. Sales reps had to switch between six
+                  different spreadsheets to create an order. Procurement
+                  forecasting often meant inspecting dozens of tabs across multiple
+                  files. Every region had its own version of the truth, and no one
+                  had a complete view of operations.
                 </p>
-              </div>
-              <div className={styles.methodCard}>
-                <h4 className={styles.methodTitle}>Competitive Analysis</h4>
-                <p className={styles.methodDetails}>8 apps analyzed</p>
-                <p className={styles.methodDescription}>
-                  Studied Strava, MyFitnessPal, Apple Fitness. Identified patterns that 
-                  worked and pain points that caused abandonment.
+                <p className={styles.blockText}>
+                  The company was functioning through sheer experience and effort,
+                  not through systems. OMIS was created to change that. It became
+                  the first attempt to connect the entire organisation through a
+                  shared platform that digitised core workflows, reduced
+                  bottlenecks, and gave people the information they needed without
+                  waiting on others.
                 </p>
-              </div>
-              <div className={styles.methodCard}>
-                <h4 className={styles.methodTitle}>Behavioral Analytics</h4>
-                <p className={styles.methodDetails}>12 weeks of usage data</p>
-                <p className={styles.methodDescription}>
-                  Analyzed existing app usage patterns. Drop-off occurred at week 2-3 
-                  when novelty wore off and complexity set in.
-                </p>
-              </div>
-              <div className={styles.methodCard}>
-                <h4 className={styles.methodTitle}>Heuristic Review</h4>
-                <p className={styles.methodDetails}>Jakob Nielsen framework</p>
-                <p className={styles.methodDescription}>
-                  Found violations: information overload, heavy cognitive load, 
-                  lack of feedback for micro-actions.
+                <p className={styles.blockText}>
+                  I led the UX design and front-end implementation from the very
+                  beginning, shaping how the platform looks, behaves, and supports
+                  more than thirty specialised modules used across several regions.
                 </p>
               </div>
             </div>
+          </section>
 
-            <div className={styles.insightsSection}>
-              <h3 className={styles.insightsTitle}>Key Insights</h3>
-              <div className={styles.insightsList}>
-                <div className={styles.insight}>
-                  <span className={styles.insightBullet}>•</span>
-                  <p className={styles.insightText}>
-                    <strong>73% of users</strong> wanted visual progress, not charts. 
-                    They wanted to &quot;feel&quot; progress, not analyze it.
+          <section id="starting-point" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="The Starting Point"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>Digitising known workflows</div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  Oriental Merchant had no ERP. Every department built its own
+                  processes through Excel, email, and manual handovers. These tools
+                  were created by people who understood the business well, but
+                  their limitations were obvious:
+                </p>
+                <ul className={styles.blockList}>
+                  <li>Each team maintained separate files and rules</li>
+                  <li>Reports took hours to prepare</li>
+                  <li>Forecasting meant cross-referencing many spreadsheets</li>
+                  <li>Delivery routes were drawn manually every morning</li>
+                  <li>Order history was stored in binders</li>
+                  <li>Input validation was inconsistent</li>
+                  <li>Regions developed their own habits and logic</li>
+                </ul>
+                <p className={styles.blockText}>
+                  OMIS was not designed to reinvent the company. It was designed to
+                  digitise known workflows, remove unnecessary friction, and give
+                  people immediate access to the information they relied on.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="why-omis-mattered" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Why OMIS Mattered"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                The company had grown past what manual tools could support
+              </div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  Teams were spending more time finding information than using it.
+                </p>
+                <ul className={styles.blockList}>
+                  <li>Sales reps needed live stock and pricing data.</li>
+                  <li>Procurement needed a single place to plan national replenishment.</li>
+                  <li>Logistics needed to eliminate hours of manual route planning.</li>
+                  <li>Managers needed transparency over operations instead of chasing files.</li>
+                </ul>
+                <p className={styles.blockText}>
+                  OMIS became the central platform that brought these needs together.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="my-role" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="My Role"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                Lead UX designer and primary front-end developer
+              </div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  I served as the lead UX designer and one of the primary front-end
+                  developers on the project. My responsibilities included:
+                </p>
+                <ul className={styles.blockList}>
+                  <li>Designing and wireframing every module in OMIS</li>
+                  <li>Creating the platform structure and navigation</li>
+                  <li>Building a design system to support dozens of internal applications</li>
+                  <li>Working directly with department heads to understand workflows deeply</li>
+                  <li>Translating their processes into clear digital interfaces</li>
+                  <li>Running discovery sessions and shadowing staff</li>
+                  <li>Collaborating with backend engineers to define feasible solutions</li>
+                  <li>Presenting modules to regional teams</li>
+                  <li>Creating training materials, onboarding guides, and stakeholder presentations</li>
+                </ul>
+                <p className={styles.blockText}>
+                  The development team had strong engineering expertise, but little
+                  exposure to UX. I introduced design principles such as
+                  hierarchy, contrast, spacing, and interaction patterns. This
+                  created a shared language that helped us work more effectively as
+                  a team.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="who-omis-serves" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Who OMIS Serves"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                OMIS needed to support nearly every operational team in the business
+              </div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  Each module had its own requirements, but everything needed to
+                  feel like it belonged in the same ecosystem.
+                </p>
+              </div>
+
+              <div className={styles.contentGrid}>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Sales</h3>
+                  <p className={styles.blockText}>
+                    Customer ordering, promotions and pricing, sales history,
+                    customer delivery information, SKU search, account data
                   </p>
                 </div>
-                <div className={styles.insight}>
-                  <span className={styles.insightBullet}>•</span>
-                  <p className={styles.insightText}>
-                    Users checked apps <strong>3-5 times daily</strong> but only wanted 
-                    10-15 second interactions. Current apps required 2+ minutes.
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Procurement</h3>
+                  <p className={styles.blockText}>
+                    Stock forecasting, supplier planning, warehouse allocation,
+                    container planning, inventory visibility, inter-warehouse transfers
                   </p>
                 </div>
-                <div className={styles.insight}>
-                  <span className={styles.insightBullet}>•</span>
-                  <p className={styles.insightText}>
-                    <strong>88% of abandoners</strong> cited &quot;too complicated&quot; as primary reason. 
-                    Not lack of features—too many features.
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Logistics</h3>
+                  <p className={styles.blockText}>
+                    Transport management, daily route planning, live driver tracking,
+                    signature capture, photo evidence, route history
                   </p>
                 </div>
-                <div className={styles.insight}>
-                  <span className={styles.insightBullet}>•</span>
-                  <p className={styles.insightText}>
-                    Users valued <strong>flexibility over structure</strong>. They wanted 
-                    suggestions, not rigid plans that made them feel guilty.
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Warehouse</h3>
+                  <p className={styles.blockText}>
+                    Receiving, dispatch, adjustments, transfers
+                  </p>
+                </div>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Shipping</h3>
+                  <p className={styles.blockText}>
+                    Container registry, purchase order registry, best-before-date tracking
+                  </p>
+                </div>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Admin and IT</h3>
+                  <p className={styles.blockText}>
+                    User permissions, module access, image storage
                   </p>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
+
+          <section id="problems-we-needed-to-solve" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Problems We Needed to Solve"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                Department-specific pain points
+              </div>
+
+              <div className={styles.contentGrid}>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Sales</h3>
+                  <p className={styles.blockText}>
+                    Order creation involved many spreadsheets and slow
+                    cross-checking. Customer history and stock data were difficult
+                    to find. Promotions varied by region.
+                  </p>
+                </div>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Logistics</h3>
+                  <p className={styles.blockText}>
+                    Drivers had no digital tools. There was no tracking, no proof of
+                    delivery, and no route history. Planning took hours.
+                  </p>
+                </div>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Procurement</h3>
+                  <p className={styles.blockText}>
+                    Forecasting required intense manual effort. Warehouse splits
+                    were inconsistent. Container plans relied heavily on
+                    individual experience and were not centralised.
+                  </p>
+                </div>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Shipping</h3>
+                  <p className={styles.blockText}>
+                    Container records were scattered across files and emails.
+                  </p>
+                </div>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Company-wide</h3>
+                  <p className={styles.blockText}>
+                    There was no centralised data, slow communication, and
+                    constant duplication. Mistakes were common because validation
+                    varied across spreadsheets.
+                  </p>
+                </div>
+              </div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  OMIS had to solve each of these issues without overwhelming users
+                  or removing the logic they trusted.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="design-principles" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Design Principles"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                Guardrails for every module
+              </div>
+
+              <div className={styles.contentBlock}>
+                <ul className={styles.blockList}>
+                  <li>
+                    <strong>Respect existing mental models</strong>
+                    <br />
+                    Many staff were experienced with spreadsheets. AG Grid
+                    preserved familiar behaviour such as multi-row copy,
+                    drag-to-fill, and rapid filtering.
+                  </li>
+                  <li>
+                    <strong>Gate user input</strong>
+                    <br />
+                    Open text fields were replaced with dropdowns, selectors, and
+                    auto-search wherever possible. This improved accuracy and
+                    reduced support requests.
+                  </li>
+                  <li>
+                    <strong>Break workflows into steps</strong>
+                    <br />
+                    Complex modules like PO planning were divided into clear stages
+                    to reduce cognitive load.
+                  </li>
+                  <li>
+                    <strong>Use automation responsibly</strong>
+                    <br />
+                    Automation handled suggestions and repetitive calculations, but
+                    users retained the ability to override values. Tooltips
+                    explained the logic behind automated fields.
+                  </li>
+                  <li>
+                    <strong>Build consistency through foundations</strong>
+                    <br />
+                    Typography, spacing, interaction patterns, and page headers
+                    were consistent across modules. Layouts were tailored to each
+                    workflow.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section id="design-system" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="The Design System"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                Structure without restriction
+              </div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  The design system provided structure without restricting functionality.
+                  It included:
+                </p>
+              </div>
+
+              <div className={styles.contentGrid}>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Shared foundations</h3>
+                  <ul className={styles.blockList}>
+                    <li>Typography scale, spacing rules, standardised headers</li>
+                    <li>Departmental colour coding</li>
+                    <li>Consistent icons</li>
+                  </ul>
+                </div>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Components</h3>
+                  <ul className={styles.blockList}>
+                    <li>SKU search with advanced filtering</li>
+                    <li>AG Grid table variations</li>
+                    <li>Forms, step flows, drawers and modals, validation patterns</li>
+                  </ul>
+                </div>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Interaction patterns</h3>
+                  <ul className={styles.blockList}>
+                    <li>Inline validation and clear success feedback</li>
+                    <li>Tooltip explanations</li>
+                    <li>Expand and collapse behaviour for dense content</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="purchase-order-system" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Key Module: Purchase Order System"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                Procurement's most complex workflow
+              </div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  The PO System was the most complex part of OMIS. Procurement
+                  needed to manage replenishment across four national warehouses
+                  and align with vendor schedules.
+                </p>
+              </div>
+
+              <div className={styles.contentGrid}>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Challenges</h3>
+                  <ul className={styles.blockList}>
+                    <li>Large volumes of data</li>
+                    <li>Dependent decisions</li>
+                    <li>Complex forecasting logic</li>
+                    <li>Warehouse splits</li>
+                    <li>Container planning</li>
+                    <li>Validation at every step</li>
+                  </ul>
+                </div>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Solution</h3>
+                  <ul className={styles.blockList}>
+                    <li>Structured workflow into stages</li>
+                    <li>Automated suggestions with manual overrides</li>
+                    <li>Tooltips explaining calculations</li>
+                    <li>Expandable tables</li>
+                    <li>Multi-layer validation</li>
+                    <li>Clear success flow</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="transport-management-system" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Key Module: Transport Management System"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                Digitising delivery operations
+              </div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  Before TMS, delivery routes were planned manually with printed
+                  maps. Drivers had no digital tools or proof-of-delivery workflow.
+                </p>
+              </div>
+
+              <div className={styles.contentGrid}>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Constraints</h3>
+                  <ul className={styles.blockList}>
+                    <li>Offline mode</li>
+                    <li>Simple driver interactions</li>
+                    <li>Manager visibility</li>
+                    <li>Signature and photo capture</li>
+                  </ul>
+                </div>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>Solution</h3>
+                  <ul className={styles.blockList}>
+                    <li>Automated route generation</li>
+                    <li>Offline-capable driver app</li>
+                    <li>Local caching and sync on reconnect</li>
+                    <li>Logistics dashboard</li>
+                    <li>Digital route history</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="sales-ordering-program" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Key Module: Sales Ordering Program"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                Replacing a scattered workflow
+              </div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  The Sales Ordering Program replaced a scattered workflow
+                  involving many spreadsheets.
+                </p>
+              </div>
+
+              <div className={styles.contentBlock}>
+                <h3 className={styles.blockTitle}>Improvements</h3>
+                <p className={styles.blockText}>
+                  High-speed SKU search, consolidated customer information,
+                  real-time stock visibility, integrated promotions, parallel and
+                  saved orders, built-in validation.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="regional-challenges" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Regional & Departmental Challenges"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>
+                Adapting without fragmenting the system
+              </div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  Different regions required different rules. For example, Australia
+                  used a structured promotional system while the Netherlands and the
+                  UK were more flexible. Modules were adapted without breaking
+                  overall structure. Feature requests were versioned so teams could
+                  validate needs after using the module.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section id="impact" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Impact"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>Efficiency across departments</div>
+
+              <div className={styles.contentBlock}>
+                <ul className={styles.blockList}>
+                  <li>Efficiency improved significantly across all departments.</li>
+                  <li>Order creation and route planning became faster.</li>
+                  <li>Procurement gained a unified system for replenishment.</li>
+                  <li>Staff no longer relied on email for data.</li>
+                  <li>Accuracy increased due to consistent validation.</li>
+                  <li>Managers gained instant access to history and analytics.</li>
+                  <li>Delivery proof became digital and searchable.</li>
+                  <li>
+                    Modules expanded from seven to more than thirty and now support
+                    multiple regions.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section id="what-i-learned" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="What I Learned"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>Personal takeaways</div>
+
+              <div className={styles.contentBlock}>
+                <ul className={styles.blockList}>
+                  <li>How to break down complex workflows into smaller steps</li>
+                  <li>How to design for users who rely on familiar spreadsheet behaviour</li>
+                  <li>How to use a design system as a foundation, not a limitation</li>
+                  <li>How to manage scope through versioning</li>
+                  <li>How to communicate clearly with stakeholders and engineers</li>
+                  <li>How to design confidently within complex constraints</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section id="reflection" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="Reflection"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>Looking forward</div>
+
+              <div className={styles.contentBlock}>
+                <p className={styles.blockText}>
+                  Seeing staff rely on OMIS every day is rewarding. The platform
+                  has made daily work faster, clearer, and more consistent across
+                  the organisation. It continues to grow as new modules are added
+                  and existing ones are refined. I am proud to have contributed to
+                  a system that supports so many people across multiple regions and
+                  departments.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
+      </div>
 
-      {/* Problem Reframing */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-        <ScrollRevealText
-            text="Problem Reframing"
-            fontSize="clamp(2rem, 4vw, 3rem)"
-          fontWeight={400}
-            className={styles.sectionTitle}
-          />
-          
-          <div className={styles.reframeCard}>
-            <p className={styles.reframeText}>
-              <strong>Original assumption:</strong> Users needed more features, better 
-              gamification, and more data to stay motivated.
-            </p>
-            <p className={styles.reframeText}>
-              <strong>Reality:</strong> Users needed less information, fewer steps, and 
-              more emotional connection to progress. Data overload caused abandonment.
-            </p>
-            <p className={styles.reframeText}>
-              <strong>Pivot:</strong> Focused on visual progress stories instead of charts, 
-              one-tap logging instead of multi-step forms, and encouragement instead of 
-              judgment.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Design Options + Rationale */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-        <ScrollRevealText
-            text="Design Options + Decision Rationale"
-            fontSize="clamp(2rem, 4vw, 3rem)"
-          fontWeight={400}
-            className={styles.sectionTitle}
-          />
-
-          <div className={styles.decisionGrid}>
-            <div className={styles.decisionCard}>
-              <h3 className={styles.decisionTitle}>Progress Display: Charts vs Visual Stories</h3>
-              <div className={styles.decisionOptions}>
-                <div className={styles.option}>
-                  <span className={styles.optionLabel}>Option A:</span>
-                  <span className={styles.optionText}>Comprehensive data charts and analytics</span>
-                </div>
-                <div className={styles.option}>
-                  <span className={styles.optionLabel}>Option B:</span>
-                  <span className={styles.optionText}>Visual progress stories with photos and milestones</span>
-                </div>
-              </div>
-              <p className={styles.decisionRationale}>
-                <strong>Chose B.</strong> Testing showed visual stories created 3x more 
-                emotional engagement than charts. Users felt motivated seeing their journey, 
-                not analyzing data. Trade-off: Power users who wanted detailed analytics 
-                could access them via progressive disclosure.
-              </p>
-            </div>
-
-            <div className={styles.decisionCard}>
-              <h3 className={styles.decisionTitle}>Logging: Multi-Step Forms vs One-Tap Actions</h3>
-              <div className={styles.decisionOptions}>
-                <div className={styles.option}>
-                  <span className={styles.optionLabel}>Option A:</span>
-                  <span className={styles.optionText}>Detailed forms with multiple fields</span>
-                </div>
-                <div className={styles.option}>
-                  <span className={styles.optionLabel}>Option B:</span>
-                  <span className={styles.optionText}>One-tap logging with smart defaults</span>
-                </div>
-              </div>
-              <p className={styles.decisionRationale}>
-                <strong>Chose B.</strong> Research showed users abandoned logging when it 
-                took more than 2 taps. One-tap with smart defaults (remember last workout, 
-                suggest based on time) reduced friction by 70%. Trade-off: Less precision, 
-                but testing showed users preferred speed over detail.
-              </p>
-            </div>
-
-            <div className={styles.decisionCard}>
-              <h3 className={styles.decisionTitle}>Interface: Feature-Rich vs Focused</h3>
-              <div className={styles.decisionOptions}>
-                <div className={styles.option}>
-                  <span className={styles.optionLabel}>Option A:</span>
-                  <span className={styles.optionText}>Multiple sections and features visible</span>
-                </div>
-                <div className={styles.option}>
-                  <span className={styles.optionLabel}>Option B:</span>
-                  <span className={styles.optionText}>Three core screens: Today, Progress, Profile</span>
-                </div>
-              </div>
-              <p className={styles.decisionRationale}>
-                <strong>Chose B.</strong> Simplified navigation to three core sections reduced 
-                cognitive load. Testing showed users completed tasks 40% faster with focused 
-                interface. Trade-off: Some features hidden behind progressive disclosure, but 
-                core actions more accessible.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Final Solution */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-        <ScrollRevealText
-            text="Final Solution"
-            fontSize="clamp(2rem, 4vw, 3rem)"
-          fontWeight={400}
-            className={styles.sectionTitle}
-          />
-
-          <div className={styles.solutionsGrid}>
-            <div className={styles.solutionCard}>
-              <div className={styles.solutionVisual}>
-                <div className={styles.visualPlaceholder}>
-                  <span className={styles.visualLabel}>Simplified Daily View</span>
-                </div>
-              </div>
-              <div className={styles.solutionContent}>
-                <h3 className={styles.solutionTitle}>Simplified Daily View</h3>
-                <p className={styles.solutionText}>
-                  Single-screen dashboard showing today&apos;s progress at a glance. Large visual 
-                  progress rings replace complex charts. Log activities with one tap.
-                </p>
-                <p className={styles.solutionCaption}>
-                  <strong>Function:</strong> Surface actionable information → reduce steps → 
-                  enable quick check-ins
-                </p>
-              </div>
-            </div>
-
-            <div className={styles.solutionCard}>
-              <div className={styles.solutionVisual}>
-                <div className={styles.visualPlaceholder}>
-                  <span className={styles.visualLabel}>Visual Progress Stories</span>
-                </div>
-              </div>
-              <div className={styles.solutionContent}>
-                <h3 className={styles.solutionTitle}>Visual Progress Stories</h3>
-                <p className={styles.solutionText}>
-                  Replaced data-heavy charts with visual stories showing transformation over time. 
-                  Users see their journey through photos, milestones, and simple progress indicators.
-                </p>
-                <p className={styles.solutionCaption}>
-                  <strong>Function:</strong> Create emotional connection → increase motivation → 
-                  improve retention
-                </p>
-              </div>
-            </div>
-
-            <div className={styles.solutionCard}>
-              <div className={styles.solutionVisual}>
-                <div className={styles.visualPlaceholder}>
-                  <span className={styles.visualLabel}>Smart Suggestions</span>
-                </div>
-              </div>
-              <div className={styles.solutionContent}>
-                <h3 className={styles.solutionTitle}>Contextual Smart Suggestions</h3>
-                <p className={styles.solutionText}>
-                  Flexible suggestions based on time available, energy level, and past preferences. 
-                  Users feel supported without rigid plans that create guilt.
-                </p>
-                <p className={styles.solutionCaption}>
-                  <strong>Function:</strong> Provide guidance → respect flexibility → 
-                  reduce abandonment pressure
-                </p>
-              </div>
-            </div>
-
-            <div className={styles.solutionCard}>
-              <div className={styles.solutionVisual}>
-                <div className={styles.visualPlaceholder}>
-                  <span className={styles.visualLabel}>Gesture-Based Shortcuts</span>
-                </div>
-              </div>
-              <div className={styles.solutionContent}>
-                <h3 className={styles.solutionTitle}>Gesture-Based Quick Actions</h3>
-                <p className={styles.solutionText}>
-                  Swipe up to start workout, swipe down to log food, long-press for settings. 
-                  Reduced friction for frequent tasks while keeping interface clean.
-                </p>
-                <p className={styles.solutionCaption}>
-                  <strong>Function:</strong> Enable shortcuts → reduce taps → 
-                  speed up interactions
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Validation */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-        <ScrollRevealText
-            text="Validation"
-            fontSize="clamp(2rem, 4vw, 3rem)"
-          fontWeight={400}
-            className={styles.sectionTitle}
-          />
-
-          <div className={styles.validationGrid}>
-            <div className={styles.validationCard}>
-              <h3 className={styles.validationTitle}>Quantitative</h3>
-              <div className={styles.validationList}>
-                <div className={styles.validationItem}>
-                  <span className={styles.validationMetric}>58%</span>
-                  <span className={styles.validationLabel}>increase in daily active users</span>
-                </div>
-                <div className={styles.validationItem}>
-                  <span className={styles.validationMetric}>2 taps</span>
-                  <span className={styles.validationLabel}>average to log activity</span>
-                </div>
-                <div className={styles.validationItem}>
-                  <span className={styles.validationMetric}>6 weeks</span>
-                  <span className={styles.validationLabel}>average retention (up from 2 weeks)</span>
-                </div>
-                <div className={styles.validationItem}>
-                  <span className={styles.validationMetric}>12 sec</span>
-                  <span className={styles.validationLabel}>average session duration</span>
-                </div>
-              </div>
-            </div>
-            <div className={styles.validationCard}>
-              <h3 className={styles.validationTitle}>Qualitative</h3>
-              <div className={styles.validationQuotes}>
-                <p className={styles.quote}>
-                  &quot;Finally, an app that doesn&apos;t make me feel guilty for missing a day.&quot;
-                </p>
-                <p className={styles.quote}>
-                  &quot;I can actually see my progress without digging through charts.&quot;
-                </p>
-                <p className={styles.quote}>
-                  &quot;Logging takes seconds, not minutes. I actually use it daily now.&quot;
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Outcome */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-        <ScrollRevealText
-            text="Outcome"
-            fontSize="clamp(2rem, 4vw, 3rem)"
-          fontWeight={400}
-            className={styles.sectionTitle}
-          />
-
-          <div className={styles.outcomeCard}>
-            <p className={styles.outcomeText}>
-              <strong>Original problem:</strong> High abandonment rates (70%+), users stopped 
-              using apps within weeks, low retention and engagement.
-            </p>
-            <p className={styles.outcomeText}>
-              <strong>Result:</strong> Daily active usage increased 58%. Retention extended to 
-              6 weeks average (up from 2 weeks). Users completed logging in 2 taps vs 8+ taps. 
-              4.8/5 App Store rating with consistent praise for simplicity.
-            </p>
-            <p className={styles.outcomeText}>
-              <strong>Impact:</strong> Proved that simplicity and emotional connection beat 
-              feature bloat. Users engaged more when they spent less time in the app.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Reflection */}
-      <section className={styles.section}>
-        <div className={styles.container}>
-          <ScrollRevealText
-            text="Reflection"
-            fontSize="clamp(2rem, 4vw, 3rem)"
-          fontWeight={400}
-            className={styles.sectionTitle}
-          />
-
-          <div className={styles.reflectionContent}>
-            <div className={styles.reflectionCard}>
-              <h3 className={styles.reflectionTitle}>What Worked</h3>
-              <p className={styles.reflectionText}>
-                Removing features was harder than adding them, but essential. Visual progress 
-                stories created emotional connections that data couldn&apos;t match. One-tap logging 
-                removed friction that was killing engagement.
-              </p>
-            </div>
-            <div className={styles.reflectionCard}>
-              <h3 className={styles.reflectionTitle}>What I&apos;d Change</h3>
-              <p className={styles.reflectionText}>
-                Should have tested gestures earlier. Some users took time to discover swipe actions. 
-                Would have added onboarding hints or made gestures more discoverable initially.
-              </p>
-            </div>
-            <div className={styles.reflectionCard}>
-              <h3 className={styles.reflectionTitle}>What&apos;s Next</h3>
-              <p className={styles.reflectionText}>
-                Analytics show smart suggestions are underutilized. Need to improve timing and 
-                personalization. Also evaluating social features that respect privacy—users want 
-                accountability without public sharing.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
       <section className={styles.ctaSection}>
         <div className={styles.container}>
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>Interested in working together?</h2>
             <p className={styles.ctaText}>
-              I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
+              I&apos;m always open to discussing new projects, creative ideas, or
+              opportunities to be part of your vision.
             </p>
             <div className={styles.ctaButtons}>
-              <Link href="/contact" className={styles.ctaButton}>
+              <a
+                href="https://linkedin.com/in/russellsaw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.ctaButton}
+              >
                 Get in Touch
-              </Link>
+              </a>
               <Link href="/" className={styles.ctaButtonSecondary}>
                 View Other Projects
               </Link>
@@ -560,5 +787,5 @@ export default function ProjectTwoCaseStudy() {
         </div>
       </section>
     </main>
-  )
+  );
 }

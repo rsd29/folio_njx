@@ -4,9 +4,8 @@
 :root {
   --background: #181818;
   --foreground: #f5f5f5;
-  --font-family-sans: 'Figtree', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-heading: var(--font-family-sans);
-  --font-body: var(--font-family-sans);
+  --font-heading: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Stack Sans Notch', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   
   /* Typography Scale - Design System */
   --font-display: 4.5rem;        /* 72px - Hero titles */
@@ -154,10 +153,96 @@ strong{
   pointer-events: none;
   z-index: 9999;
   mix-blend-mode: difference;
-  background-color: white;
-  transition: background-color 0.3s ease;
+  background-color: #ffffff;
+  color: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  padding: 0;
+  transition:
+    width 0.28s cubic-bezier(0.23, 1, 0.32, 1),
+    height 0.28s cubic-bezier(0.23, 1, 0.32, 1),
+    border-radius 0.28s cubic-bezier(0.23, 1, 0.32, 1),
+    background-color 0.28s ease,
+    color 0.2s ease,
+    mix-blend-mode 0.2s ease;
   will-change: transform;
+  overflow: visible;
   transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.custom-cursor__label {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px) scale(0.96);
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+  white-space: nowrap;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.custom-cursor__text {
+  display: inline-block;
+}
+
+.custom-cursor__arrow {
+  display: inline-block;
+  line-height: 1;
+  font-size: 1.1em;
+  transition: transform 0.2s ease;
+}
+
+.custom-cursor--pill {
+  width: 150px;
+  height: 44px;
+  border-radius: 999px;
+  background: rgba(245, 245, 245, 0.94);
+  color: #000;
+  mix-blend-mode: normal;
+  padding: 0 28px;
+  box-shadow:
+    0 18px 36px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.custom-cursor--pill .custom-cursor__label {
+  opacity: 1;
+  color: #000;
+  transform: translateY(0) scale(1);
+}
+
+.custom-cursor--pill .custom-cursor__text,
+.custom-cursor--pill .custom-cursor__arrow {
+  color: #000;
+}
+
+.custom-cursor--pill .custom-cursor__arrow {
+  transform: translateX(4px);
+}
+
+.custom-cursor--pill::after {
+  content: '';
+  position: absolute;
+  inset: -10px;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.45), transparent 40%),
+    radial-gradient(circle at 80% 50%, rgba(102, 217, 255, 0.35), transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(255, 0, 153, 0.28), transparent 60%);
+  filter: blur(8px);
+  opacity: 0.8;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: opacity 0.3s ease;
 }
 
 .about-blank {

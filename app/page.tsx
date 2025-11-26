@@ -2,9 +2,8 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
+import { ArrowDownIcon, DownloadIcon } from '@radix-ui/react-icons'
 import styles from './home.module.css'
-import AnimatedRichText from '../components/AnimatedRichText'
-import ScrollRevealText from '../components/ScrollRevealText'
 import ProjectsSection from '../components/ProjectSection'
 
 const taglines = [
@@ -78,9 +77,13 @@ export default function HomePage() {
 
         <div className={styles.heroSignatureWrapper}>
           <div className={styles.heroSignature}>
-            <span className={styles.heroSignatureName}>Russell Saw</span>
+            <span className={styles.heroSignatureName}>Russell Saw </span>
             <span className={styles.heroSignatureDivider} />
-            <span className={styles.heroSignatureRole}>UX</span>
+            <div className={styles.heroSignatureRoleWrapper}>
+            <span className={styles.heroSignatureRole}>UI \ UX</span>
+            <span className={styles.heroSignatureRole2}>Designer</span>
+            </div>
+
           </div>
         </div>
 
@@ -88,38 +91,30 @@ export default function HomePage() {
         <div className={styles.heroContent}>
           <div className={styles.heroPrimary}>
 
-            <AnimatedRichText
-              className={styles.heroLead}
-              segments={[
-                { text: 'Designing calm, credible product experiences ' },
-                { text: 'for teams that can’t afford to break things.', isStrong: true }
-              ]}
-              useFlickerEffect={false}
-              fontSize="clamp(2.2rem, 4vw, 3.5rem)"
-              fontWeight={400}
-              lineHeight={1.1}
-              letterSpacing="-0.02em"
-            />
-            <p className={styles.heroDescription}>
-              I lead UX and front-end delivery for enterprise platforms—translating messy requirements into systems,
-              rituals, and UI that feel intentional, premium, and scalable.
-            </p>
-            <div className={styles.heroTagList}>
-              {['Enterprise UX', 'Design Systems', 'Frontend Dev', 'Research Ops'].map((tag) => (
-                <span key={tag} className={styles.heroTag}>
-                  {tag}
-                </span>
-              ))}
+            <div className={styles.heroLeadGroup}>
+            <p className={`${styles.heroLead} ${styles.heroLeadLine}`} style={{ animationDelay: '0.1s' }}>
+  I craft experiences that feel effortless for users and scalable for teams.
+</p>
+            <p className={`${styles.heroLead} ${styles.heroLeadLine2}`} style={{ animationDelay: '0.25s' }}>
+  Currently a enterprise UX designer at Oriental Merchant, blending design and code to shape meaningful business outcomes.
+</p>
+
+     
+              <div className={`${styles.heroLeadMeta} ${styles.heroLeadLine}`} style={{ animationDelay: '0.45s' }}>
+       
+              </div>
             </div>
-            <div className={styles.heroTicker}>
+
+            {/* <div className={styles.heroTicker}>
               <span className={styles.heroTickerText}>Based in Melbourne — {displayed}</span>
               <button type="button" className={styles.heroTickerButton} onClick={loadNewTagline}>
                 Shuffle line
               </button>
-            </div>
+            </div> */}
             <div className={styles.heroActions}>
-              <Link href="/projects/project-one" className={styles.heroButtonPrimary}>
+              <Link href="#case-studies" scroll className={styles.heroButtonPrimary}>
                 View case studies
+                <ArrowDownIcon className={styles.heroButtonIcon} />
               </Link>
               <a
                 href="/rs-resume-q3-2025-v2.pdf"
@@ -128,45 +123,15 @@ export default function HomePage() {
                 className={styles.heroButtonSecondary}
               >
                 Download resume
+                <DownloadIcon className={styles.heroButtonIcon} />
               </a>
+              <div className={styles.heroAvailabilityPill}>
+  Open to new opportunities (always)
+  <span className={styles.availabilityIndicator}></span>
+</div>
             </div>
           </div>
         </div>
-
-        <div className={styles.heroGlowRail} />
-        </div>
-      </section>
-
-      {/* Animated Text Section */}
-      <section className={styles.animatedTextSection}>
-        <div className={styles.animatedTextContainer}>
-          <div className={styles.contentGrid}>
-            <div className={styles.mainTitle}>
-            <ScrollRevealText
-              text="Year 5 of UX."
-              fontSize="var(--font-display)"
-              fontWeight={400}
-              lineHeight={1.1}
-              letterSpacing="var(--letter-spacing-tight)"
-              className="scrollRevealText"
-            />
-              <div className={styles.disclaimer}>
-                Currently seeking new opportunities.
-                <span className={styles.availabilityIndicator}></span>
-              </div>
-            </div>
-            <div className={styles.descriptionBlock}>
-              <div className={styles.roleLabel}>Current Role</div>
-              <ScrollRevealText
-                text="Leading product design across enterprise platforms at Oriental Merchant, while building front-end experiences."
-                fontSize="var(--font-heading-m)"
-                fontWeight={400}
-                lineHeight={1.4}
-                letterSpacing="var(--letter-spacing-normal)"
-                className="scrollRevealText"
-              />
-            </div>
-          </div>
         </div>
       </section>
 

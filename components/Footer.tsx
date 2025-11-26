@@ -22,7 +22,14 @@ export default function Footer() {
           <nav className={styles.nav}>
             <Link href="/" className={styles.navLink}>Projects</Link>
             <Link href="/about" className={styles.navLink}>About</Link>
-            <Link href="/contact" className={styles.navLink}>Contact</Link>
+            <a
+              href="https://linkedin.com/in/russellsaw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.navLink}
+            >
+              LinkedIn
+            </a>
             <Link href="/off-the-clock" className={styles.navLink}>Off the Clock</Link>
           </nav>
 
@@ -38,7 +45,7 @@ export default function Footer() {
 
         <div className={styles.bottomSection}>
           <div className={styles.copyright}>
-            © 2025 Russell Saw Design
+            © 2025 Russell Saw Design UX Portfolio
           </div>
         </div>
       </div>

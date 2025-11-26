@@ -32,11 +32,21 @@
     0 0 12px rgba(0, 0, 0, 0.4),
     inset 0 -2px rgba(0, 0, 0, 0.25),
     inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-      transition: all ease 0.4s;
+  transition:
+    transform 0.34s cubic-bezier(0.23, 1, 0.32, 1),
+    box-shadow 0.34s ease,
+    background 0.34s ease;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .innerContainer:hover{
-    scale: 1.05;
+  transform: scale(1.025);
+  box-shadow:
+    0 18px 30px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(255, 255, 255, 0.08),
+    inset 0 -2px rgba(0, 0, 0, 0.25),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 /* Inner content box */
@@ -77,6 +87,28 @@
     transparent
   );
   z-index: 1;
+}
+
+.innerContainer::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15), transparent 55%),
+    radial-gradient(circle at 70% 70%, rgba(255, 255, 255, 0.08), transparent 50%);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+  mix-blend-mode: screen;
+  z-index: 0;
+}
+
+.innerContainer:hover::after {
+  opacity: 1;
+  transform: scale(1.01);
 }
 .innerContentDiv::before {
   content: '';

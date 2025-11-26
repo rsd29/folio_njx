@@ -275,7 +275,21 @@
 }
 
 .sectionTitle {
-  margin-bottom: 60px;
+  margin-bottom: 0;
+}
+
+.sectionSubtext {
+  font-size: var(--font-body-m);
+  font-weight: 400;
+  color: #888;
+  font-family: var(--font-body);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 16px 0;
+  margin-bottom: 48px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
 }
 
 /* Content Blocks */

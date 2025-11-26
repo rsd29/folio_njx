@@ -4,16 +4,10 @@ import SmoothScroll from '../components/SmoothScroll'
 import Footer from '../components/Footer'
 import NegativeCursor from '../components/NegativeCursor'
 import ClientPageTransition from '../components/ClientPageTransition'
+import ContactForm from '../components/ContactForm'
 // import PasswordGate from '../components/PasswordGate' // Disabled for now - uncomment to re-enable
 import { Analytics } from "@vercel/analytics/next"
-import { Figtree, UnifrakturMaguntia } from 'next/font/google'
-
-const figtree = Figtree({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  weight: ['300','400','500','600','700','800','900'],
-  display: 'swap',
-})
+import { UnifrakturMaguntia } from 'next/font/google'
 
 const unifrakturMaguntia = UnifrakturMaguntia({
   weight: ['400'],
@@ -29,13 +23,16 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${figtree.variable} ${unifrakturMaguntia.variable}`}>
+    <html lang="en" className={unifrakturMaguntia.variable}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Stack+Sans+Notch:wght@200..700&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className={figtree.className}>
+      <body>
         <Analytics />
         {/* <PasswordGate> - Disabled for now - uncomment to re-enable */}
           <NegativeCursor />
@@ -81,12 +78,39 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   fontSize: '5rem',
                   fontWeight: 300,
                   fontFamily: 'var(--font-body)',
-                  letterSpacing: '-0.08em',
+                  letterSpacing: '-0.05em',
                   lineHeight: 1.1
                 }}>
                   Let&apos;s collaborate, Drop us a line  →
                 </div>
               </div>
+              <section style={{
+                padding: '50px 10% 140px',
+                background: '#070707',
+                borderTop: '1px solid rgba(255,255,255,0.05)',
+                borderBottom: '1px solid rgba(255,255,255,0.05)'
+              }}>
+                <div style={{
+                  maxWidth: '960px',
+                  width: '100%',
+                  margin: '0',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '32px'
+                }}>
+                  <div style={{
+                    color: '#ffffff',
+                    fontSize: '3rem',
+                    fontWeight: 300,
+                    fontFamily: 'var(--font-body)',
+                    letterSpacing: '-0.05em',
+                    lineHeight: 1.1
+                  }}>
+                    Quick hello, quicker reply.
+                  </div>
+                  <ContactForm />
+                </div>
+              </section>
               <Footer />
             </div>
           </div>

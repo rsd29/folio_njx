@@ -37,7 +37,7 @@ interface AnimatedRichTextProps {
 export default function AnimatedRichText({
   segments,
   fontSize = '2rem',
-  fontWeight = 400,
+  fontWeight = 300,
   lineHeight = 1.2,
   maxWidth = '100ch',
   className = '',
