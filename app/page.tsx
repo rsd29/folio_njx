@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+// import { useEffect, useRef, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { ArrowDownIcon, DownloadIcon } from '@radix-ui/react-icons'
 import styles from './home.module.css'
@@ -21,39 +21,40 @@ const taglines = [
 ]
 
 export default function HomePage() {
-  const [displayed, setDisplayed] = useState('')
-  const [fullTagline, setFullTagline] = useState('')
-  const [charIndex, setCharIndex] = useState(0)
-  const fullTaglineRef = useRef(fullTagline)
+  // Tagline functionality commented out - keeping for potential future use
+  // const [displayed, setDisplayed] = useState('')
+  // const [fullTagline, setFullTagline] = useState('')
+  // const [charIndex, setCharIndex] = useState(0)
+  // const fullTaglineRef = useRef(fullTagline)
 
-  useEffect(() => {
-    fullTaglineRef.current = fullTagline
-  }, [fullTagline])
+  // useEffect(() => {
+  //   fullTaglineRef.current = fullTagline
+  // }, [fullTagline])
 
-  useEffect(() => {
-    if (charIndex < fullTagline.length) {
-      const timeout = setTimeout(() => {
-        setDisplayed((prev) => prev + fullTagline[charIndex])
-        setCharIndex((prev) => prev + 1)
-      }, 20)
-      return () => clearTimeout(timeout)
-    }
-  }, [charIndex, fullTagline])
+  // useEffect(() => {
+  //   if (charIndex < fullTagline.length) {
+  //     const timeout = setTimeout(() => {
+  //       setDisplayed((prev) => prev + fullTagline[charIndex])
+  //       setCharIndex((prev) => prev + 1)
+  //     }, 20)
+  //     return () => clearTimeout(timeout)
+  //   }
+  // }, [charIndex, fullTagline])
 
-  const loadNewTagline = useCallback(() => {
-    let newLine = ''
-    do {
-      newLine = taglines[Math.floor(Math.random() * taglines.length)]
-    } while (newLine === fullTaglineRef.current)
+  // const loadNewTagline = useCallback(() => {
+  //   let newLine = ''
+  //   do {
+  //     newLine = taglines[Math.floor(Math.random() * taglines.length)]
+  //   } while (newLine === fullTaglineRef.current)
 
-    setFullTagline(newLine)
-    setDisplayed('')
-    setCharIndex(0)
-  }, [])
+  //   setFullTagline(newLine)
+  //   setDisplayed('')
+  //   setCharIndex(0)
+  // }, [])
 
-  useEffect(() => {
-    loadNewTagline()
-  }, [loadNewTagline])
+  // useEffect(() => {
+  //   loadNewTagline()
+  // }, [loadNewTagline])
 
   return (
     <main style={{ maxWidth: '100%' }}>

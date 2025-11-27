@@ -269,8 +269,13 @@ export default function ProjectOneCaseStudy() {
                 </p>
 
                 <blockquote className={styles.quoteBlock}>
-                  <span className={styles.quoteBlockLabel}>Reflection</span>
-                  Let me place accurate orders quickly, and show me what discounts I qualify for.
+                  <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                  The biggest insight wasn't in the interviews—it was watching store owners order while handling customers. That's when I realized we weren't building a shopping experience, we were building a tool for people who don't have time to think about shopping.
+                </blockquote>
+
+                <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
+                  <span className={styles.quoteBlockLabel}>In Hindsight</span>
+                  We built flexibility into everything, which was smart for global rollout, but it also meant we were solving problems we didn't know we'd have. Sometimes the best architecture is the one you don't need to think about.
                 </blockquote>
                 
                 <div className={styles.imagePlaceholder}>
@@ -504,7 +509,10 @@ export default function ProjectOneCaseStudy() {
                   beautiful visuals or innovative interactions. They wanted{" "}
                   <strong>speed, clarity, and access</strong>.
                 </p>
-          
+                <blockquote className={styles.quoteBlock}>
+                  <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                  The biggest insight wasn't in the interviews—it was watching store owners order while handling customers. That's when I realized we weren't building a shopping experience, we were building a tool for people who don't have time to think about shopping.
+                </blockquote>
               </div>
 
               <div className={styles.insightsSection}>
@@ -620,6 +628,10 @@ export default function ProjectOneCaseStudy() {
                   immediately familiar but supported far more sophisticated
                   logic than typical consumer platforms.
                 </p>
+                <blockquote className={styles.quoteBlock}>
+                  <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                  Choosing familiarity over innovation felt like a compromise at first, but it was the right call. Users didn't need to learn our platform—they needed to trust it immediately. The sophistication lives in the backend, not the interface.
+                </blockquote>
               </div>
             </div>
           </section>
@@ -691,6 +703,8 @@ export default function ProjectOneCaseStudy() {
                     <li>Optimized for on-the-floor ordering scenarios</li>
                   </ul>
                 </div>
+
+                
               </div>
               
               <div className={styles.imagePlaceholder}>
@@ -909,6 +923,10 @@ export default function ProjectOneCaseStudy() {
                     Ongoing performance optimization for large catalogs
                   </li>
                 </ul>
+                <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
+                  <span className={styles.quoteBlockLabel}>In Hindsight</span>
+                  We built flexibility into everything, which was smart for global rollout, but it also meant we were solving problems we didn't know we'd have. Sometimes the best architecture is the one you don't need to think about.
+                </blockquote>
               </div>
             </div>
           </section>
@@ -968,6 +986,10 @@ export default function ProjectOneCaseStudy() {
                     intuitive design.
                   </p>
                 </div>
+                <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
+                  <span className={styles.quoteBlockLabel}>In Hindsight</span>
+                  The rapid global expansion caught us off guard. We should have planned for success from day one—better documentation, clearer onboarding flows, and more robust error handling. Success is great, but it amplifies every weakness you didn't fix.
+                </blockquote>
               </div>
             </div>
           </section>
@@ -1104,6 +1126,10 @@ export default function ProjectOneCaseStudy() {
                       would have improved perceived performance
                     </li>
                   </ul>
+                  <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
+                    <span className={styles.quoteBlockLabel}>In Hindsight</span>
+                    I spent too much time polishing features that barely got used. The analytics told us early on which features mattered, but I kept iterating on the wrong things because they were more interesting to design. Lesson learned: data beats intuition, even when intuition feels right.
+                  </blockquote>
                 </div>
               </div>
             </div>

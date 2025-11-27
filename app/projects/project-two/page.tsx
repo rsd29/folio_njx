@@ -577,7 +577,7 @@ export default function ProjectTwoCaseStudy() {
                 className={styles.sectionTitle}
               />
               <div className={styles.sectionSubtext}>
-                Procurement's most complex workflow
+                Procurement&apos;s most complex workflow
               </div>
 
               <div className={styles.contentBlock}>
