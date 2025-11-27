@@ -42,6 +42,8 @@ export default function ProjectOneCaseStudy() {
   const [activeSection, setActiveSection] = useState(
     CASE_STUDY_SECTIONS[0]?.id ?? "",
   );
+  const heroMetaRef = useRef<HTMLDivElement>(null);
+  const [heroMetaVisible, setHeroMetaVisible] = useState(false);
 
   useEffect(() => {
     const toc = tocRef.current;
@@ -82,6 +84,25 @@ export default function ProjectOneCaseStudy() {
     };
   }, []);
 
+  useEffect(() => {
+    const node = heroMetaRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          setHeroMetaVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-20% 0px -35% 0px", threshold: 0.15 },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   const handleSectionClick =
     (id: string) => (event: MouseEvent<HTMLAnchorElement>) => {
       event.preventDefault();
@@ -118,7 +139,25 @@ export default function ProjectOneCaseStudy() {
               letterSpacing="-0.02em"
               className={styles.heroTitle}
             />
-            <div className={styles.heroMeta}>
+            <ScrollRevealText
+              text="SalesIQ is Oriental Merchant's end-to-end wholesale ordering platform, replacing phone and paper workflows with a live catalog that surfaces customer-specific pricing, stock, and promotions for thousands of grocers across every region."
+              fontSize="var(--font-body-l)"
+              fontWeight={300}
+              lineHeight={1.6}
+              letterSpacing="0"
+              className={styles.heroDescription}
+              style={{
+                fontFamily: 'var(--font-body)',
+                color: '#c7c7c7',
+                transitionDelay: '0.12s',
+              }}
+            />
+            <div
+              className={`${styles.heroMeta} ${
+                heroMetaVisible ? styles.heroMetaVisible : ""
+              }`}
+              ref={heroMetaRef}
+            >
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Client</span>
                 <span className={styles.metaValue}>Oriental Merchant</span>
@@ -228,6 +267,11 @@ export default function ProjectOneCaseStudy() {
                   and instantly access that customer&apos;s specific pricing,
                   product catalog, and promotional structures.
                 </p>
+
+                <blockquote className={styles.quoteBlock}>
+                  <span className={styles.quoteBlockLabel}>Reflection</span>
+                  Let me place accurate orders quickly, and show me what discounts I qualify for.
+                </blockquote>
                 
                 <div className={styles.imagePlaceholder}>
                   <div className={styles.placeholderIcon}>📞 → 💻</div>
@@ -460,17 +504,7 @@ export default function ProjectOneCaseStudy() {
                   beautiful visuals or innovative interactions. They wanted{" "}
                   <strong>speed, clarity, and access</strong>.
                 </p>
-                <p
-                  className={styles.blockText}
-                  style={{
-                    fontStyle: "italic",
-                    fontSize: "1.1rem",
-                    color: "#ccc",
-                  }}
-                >
-                  &quot;Let me place accurate orders quickly, and show me what
-                  discounts I qualify for.&quot;
-                </p>
+          
               </div>
 
               <div className={styles.insightsSection}>

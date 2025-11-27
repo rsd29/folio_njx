@@ -6,7 +6,7 @@ import styles from './ProjectLayout.module.css'
 
 export default function ProjectOne() {
   return (
-    <Link href="/projects/project-one" style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link href="/projects/project-one" className={styles.projectLink}>
       <div className={styles.outerContainer}>
         <div className={styles.innerContainer} data-cursor="view-project">
           <div className={styles.innerContentDiv}>

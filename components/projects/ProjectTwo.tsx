@@ -5,7 +5,7 @@ import styles from './ProjectLayout.module.css'
 
 export default function ProjectTwo() {
   return (
-    <Link href="/projects/project-two" style={{ textDecoration: 'none', color: 'inherit' }}>
+    <Link href="/projects/project-two" className={styles.projectLink}>
       <div className={styles.outerContainer}>
         <div className={styles.innerContainer} data-cursor="view-project">
           <div className={styles.innerContentDiv}>

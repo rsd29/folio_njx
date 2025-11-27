@@ -38,6 +38,8 @@ export default function ProjectTwoCaseStudy() {
   const [activeSection, setActiveSection] = useState(
     CASE_STUDY_SECTIONS[0]?.id ?? "",
   );
+  const heroMetaRef = useRef<HTMLDivElement>(null);
+  const [heroMetaVisible, setHeroMetaVisible] = useState(false);
 
   useEffect(() => {
     const toc = tocRef.current;
@@ -76,6 +78,25 @@ export default function ProjectTwoCaseStudy() {
     };
   }, []);
 
+  useEffect(() => {
+    const node = heroMetaRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          setHeroMetaVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "-20% 0px -35% 0px", threshold: 0.15 },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   const handleSectionClick =
     (id: string) => (event: MouseEvent<HTMLAnchorElement>) => {
       event.preventDefault();
@@ -110,7 +131,12 @@ export default function ProjectTwoCaseStudy() {
               letterSpacing="-0.02em"
               className={styles.heroTitle}
             />
-            <div className={styles.heroMeta}>
+            <div
+              className={`${styles.heroMeta} ${
+                heroMetaVisible ? styles.heroMetaVisible : ""
+              }`}
+              ref={heroMetaRef}
+            >
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Client</span>
                 <span className={styles.metaValue}>Oriental Merchant</span>

@@ -246,6 +246,39 @@
   margin-top: 20px;
 }
 
+.heroMetaVisible {
+  pointer-events: auto;
+}
+
+.heroMeta .metaItem {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+.heroMetaVisible .metaItem {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.heroMetaVisible .metaItem:nth-child(1) {
+  transition-delay: 0.12s;
+}
+
+.heroMetaVisible .metaItem:nth-child(2) {
+  transition-delay: 0.18s;
+}
+
+.heroMetaVisible .metaItem:nth-child(3) {
+  transition-delay: 0.24s;
+}
+
+.heroMetaVisible .metaItem:nth-child(4) {
+  transition-delay: 0.3s;
+}
+
 .metaItem {
   display: flex;
   flex-direction: column;
