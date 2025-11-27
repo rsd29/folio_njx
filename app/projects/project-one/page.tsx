@@ -270,12 +270,12 @@ export default function ProjectOneCaseStudy() {
 
                 <blockquote className={styles.quoteBlock}>
                   <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                  The biggest insight wasn't in the interviews—it was watching store owners order while handling customers. That's when I realized we weren't building a shopping experience, we were building a tool for people who don't have time to think about shopping.
+                  The biggest insight wasn&apos;t in the interviews. It was watching store owners order while handling customers. That&apos;s when I realized we weren&apos;t building a shopping experience, we were building a tool for people who don&apos;t have time to think about shopping.
                 </blockquote>
 
                 <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
                   <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                  We built flexibility into everything, which was smart for global rollout, but it also meant we were solving problems we didn't know we'd have. Sometimes the best architecture is the one you don't need to think about.
+                  We built flexibility into everything, which was smart for global rollout, but it also meant we were solving problems we didn&apos;t know we&apos;d have. Sometimes the best architecture is the one you don&apos;t need to think about.
                 </blockquote>
                 
                 <div className={styles.imagePlaceholder}>
@@ -630,7 +630,7 @@ export default function ProjectOneCaseStudy() {
                 </p>
                 <blockquote className={styles.quoteBlock}>
                   <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                  Choosing familiarity over innovation felt like a compromise at first, but it was the right call. Users didn't need to learn our platform—they needed to trust it immediately. The sophistication lives in the backend, not the interface.
+                  Choosing familiarity over innovation felt like a compromise at first, but it was the right call. Users didn&apos;t need to learn our platform. They needed to trust it immediately. The sophistication lives in the backend, not the interface.
                 </blockquote>
               </div>
             </div>
@@ -925,7 +925,7 @@ export default function ProjectOneCaseStudy() {
                 </ul>
                 <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
                   <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                  We built flexibility into everything, which was smart for global rollout, but it also meant we were solving problems we didn't know we'd have. Sometimes the best architecture is the one you don't need to think about.
+                  We built flexibility into everything, which was smart for global rollout, but it also meant we were solving problems we didn&apos;t know we&apos;d have. Sometimes the best architecture is the one you don&apos;t need to think about.
                 </blockquote>
               </div>
             </div>
@@ -988,7 +988,7 @@ export default function ProjectOneCaseStudy() {
                 </div>
                 <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
                   <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                  The rapid global expansion caught us off guard. We should have planned for success from day one—better documentation, clearer onboarding flows, and more robust error handling. Success is great, but it amplifies every weakness you didn't fix.
+                  The rapid global expansion caught us off guard. We should have planned for success from day one: better documentation, clearer onboarding flows, and more robust error handling. Success is great, but it amplifies every weakness you didn&apos;t fix.
                 </blockquote>
               </div>
             </div>
