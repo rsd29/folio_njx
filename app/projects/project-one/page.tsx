@@ -266,16 +266,20 @@ export default function ProjectOneCaseStudy() {
                   second authorization tier, allowing them to log into any store
                   and instantly access that customer&apos;s specific pricing,
                   product catalog, and promotional structures.
+            <br />
+                  At the end of the day, the project scopes out to be a B2B e-comm platform that satisfies power users while mantaining a commercial feel. 
                 </p>
 
                 <blockquote className={styles.quoteBlock}>
                   <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                  The biggest insight wasn&apos;t in the interviews. It was watching store owners order while handling customers. That&apos;s when I realized we weren&apos;t building a shopping experience, we were building a tool for people who don&apos;t have time to think about shopping.
+                  The project was a long time coming, and definitely the avenue the company needed to expand in. There's just no way in this day and age can you NOT have centralised digital platforms, especially for such complex businesses outcomes.
+                  Initially we thought of this as a single region pilot, but it quickly became clear that it was going to be a global rollout. This meant we needed to build a platform that was flexible enough to handle the different needs of the different regions.
+
                 </blockquote>
 
                 <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
                   <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                  We built flexibility into everything, which was smart for global rollout, but it also meant we were solving problems we didn&apos;t know we&apos;d have. Sometimes the best architecture is the one you don&apos;t need to think about.
+                  We built flexibility into everything, which was smart for global rollout, but it also meant we were solving problems we didn&apos;t know we&apos;d have. Sometimes the best architecture is the one you don&apos;t need to think about. We aren't a massive dev team, so balancing flexibility with maintainability was key.  Dynamic platforms can sometimes invite unecessary scope creep too..
                 </blockquote>
                 
                 <div className={styles.imagePlaceholder}>
@@ -349,6 +353,10 @@ export default function ProjectOneCaseStudy() {
                   </ul>
                 </div>
               </div>
+
+              <blockquote className={styles.quoteBlock}>
+                  <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                  I drove the design from concept to implementation and built the UI components I created, partnering with the product manager to keep the project on track.                </blockquote>
             </div>
           </section>
 
@@ -458,6 +466,10 @@ export default function ProjectOneCaseStudy() {
                 </ul>
               </div>
             </div>
+            <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
+                  <span className={styles.quoteBlockLabel}>In Hindsight</span>
+                  Scope creep hit us when some regions began treating the platform as a full commercial storefront rather than an ordering tool. One region pushed for a complete UI overhaul, while others wanted to diverge in different directions. The real issue was misalignment.. we needed all region leads operating from the same brief. Its challenging managing expectations across multiple regions with differing timezones and work processes.. and even tougher yet to conduct true user research with just email conversations an the occasional call.        </blockquote>
+            
           </section>
 
           {/* Research & Discovery */}
@@ -511,7 +523,7 @@ export default function ProjectOneCaseStudy() {
                 </p>
                 <blockquote className={styles.quoteBlock}>
                   <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                  The biggest insight wasn&apos;t in the interviews. It was watching store owners order while handling customers. That&apos;s when I realized we weren&apos;t building a shopping experience, we were building a tool for people who don&apos;t have time to think about shopping.
+                  The biggest insight wasn&apos;t in the interviews. It was watching store owners order while handling customers. That&apos;s when I realized we weren&apos;t building a shopping experience, we were building a tool for people who don&apos;t have time to think about shopping. 
                 </blockquote>
               </div>
 
@@ -630,7 +642,7 @@ export default function ProjectOneCaseStudy() {
                 </p>
                 <blockquote className={styles.quoteBlock}>
                   <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                  Choosing familiarity over innovation felt like a compromise at first, but it was the right call. Users didn&apos;t need to learn our platform. They needed to trust it immediately. The sophistication lives in the backend, not the interface.
+                  Choosing familiarity over innovation felt like a compromise at first, but it was 100% the right call. Yeah, as a young hungry designer, its tempting to take any oppurtunity and creative freedom to flex your creative chops or spark change. Truth is users didn&apos;t need to learn our platform. They needed to trust it immediately. The sophistication lives in the backend, and NOT the interface. 
                 </blockquote>
               </div>
             </div>
@@ -790,7 +802,9 @@ export default function ProjectOneCaseStudy() {
                   ordering workflow.
                 </p>
               </div>
-              
+                          <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
+            In hindsight, we should have avoided adding non-essential supporting pages. Features like new arrivals and promotional banners required ongoing creative maintenance that some regions couldn’t resource, and the work ultimately shifted to the development team. Even a simple CMS proved more than some regions could manage. The outcomes of these pages simply weren't worth the effort.           </blockquote>
+
               <div className={styles.imagePlaceholder}>
                 <div className={styles.placeholderIcon}>🗺️</div>
                 <h4 className={styles.placeholderTitle}>Information Architecture Diagram</h4>
@@ -799,6 +813,7 @@ export default function ProjectOneCaseStudy() {
                 </p>
               </div>
             </div>
+
           </section>
 
           {/* Visual Design Direction */}
@@ -847,7 +862,10 @@ export default function ProjectOneCaseStudy() {
                   .
                 </p>
               </div>
-              
+              <blockquote className={styles.quoteBlock}>
+                <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                The UI is more compact than typical consumer e-commerce. Users see more line items at once, helping wholesale buyers build orders quickly without excessive scrolling.
+              </blockquote>
               <div className={styles.imagePlaceholder}>
                 <div className={styles.placeholderIcon}>🎨</div>
                 <h4 className={styles.placeholderTitle}>Visual Design System</h4>
@@ -925,8 +943,8 @@ export default function ProjectOneCaseStudy() {
                 </ul>
                 <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
                   <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                  We built flexibility into everything, which was smart for global rollout, but it also meant we were solving problems we didn&apos;t know we&apos;d have. Sometimes the best architecture is the one you don&apos;t need to think about.
-                </blockquote>
+                  I didn’t anticipate how much regional flexibility would cost us long-term. What started as thoughtful accommodation turned into a long tail of exceptions we had to maintain indefinitely. Even with very strict scopes, sometimes you just can't please everyone.. and that just the reality. 
+             </blockquote>
               </div>
             </div>
           </section>
@@ -986,11 +1004,20 @@ export default function ProjectOneCaseStudy() {
                     intuitive design.
                   </p>
                 </div>
-                <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
-                  <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                  The rapid global expansion caught us off guard. We should have planned for success from day one: better documentation, clearer onboarding flows, and more robust error handling. Success is great, but it amplifies every weakness you didn&apos;t fix.
-                </blockquote>
+                <div className={styles.contentBlock}>
+                  <h3 className={styles.blockTitle}>
+                    Never ending scope creep
+                  </h3>
+                  <p className={styles.blockText}>
+               I've mentioned this problem several times already, but it's worth repeating. The scope of the project was always changing, and we were always having to adapt to new requirements. This was especially challenging when we were working with multiple regions, each with their own unique requirements.
+                  </p>
+                </div>
+       
+       
               </div>
+              <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
+                  <span className={styles.quoteBlockLabel}>In Hindsight</span>None of the issues were individually serious, but together they slowed us down. Without consistent alignment across regions, even simple decisions took longer than they should have.
+                  </blockquote>
             </div>
           </section>
 
@@ -1056,6 +1083,10 @@ export default function ProjectOneCaseStudy() {
                   product competing with established B2B platforms.
                 </p>
               </div>
+
+              <blockquote className={`${styles.quoteBlock} ${styles.quoteBlock}`}>
+                  <span className={styles.quoteBlockLabel}>Lets go boys!</span> The project was a success, and the team SHOULD be proud of their work. Seeing live metrics of hugely increased uptake in online orders over time was massively gratifying. AUS/NZ region are projected to eclipse over $3M this year, from what started as zero digital orders just afew years ago The lads have earnt it. This was one of our earlier projects, and gave the dev team confidence to tackle bigger projects in the future.
+                  </blockquote>
               
               <div className={styles.imagePlaceholder}>
                 <div className={styles.placeholderIcon}>📊</div>
@@ -1065,6 +1096,7 @@ export default function ProjectOneCaseStudy() {
                 </p>
               </div>
             </div>
+            
           </section>
 
           {/* Key Learnings */}
