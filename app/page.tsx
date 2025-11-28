@@ -6,19 +6,20 @@ import { ArrowDownIcon, DownloadIcon } from '@radix-ui/react-icons'
 import styles from './home.module.css'
 import ProjectsSection from '../components/ProjectSection'
 
-const taglines = [
-  "live from a shoebox that costs $800 a week.",
-  "where house prices rise faster than frontend frameworks.",
-  "currently battling three types of weather and two kinds of impostor syndrome.",
-  "broadcasting from a laneway you've probably never heard of.",
-  "still saving for a place with natural light.",
-  "where the rent is high but brunch is higher.",
-  "where even the pigeons have a side hustle.",
-  "still debugging life and code.",
-  "home of coffee snobs and CSS bugs.",
-  "where freelancers are born and slowly caffeinated to death.",
-  "live from the world's most livable city (unless you're poor).",
-]
+// Tagline functionality commented out - keeping for potential future use
+// const taglines = [
+//   "live from a shoebox that costs $800 a week.",
+//   "where house prices rise faster than frontend frameworks.",
+//   "currently battling three types of weather and two kinds of impostor syndrome.",
+//   "broadcasting from a laneway you've probably never heard of.",
+//   "still saving for a place with natural light.",
+//   "where the rent is high but brunch is higher.",
+//   "where even the pigeons have a side hustle.",
+//   "still debugging life and code.",
+//   "home of coffee snobs and CSS bugs.",
+//   "where freelancers are born and slowly caffeinated to death.",
+//   "live from the world's most livable city (unless you're poor).",
+// ]
 
 export default function HomePage() {
   // Tagline functionality commented out - keeping for potential future use

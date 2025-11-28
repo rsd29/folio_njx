@@ -511,7 +511,7 @@ export default function ProjectOneCaseStudy() {
                 </p>
                 <blockquote className={styles.quoteBlock}>
                   <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                  The biggest insight wasn't in the interviews—it was watching store owners order while handling customers. That's when I realized we weren't building a shopping experience, we were building a tool for people who don't have time to think about shopping.
+                  The biggest insight wasn&apos;t in the interviews. It was watching store owners order while handling customers. That&apos;s when I realized we weren&apos;t building a shopping experience, we were building a tool for people who don&apos;t have time to think about shopping.
                 </blockquote>
               </div>
 
