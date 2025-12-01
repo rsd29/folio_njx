@@ -10,6 +10,10 @@ export default function ProjectsSection() {
     >
       <div className={styles.projectsHeader}>
         <h2 className={styles.projectsTitle}>Projects</h2>
+        <p className={styles.projectsIntro}>
+        Designing and building enterprise products that work beautifully for users, teams, and the bottom line.
+        Here are some of my projects from my time at Oriental Merchant.
+        </p>
       </div>
       <ProjectOne />
       <ProjectTwo  />

@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import type { MouseEvent } from "react";
+import { useEffect, useRef, useState, MouseEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ScrollRevealText from "../../../components/ScrollRevealText";
@@ -17,23 +16,14 @@ if (typeof window !== "undefined") {
 const CASE_STUDY_SECTIONS = [
   { id: "the-challenge", label: "The Challenge" },
   { id: "project-overview", label: "Project Overview" },
-  { id: "business-objectives", label: "Business Objectives" },
   { id: "understanding-the-users", label: "Understanding the Users" },
   { id: "research-and-discovery", label: "Research & Discovery" },
   { id: "defining-the-experience", label: "Defining the Experience" },
-  { id: "core-features", label: "Core Features & Functionality" },
-  { id: "information-architecture", label: "Information Architecture" },
-  { id: "visual-design-direction", label: "Visual Design Direction" },
-  {
-    id: "technical-collaboration",
-    label: "Technical Collaboration & Complexity",
-  },
-  { id: "overcoming-challenges", label: "Overcoming Challenges" },
+  { id: "core-features", label: "Core Features" },
+  { id: "visual-design-direction", label: "Visual Design" },
+  { id: "technical-collaboration", label: "Technical Collaboration" },
   { id: "results-and-impact", label: "Results & Impact" },
-  { id: "key-learnings", label: "Key Learnings" },
-  { id: "what-id-do-differently", label: "What I Would Do Differently" },
-  { id: "future-opportunities", label: "Future Opportunities" },
-  { id: "conclusion", label: "Conclusion" },
+  { id: "key-learnings", label: "Reflection & Next Steps" },
 ];
 
 export default function ProjectOneCaseStudy() {
@@ -46,20 +36,35 @@ export default function ProjectOneCaseStudy() {
   const [heroMetaVisible, setHeroMetaVisible] = useState(false);
 
   useEffect(() => {
+    const smootherInstance = ScrollSmoother.get();
+    if (smootherInstance) {
+      requestAnimationFrame(() => {
+        smootherInstance.scrollTo(0, true);
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, []);
+
+  useEffect(() => {
     const toc = tocRef.current;
     const sectionsColumn = sectionsColumnRef.current;
     if (!toc || !sectionsColumn) return;
 
-    // Use GSAP pin to affix the TOC
+    const getPinEnd = () => {
+      if (!toc || !sectionsColumn) return "+=0";
+      const distance = sectionsColumn.offsetHeight - toc.offsetHeight;
+      return "+=" + Math.max(0, distance);
+    };
+
     const pinTrigger = ScrollTrigger.create({
       trigger: sectionsColumn,
       pin: toc,
-      start: "top 40px",
-      end: "bottom bottom",
+      start: "top 100px",
+      end: getPinEnd,
       pinSpacing: false,
     });
 
-    // Track active section with ScrollTrigger
     const sectionTriggers: ScrollTrigger[] = [];
     CASE_STUDY_SECTIONS.forEach(({ id }) => {
       const element = document.getElementById(id);
@@ -109,7 +114,6 @@ export default function ProjectOneCaseStudy() {
       const element = document.getElementById(id);
       if (!element) return;
 
-      // Use GSAP ScrollSmoother if available, otherwise fallback to native
       const smoother = ScrollSmoother.get();
       if (smoother) {
         smoother.scrollTo(element, true, "top top");
@@ -140,16 +144,16 @@ export default function ProjectOneCaseStudy() {
               className={styles.heroTitle}
             />
             <ScrollRevealText
-              text="SalesIQ is Oriental Merchant's end-to-end wholesale ordering platform, replacing phone and paper workflows with a live catalog that surfaces customer-specific pricing, stock, and promotions for thousands of grocers across every region."
+              text="I led the UX and front-end implementation of SalesIQ, a wholesale ordering platform that replaced phone and paper workflows with a digital storefront for thousands of independent grocers and national chains."
               fontSize="var(--font-body-l)"
               fontWeight={300}
               lineHeight={1.6}
               letterSpacing="0"
               className={styles.heroDescription}
               style={{
-                fontFamily: 'var(--font-body)',
-                color: '#c7c7c7',
-                transitionDelay: '0.12s',
+                fontFamily: "var(--font-body)",
+                color: "#c7c7c7",
+                transitionDelay: "0.12s",
               }}
             />
             <div
@@ -164,13 +168,13 @@ export default function ProjectOneCaseStudy() {
               </div>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Role</span>
-                <span className={styles.metaValue}>Lead UX Designer</span>
+                <span className={styles.metaValue}>
+                  Lead UX Designer, Front-end
+                </span>
               </div>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Timeline</span>
-                <span className={styles.metaValue}>
-                  6-10 months initial build
-                </span>
+                <span className={styles.metaValue}>6–10 months initial build</span>
               </div>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Regions</span>
@@ -216,7 +220,7 @@ export default function ProjectOneCaseStudy() {
                 >
                   {label}
                 </a>
-              </li> 
+              </li>
             ))}
           </ul>
         </nav>
@@ -232,63 +236,62 @@ export default function ProjectOneCaseStudy() {
                 className={styles.sectionTitle}
               />
               <div className={styles.sectionSubtext}>
-                From Phone Orders to Digital at Scale
+                From Offline Orders to a Global Platform
               </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  Oriental Merchant, one of the world&apos;s largest Asian
-                  FMCG distributors, serves everyone from independent family
-                  grocers to major national chains like{" "}
-                  <strong>Coles and Woolworths</strong>. Despite this scale,
-                  their entire ordering process was offline: phone calls, paper
-                  catalogs, and field reps manually processing every order.
+                  Oriental Merchant is one of the largest FMCG importers of Asian
+                  groceries in the world, supplying independent stores and major chains like{" "}
+                  <strong>Coles and Woolworths</strong>. Before SalesIQ, almost
+                  all wholesale orders ran through phone calls, paper catalogues,
+                  and email. Reps manually keyed in every order.
                 </p>
                 <p className={styles.blockText}>
-                  Store owners had no visibility into{" "}
-                  <strong>real-time pricing or stock</strong>. Promotions with
-                  complex tier structures required rep interpretation. Every
-                  order risked miscommunication and data entry errors, and
-                  customers had no way to save patterns or access history.
+                  Store owners had no real-time view of{" "}
+                  <strong>stock, pricing, or promotions</strong>. Tiered
+                  discounts depended on how well a rep could explain them. Every
+                  order was a chance for miscommunication.
                 </p>
                 <p className={styles.blockText}>
-                  The business needed a{" "}
-                  <strong>
-                    scalable digital platform
-                  </strong>{" "}
-                  that could make complex promotional logic feel simple.
+                  I needed to help the business shift from a{" "}
+                  <strong>high-touch, analogue process</strong> to a{" "}
+                  <strong>self-serve digital platform</strong> that could grow
+                  across regions without losing the relationships that made the
+                  business successful.
                 </p>
-                <p className={styles.blockText}>
-                  The platform also needed to serve two distinct use cases
-                  simultaneously. Sales reps required speed to process orders
-                  quickly on behalf of customers, while end users expected a
-                  polished commercial experience. Staff accounts operated with a
-                  second authorization tier, allowing them to log into any store
-                  and instantly access that customer&apos;s specific pricing,
-                  product catalog, and promotional structures.
-            <br />
-                  At the end of the day, the project scopes out to be a B2B e-comm platform that satisfies power users while mantaining a commercial feel. 
+              </div>
+
+              <div className={styles.contentBlock}>
+                <h4 className={styles.blockTitle}>How I Framed the Problem</h4>
+                <p
+                  className={styles.blockText}
+                  style={{ fontStyle: "italic", color: "#9f9f9f" }}
+                >
+                  I anchored the experience around two principles. First,
+                  mirror mental models that store owners already trusted from
+                  mainstream grocery sites. Second, hide the complexity of
+                  pricing and promotions so the interface stayed simple while
+                  the logic stayed powerful.
                 </p>
+              </div>
 
-                <blockquote className={styles.quoteBlock}>
-                  <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                  The project was a long time coming, and definitely the avenue the company needed to expand in. There's just no way in this day and age can you NOT have centralised digital platforms, especially for such complex businesses outcomes.
-                  Initially we thought of this as a single region pilot, but it quickly became clear that it was going to be a global rollout. This meant we needed to build a platform that was flexible enough to handle the different needs of the different regions.
+              <blockquote className={styles.quoteBlock}>
+                <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                When I mapped how many steps a rep took to place a single
+                order, it was obvious the first release had one job. Remove
+                friction, not introduce a clever new pattern.
+              </blockquote>
 
-                </blockquote>
-
-                <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
-                  <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                  We built flexibility into everything, which was smart for global rollout, but it also meant we were solving problems we didn&apos;t know we&apos;d have. Sometimes the best architecture is the one you don&apos;t need to think about. We aren't a massive dev team, so balancing flexibility with maintainability was key.  Dynamic platforms can sometimes invite unecessary scope creep too..
-                </blockquote>
-                
-                <div className={styles.imagePlaceholder}>
-                  <div className={styles.placeholderIcon}>📞 → 💻</div>
-                  <h4 className={styles.placeholderTitle}>Before & After Workflow</h4>
-                  <p className={styles.placeholderDescription}>
-                    Split-screen comparison showing the old manual phone/paper ordering process on the left vs. the new digital self-service platform on the right. Include visual representations of order forms, catalogs, and the transformation to digital.
-                  </p>
-                </div>
+              <div className={styles.imagePlaceholder}>
+                <div className={styles.placeholderIcon}>📞 → 💻</div>
+                <h4 className={styles.placeholderTitle}>Before and After Flow</h4>
+                <p className={styles.placeholderDescription}>
+                  Side by side diagram. Left shows the old flow from phone call
+                  and handwritten notes through to manual entry in back-office
+                  systems. Right shows the new flow from customer login to
+                  order confirmation in SalesIQ.
+                </p>
               </div>
             </div>
           </section>
@@ -302,101 +305,53 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <div className={styles.sectionSubtext}>
-                What We Built
-              </div>
+              <div className={styles.sectionSubtext}>What I Built</div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  <strong>SalesIQ</strong> is a global B2B e-commerce platform
-                  that provides self-service ordering for wholesale customers.
-                  What started as a single-region pilot rapidly expanded to
-                  become the core ordering tool across all of Oriental
-                  Merchant&apos;s international operations.
+                  <strong>SalesIQ</strong> is a global B2B ordering platform
+                  for wholesale customers. It exposes live stock, customer
+                  specific pricing, and complex promotional tiers in a layout
+                  that feels familiar to anyone who has shopped online.
                 </p>
                 <p className={styles.blockText}>
-                  The platform handles{" "}
-                  <strong>
-                    region-specific catalogs, dynamic pricing, live stock
-                    visibility, tiered promotions, and multiple languages
-                  </strong>
-                  , while maintaining familiar shopping patterns users already
-                  know.
+                  I led UX from discovery through to front-end delivery. That
+                  included research, information architecture, interaction
+                  design, UI design, and implementation of the key screens and
+                  components.
                 </p>
               </div>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>My Responsibilities</h3>
-                  <p className={styles.blockText}>
-                    I owned UX from end to end:
-                  </p>
                   <ul className={styles.blockList}>
-                    <li>Research and stakeholder discovery</li>
-                    <li>Information architecture and flow planning</li>
-                    <li>Wireframing and high-fidelity UI design</li>
-                    <li>Design system and promotional asset design</li>
-                    <li>Interaction design and prototyping</li>
-                    <li>Front-end implementation</li>
-                    <li>
-                      Continuous iteration based on analytics and feedback
-                    </li>
+                    <li>Stakeholder and user interviews</li>
+                    <li>Mapping current and future order workflows</li>
+                    <li>Wireframes and high fidelity UI design</li>
+                    <li>Designing the promotional UX and visuals</li>
+                    <li>Responsive layouts for desktop, tablet, and mobile</li>
+                    <li>Front-end implementation with the dev team</li>
+                    <li>Ongoing iteration based on analytics and feedback</li>
                   </ul>
                 </div>
                 <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>The Team</h3>
+                  <h3 className={styles.blockTitle}>Who I Worked With</h3>
                   <ul className={styles.blockList}>
                     <li>3 front-end developers (including myself)</li>
                     <li>3 back-end developers</li>
                     <li>Product manager</li>
-                    <li>Agile delivery model across multiple regions</li>
+                    <li>Regional stakeholders across multiple countries</li>
                   </ul>
                 </div>
               </div>
 
               <blockquote className={styles.quoteBlock}>
-                  <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                  I drove the design from concept to implementation and built the UI components I created, partnering with the product manager to keep the project on track.                </blockquote>
-            </div>
-          </section>
-
-          {/* Business Objectives */}
-          <section id="business-objectives" className={styles.section}>
-            <div className={styles.container}>
-              <ScrollRevealText
-                text="Business Objectives"
-                fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={400}
-                className={styles.sectionTitle}
-              />
-              <div className={styles.sectionSubtext}>
-                What Success Looked Like
-              </div>
-
-              <div className={styles.contentBlock}>
-                <ul className={styles.blockList}>
-                  <li>
-                    Enable <strong>self-service ordering</strong> across all
-                    customer segments
-                  </li>
-                  <li>Reduce field rep dependency for order entry</li>
-                  <li>Eliminate pricing and data entry errors</li>
-                  <li>
-                    Build <strong>scalable infrastructure</strong> for global
-                    expansion
-                  </li>
-                  <li>
-                    Automate complex promotional logic
-                  </li>
-                  <li>Increase promotional participation</li>
-                  <li>
-                    Improve order volume and accessibility
-                  </li>
-                </ul>
-                <p className={styles.blockText} style={{ marginTop: "2rem" }}>
-                  Transform Oriental Merchant from <strong>high-touch analog</strong> to <strong>low-touch digital</strong> ordering while maintaining service quality. Enable <strong>customer independence</strong> with pricing accuracy and promotional automation at <strong>global scale</strong>.
-                </p>
-              </div>
+                <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                Owning both UX and front-end meant every design decision had to
+                survive code. It kept me honest about what the team could
+                actually ship.
+              </blockquote>
             </div>
           </section>
 
@@ -409,67 +364,70 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <div className={styles.sectionSubtext}>
-                Who We Were Designing For
-              </div>
+              <div className={styles.sectionSubtext}>Who I Designed For</div>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Primary Users</h3>
                   <ul className={styles.blockList}>
                     <li>
-                      <strong>Independent grocery store owners:</strong>{" "}
-                      Time-poor, often ordering from the shop floor
+                      <strong>Independent grocery owners:</strong> often
+                      ordering on the shop floor between customers.
                     </li>
                     <li>
-                      <strong>National chain buyers:</strong> High-volume
-                      orders, efficiency-focused
+                      <strong>Buyers for major chains:</strong> large baskets,
+                      high expectations for speed and accuracy.
                     </li>
                     <li>
-                      <strong>Specialty store operators:</strong> Niche product
-                      needs, promotional sensitivity
+                      <strong>Specialty store operators:</strong> care about
+                      niche products and promotions.
                     </li>
                   </ul>
                 </div>
                 <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>Secondary Users</h3>
+                  <h3 className={styles.blockTitle}>Supporting Users</h3>
                   <ul className={styles.blockList}>
                     <li>
-                      <strong>Sales representatives:</strong> Using the platform
-                      to assist key accounts and place orders on behalf of
-                      customers
+                      <strong>Sales reps:</strong> placing orders on behalf of
+                      customers, often under time pressure.
                     </li>
                   </ul>
                 </div>
               </div>
 
               <div className={styles.contentBlock}>
-                <h3 className={styles.blockTitle}>Key User Context</h3>
+                <h3 className={styles.blockTitle}>Key Context</h3>
                 <ul className={styles.blockList}>
+                  <li>Time poor and often multitasking on the shop floor.</li>
+                  <li>Heavy repeat ordering rather than discovery.</li>
+                  <li>Many users with English as a second language.</li>
                   <li>
-                    Extremely <strong>time-poor</strong>, often multitasking on
-                    the shop floor
-                  </li>
-                  <li>
-                    High proportion of <strong>repeat ordering behavior</strong>
-                  </li>
-                  <li>Many English-as-a-second-language users</li>
-                  <li>
-                    Strong preference for{" "}
-                    <strong>immediately familiar interfaces</strong> over
-                    experimental designs
-                  </li>
-                  <li>
-                    Already comfortable with mainstream online grocery shopping
-                    (Coles, Woolworths)
+                    Familiar with consumer grocery sites like Coles and
+                    Woolworths.
                   </li>
                 </ul>
               </div>
+
+              <blockquote
+                className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}
+              >
+                <span className={styles.quoteBlockLabel}>In Hindsight</span>
+                The regions that treated SalesIQ as a focused ordering tool saw
+                the fastest adoption. Where it drifted toward being a full
+                marketing site, the extra visual work added noise without much
+                value.
+              </blockquote>
+
+              <div className={styles.imagePlaceholder}>
+                <div className={styles.placeholderIcon}>🧑‍🍳</div>
+                <h4 className={styles.placeholderTitle}>User Types Snapshot</h4>
+                <p className={styles.placeholderDescription}>
+                  Simple personas or tiles for three key user groups. Each tile
+                  shows a photo, a short description, and one primary need such
+                  as speed, clarity, or promo visibility.
+                </p>
+              </div>
             </div>
-            <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
-                  <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                  Scope creep hit us when some regions began treating the platform as a full commercial storefront rather than an ordering tool. One region pushed for a complete UI overhaul, while others wanted to diverge in different directions. The real issue was misalignment.. we needed all region leads operating from the same brief. Its challenging managing expectations across multiple regions with differing timezones and work processes.. and even tougher yet to conduct true user research with just email conversations an the occasional call.        </blockquote>
-            
           </section>
 
           {/* Research & Discovery */}
@@ -482,49 +440,30 @@ export default function ProjectOneCaseStudy() {
                 className={styles.sectionTitle}
               />
               <div className={styles.sectionSubtext}>
-                Understanding the Real Workflow
+                Seeing the Real Workflow
               </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  To understand needs across regions and user types, I used:
+                  I combined interviews, store visits, and workflow audits to
+                  understand how orders were really placed across regions.
                 </p>
                 <ul className={styles.blockList}>
-                  <li>
-                    User interviews with store owners and operators
-                  </li>
-                  <li>
-                    Task shadowing in retail environments
-                  </li>
-                  <li>
-                    Stakeholder interviews with sales reps and regional managers
-                  </li>
-                  <li>
-                    Legacy workflow audits
-                  </li>
-                  <li>
-                    Surveys for broader feedback
-                  </li>
-                  <li>
-                    Sandbox testing with stakeholder groups pre-launch
-                  </li>
-                  <li>
-                    Usage analytics post-launch for continuous refinement
-                  </li>
+                  <li>Interviews with store owners and operators</li>
+                  <li>Shadowing orders placed on the shop floor</li>
+                  <li>Sessions with sales reps and regional managers</li>
+                  <li>Review of legacy order forms and spreadsheets</li>
+                  <li>Sandbox testing with key customers pre-launch</li>
                 </ul>
               </div>
 
               <div className={styles.insightsSection}>
-                <h3 className={styles.insightsTitle}>What We Learned</h3>
+                <h3 className={styles.insightsTitle}>What Stood Out</h3>
                 <p className={styles.blockText}>
-                  One message emerged consistently: users didn&apos;t want
-                  beautiful visuals or innovative interactions. They wanted{" "}
-                  <strong>speed, clarity, and access</strong>.
+                  The strongest pattern was simple. Users did not want a
+                  beautiful new way to shop. They wanted a tool that felt
+                  familiar, loaded quickly, and made promotions obvious.
                 </p>
-                <blockquote className={styles.quoteBlock}>
-                  <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                  The biggest insight wasn&apos;t in the interviews. It was watching store owners order while handling customers. That&apos;s when I realized we weren&apos;t building a shopping experience, we were building a tool for people who don&apos;t have time to think about shopping. 
-                </blockquote>
               </div>
 
               <div className={styles.insightsSection}>
@@ -533,52 +472,42 @@ export default function ProjectOneCaseStudy() {
                   <div className={styles.insight}>
                     <span className={styles.insightBullet}>•</span>
                     <p className={styles.insightText}>
-                      <strong>Familiarity matters:</strong> Users already shop
-                      on mainstream platforms, so leverage those mental models
+                      <strong>Familiar flows reduce training.</strong> Users
+                      expected patterns similar to consumer grocery sites.
                     </p>
                   </div>
                   <div className={styles.insight}>
                     <span className={styles.insightBullet}>•</span>
                     <p className={styles.insightText}>
-                      <strong>Promotional visibility drives behavior:</strong>{" "}
-                      Seeing tier progress directly influenced purchasing
+                      <strong>Promotions drive behaviour.</strong> When users
+                      could see how close they were to a discount, they added
+                      more to the cart.
                     </p>
                   </div>
                   <div className={styles.insight}>
                     <span className={styles.insightBullet}>•</span>
                     <p className={styles.insightText}>
-                      <strong>Speed over polish:</strong> Workflow efficiency
-                      was valued far above aesthetic refinement
+                      <strong>Speed beats polish.</strong> Dense layouts with
+                      clear labels beat spacious designs that required scrolling.
                     </p>
                   </div>
                   <div className={styles.insight}>
                     <span className={styles.insightBullet}>•</span>
                     <p className={styles.insightText}>
-                      <strong>Repeat patterns dominate:</strong> Order templates
-                      would save time for most users
-                    </p>
-                  </div>
-                  <div className={styles.insight}>
-                    <span className={styles.insightBullet}>•</span>
-                    <p className={styles.insightText}>
-                      <strong>Mobile and tablet are critical:</strong> Many
-                      customers order while on the shop floor
-                    </p>
-                  </div>
-                  <div className={styles.insight}>
-                    <span className={styles.insightBullet}>•</span>
-                    <p className={styles.insightText}>
-                      <strong>Multilingual support enables adoption:</strong>{" "}
-                      Reduced training friction and increased confidence
+                      <strong>Repeat orders dominate.</strong> Saved orders and
+                      fast reordering were more valuable than advanced product
+                      discovery.
                     </p>
                   </div>
                 </div>
-                
+
                 <div className={styles.imagePlaceholder}>
                   <div className={styles.placeholderIcon}>🎯</div>
-                  <h4 className={styles.placeholderTitle}>Key Research Insights</h4>
+                  <h4 className={styles.placeholderTitle}>Research Highlights</h4>
                   <p className={styles.placeholderDescription}>
-                    Visual summary of top 3-5 user insights from research. Could be presented as cards, quotes overlaid on photos of actual users, or a highlight reel showing pain points and needs discovered during interviews.
+                    One visual panel showing 3–4 key insights with simple
+                    icons. Each insight can be paired with a short quote from a
+                    user to connect the research to real voices.
                   </p>
                 </div>
               </div>
@@ -594,283 +523,208 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <div className={styles.sectionSubtext}>
-                The Two-Pillar Strategy
-              </div>
+              <div className={styles.sectionSubtext}>Two Core Pillars</div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  The UX strategy was built around two core pillars:
+                  I used the research to shape two simple pillars for the
+                  experience.
                 </p>
               </div>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>
-                    1. Follow Mental Models Users Already Know
+                    1. Follow Existing Mental Models
                   </h3>
                   <p className={styles.blockText}>
-                    We designed flows that resembled{" "}
-                    <strong>
-                      Coles and Woolworths online shopping
-                    </strong>
-                    , allowing users to focus on tasks rather than learning new
-                    patterns.
+                    I based the navigation and page structure on common
+                    e-commerce patterns. Home, browse, search, product,
+                    cart, and checkout all follow a flow that feels obvious to
+                    anyone who has shopped online before.
                   </p>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>
-                    2. Make Complex Business Logic Feel Simple
+                    2. Hide the Complexity, Not the Value
                   </h3>
                   <p className={styles.blockText}>
-                    Behind the familiar interface: multi-region catalog
-                    management, dynamic promotional tiers, and complex pricing.
-                    The UX{" "}
-                    <strong>
-                      exposed only what users needed, when they needed it
-                    </strong>
-                    .
+                    Pricing rules, promotions, and regional variation sit
+                    behind the scenes. On the surface, users see clear
+                    promotional tags, progress toward discounts, and accurate
+                    totals. The heavy logic stays in the background.
                   </p>
                 </div>
               </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  The result: navigation, page structures, and layouts that felt
-                  immediately familiar but supported far more sophisticated
-                  logic than typical consumer platforms.
+                  This balance let me keep the interface simple and predictable
+                  while still supporting complex business rules behind it.
                 </p>
                 <blockquote className={styles.quoteBlock}>
                   <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                  Choosing familiarity over innovation felt like a compromise at first, but it was 100% the right call. Yeah, as a young hungry designer, its tempting to take any oppurtunity and creative freedom to flex your creative chops or spark change. Truth is users didn&apos;t need to learn our platform. They needed to trust it immediately. The sophistication lives in the backend, and NOT the interface. 
+                  Once I watched store owners serve customers while placing
+                  orders, it was clear that familiarity was a feature. My job
+                  was not to reinvent shopping. It was to speed up something
+                  they already knew how to do.
                 </blockquote>
+              </div>
+
+              <div className={styles.imagePlaceholder}>
+                <div className={styles.placeholderIcon}>🧩</div>
+                <h4 className={styles.placeholderTitle}>Experience Pillars</h4>
+                <p className={styles.placeholderDescription}>
+                  Simple two column visual. Left column shows users moving
+                  through familiar steps like browse and cart. Right column
+                  reveals the hidden system layer such as dynamic pricing and
+                  promotional rules.
+                </p>
               </div>
             </div>
           </section>
 
-          {/* Core Features & Functionality */}
+          {/* Core Features */}
           <section id="core-features" className={styles.section}>
             <div className={styles.container}>
               <ScrollRevealText
-                text="Core Features & Functionality"
+                text="Core Features"
                 fontSize="clamp(2rem, 4vw, 3rem)"
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
               <div className={styles.sectionSubtext}>
-                Platform Capabilities
+                What I Focused On
               </div>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>
-                    Catalog & Product Management
+                    Catalog and Product Experience
                   </h3>
                   <ul className={styles.blockList}>
-                    <li>
-                      Multi-region product catalogs with region-specific
-                      availability
-                    </li>
-                    <li>Region-based pricing and promotional logic</li>
+                    <li>Region-specific product availability</li>
+                    <li>Customer-specific pricing and discounts</li>
                     <li>Live stock visibility across warehouses</li>
-                    <li>Multi-language support for product information</li>
+                    <li>Support for multiple languages</li>
                   </ul>
                 </div>
                 <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>Ordering Experience</h3>
+                  <h3 className={styles.blockTitle}>Ordering Flows</h3>
                   <ul className={styles.blockList}>
-                    <li>
-                      High-density cart UI to view more line items at once
-                    </li>
-                    <li>Saved orders and comprehensive order history</li>
-                    <li>Edit and cancel flows for existing orders</li>
-                    <li>
-                      Dynamic homepage promotions tailored to user segments
-                    </li>
+                    <li>High-density cart to see many line items at once</li>
+                    <li>Saved orders and repeat ordering from history</li>
+                    <li>Clear edit and cancel flows for existing orders</li>
+                    <li>Homepage shortcuts for favourites and promos</li>
                   </ul>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Promotional System</h3>
                   <ul className={styles.blockList}>
-                  <li>
-                    <strong>Custom promotional selector:</strong> One of the
-                    most impactful features. Users could combine multiple SKUs
-                    within a promo family to hit thresholds without rep
-                    intervention
-                  </li>
                     <li>
-                      Promotional tier visual system showing progress toward
-                      discounts
+                      Custom selector that lets users mix SKUs in a promo
+                      family to hit thresholds.
                     </li>
-                    <li>Mix-and-match promotional selection components</li>
-                    <li>Clear promotional tagging throughout the catalog</li>
+                    <li>
+                      Visual progress indicators that show how close the user
+                      is to the next discount tier.
+                    </li>
+                    <li>
+                      Clear tags across the catalog so promo items stand out.
+                    </li>
                   </ul>
                 </div>
                 <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>Multi-Device Support</h3>
+                  <h3 className={styles.blockTitle}>Multi-device Support</h3>
                   <ul className={styles.blockList}>
+                    <li>Responsive layouts for desktop, tablet, and mobile</li>
                     <li>
-                      Fully responsive desktop, tablet, and mobile layouts
+                      Flows optimised for on-the-floor ordering with one hand
                     </li>
-                    <li>Optimized for on-the-floor ordering scenarios</li>
                   </ul>
                 </div>
-
-                
-              </div>
-              
-              <div className={styles.imagePlaceholder}>
-                <div className={styles.placeholderIcon}>🖥️</div>
-                <h4 className={styles.placeholderTitle}>Core Product Screenshots</h4>
-                <p className={styles.placeholderDescription}>
-                  3-4 key product screens showing main features in action: catalog browsing with real-time pricing, cart with promotional pricing applied, order history, and account dashboard. Annotate key UX decisions.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Information Architecture */}
-          <section id="information-architecture" className={styles.section}>
-            <div className={styles.container}>
-              <ScrollRevealText
-                text="Information Architecture"
-                fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={400}
-                className={styles.sectionTitle}
-              />
-              <div className={styles.sectionSubtext}>
-                Structuring the Experience
               </div>
 
               <div className={styles.contentBlock}>
-                <h3 className={styles.blockTitle}>Core User Flows</h3>
-                <ul className={styles.blockList}>
-                  <li>
-                    <strong>Home:</strong> Dynamic promotions and quick reorder
-                    access
-                  </li>
-                  <li>
-                    <strong>Browse:</strong> Category navigation with filtering
-                  </li>
-                  <li>
-                    <strong>Search:</strong> Fast product lookup
-                  </li>
-                  <li>
-                    <strong>Product Pages:</strong> Detailed information with
-                    promotional context
-                  </li>
-                  <li>
-                    <strong>Cart:</strong> High-density view with inline editing
-                  </li>
-                  <li>
-                    <strong>Checkout:</strong> Streamlined order completion
-                  </li>
-                  <li>
-                    <strong>Order History:</strong> Full order archive with
-                    reorder functionality
-                  </li>
-                  <li>
-                    <strong>Saved Orders:</strong> Template-based repeat
-                    ordering
-                  </li>
-                  <li>
-                    <strong>Account:</strong> Profile and preferences
-                  </li>
-                  <li>
-                    <strong>Language Settings:</strong> Seamless language
-                    switching
-                  </li>
-                </ul>
-              </div>
-
-              <div className={styles.contentBlock}>
-                <h3 className={styles.blockTitle}>Supporting Pages</h3>
-                <ul className={styles.blockList}>
-                  <li>New arrivals</li>
-                  <li>Brand browsing</li>
-                  <li>Promotional banners</li>
-                </ul>
+                <h4 className={styles.blockTitle}>Why I Prioritised Promos</h4>
                 <p
                   className={styles.blockText}
-                  style={{
-                    marginTop: "16px",
-                    fontStyle: "italic",
-                    color: "#aaa",
-                  }}
+                  style={{ fontStyle: "italic", color: "#9f9f9f" }}
                 >
-                  These were nice-to-have features but not critical to the core
-                  ordering workflow.
+                  Promotions were the fastest lever for revenue. By making them
+                  visible and interactive, I helped customers understand how to
+                  build baskets that worked for them and the business without
+                  needing a rep to step in.
                 </p>
               </div>
-                          <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
-            In hindsight, we should have avoided adding non-essential supporting pages. Features like new arrivals and promotional banners required ongoing creative maintenance that some regions couldn’t resource, and the work ultimately shifted to the development team. Even a simple CMS proved more than some regions could manage. The outcomes of these pages simply weren't worth the effort.           </blockquote>
 
               <div className={styles.imagePlaceholder}>
-                <div className={styles.placeholderIcon}>🗺️</div>
-                <h4 className={styles.placeholderTitle}>Information Architecture Diagram</h4>
+                <div className={styles.placeholderIcon}>🖥️</div>
+                <h4 className={styles.placeholderTitle}>Key Screens</h4>
                 <p className={styles.placeholderDescription}>
-                  Sitemap or user flow diagram showing how customers navigate through the platform. Include primary paths for browsing, searching, ordering, and managing accounts. Use clear visual hierarchy to show priority flows.
+                  A small grid of 3–4 screens. For example, the catalog with
+                  promo tags, the promo selector showing tier progress, the
+                  dense cart view, and the order history with quick reorder.
+                  Each screen can have a short annotation.
                 </p>
               </div>
             </div>
-
           </section>
 
           {/* Visual Design Direction */}
           <section id="visual-design-direction" className={styles.section}>
             <div className={styles.container}>
               <ScrollRevealText
-                text="Visual Design Direction"
+                text="Visual Design"
                 fontSize="clamp(2rem, 4vw, 3rem)"
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <div className={styles.sectionSubtext}>
-                Commercial and Clean
-              </div>
+              <div className={styles.sectionSubtext}>Commercial and Clear</div>
 
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Design Principles</h3>
                 <p className={styles.blockText}>
-                  The visual goal was <strong>commercial and clean</strong>:
-                  professional enough for enterprise buyers, familiar enough to
-                  feel approachable.
+                  I aimed for a visual style that felt like a commercial
+                  storefront, not a back-office tool. It needed to look
+                  professional for national buyers and still feel simple for
+                  independent stores.
                 </p>
                 <p className={styles.blockText}>
-                  We used <strong>Ng Zorro</strong> as a foundation but created
-                  custom styling for:
+                  I used <strong>Ng Zorro</strong> as a base library and
+                  layered custom styles on top for promotional tags, dense cart
+                  layouts, and key components.
                 </p>
-                <ul className={styles.blockList}>
-                  <li>Promotional tags and tier indicators</li>
-                  <li>Cart density and line item display</li>
-                  <li>Multi-select promotional components</li>
-                </ul>
               </div>
 
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Intentional Density</h3>
                 <p className={styles.blockText}>
-                  The UI is more compact than typical consumer e-commerce. Users
-                  see more line items at once, helping wholesale buyers build
-                  orders quickly without excessive scrolling.
+                  I chose a more compact layout than typical consumer
+                  e-commerce. Buyers can see many SKUs in one view, which cuts
+                  down on scrolling and makes it easier to compare products.
                 </p>
                 <p className={styles.blockText}>
-                  This came directly from research:{" "}
-                  <strong>
-                    time-poor users valued information density over whitespace
-                  </strong>
-                  .
+                  This came directly from research. When I showed users early
+                  spacious versions, they described them as slow, even when
+                  performance was fine. Dense but clear screens felt faster.
                 </p>
               </div>
+
               <blockquote className={styles.quoteBlock}>
                 <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                The UI is more compact than typical consumer e-commerce. Users see more line items at once, helping wholesale buyers build orders quickly without excessive scrolling.
+                The palette and components are simple on purpose. I let layout
+                and spacing do most of the work so the interface stayed calm
+                even when there were hundreds of SKUs on screen.
               </blockquote>
+
               <div className={styles.imagePlaceholder}>
                 <div className={styles.placeholderIcon}>🎨</div>
-                <h4 className={styles.placeholderTitle}>Visual Design System</h4>
+                <h4 className={styles.placeholderTitle}>Design System Snapshot</h4>
                 <p className={styles.placeholderDescription}>
-                  Component library or style guide showing typography, color palette, button styles, form elements, and key UI components. Demonstrate consistency across the platform with examples of components in use.
+                  A board that shows the core colours, typography, buttons,
+                  tags, and cards used in SalesIQ. Include a zoom into the promo
+                  tag and tier indicator to show how they stand out.
                 </p>
               </div>
             </div>
@@ -880,144 +734,69 @@ export default function ProjectOneCaseStudy() {
           <section id="technical-collaboration" className={styles.section}>
             <div className={styles.container}>
               <ScrollRevealText
-                text="Technical Collaboration & Complexity"
+                text="Technical Collaboration"
                 fontSize="clamp(2rem, 4vw, 3rem)"
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <div className={styles.sectionSubtext}>
-                Building at Scale
-              </div>
+              <div className={styles.sectionSubtext}>Designing With Constraints</div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  The platform needed to function differently across regions
-                  while maintaining a unified experience.
+                  SalesIQ needed to behave differently across regions but still
+                  look and feel like one product. I worked closely with
+                  back-end engineers to understand data structures, response
+                  times, and what could be configured without breaking the
+                  experience.
                 </p>
               </div>
 
               <div className={styles.contentBlock}>
-                <h3 className={styles.blockTitle}>Technical Challenges</h3>
+                <h3 className={styles.blockTitle}>Key Challenges</h3>
                 <ul className={styles.blockList}>
-                  <li>
-                    <strong>Regional variation:</strong> Each region had
-                    different promotional rules, pricing, and product
-                    availability
-                  </li>
-                  <li>
-                    <strong>Evolving requirements:</strong> Data structures
-                    evolved as business requirements were discovered
-                  </li>
-                  <li>
-                    <strong>Multi-language complexity:</strong> Interface
-                    translation and right-to-left considerations
-                  </li>
-                  <li>
-                    <strong>Performance:</strong> Heavy data payloads from
-                    comprehensive catalogs
-                  </li>
-                  <li>
-                    <strong>Distributed architecture:</strong> Region-hosted
-                    backend services with master data in Australia
-                  </li>
+                  <li>Different promo rules and pricing models per region.</li>
+                  <li>Evolving data structures as new requirements appeared.</li>
+                  <li>Multiple languages and content needs.</li>
+                  <li>Large catalogs that could easily impact performance.</li>
                 </ul>
               </div>
 
               <div className={styles.contentBlock}>
-                <h3 className={styles.blockTitle}>Our Approach</h3>
+                <h3 className={styles.blockTitle}>How I Handled Them</h3>
                 <ul className={styles.blockList}>
                   <li>
-                    Dynamic data handling to support regional variation without
-                    code duplication
+                    I treated shared components and data contracts as fixed
+                    points so regions could configure within guardrails.
                   </li>
                   <li>
-                    Flexible design patterns that adapted to local needs
+                    I designed patterns that could stretch for local needs
+                    instead of building one-off screens.
                   </li>
                   <li>
-                    Reusable components that maintained consistency across
-                    regions
-                  </li>
-                  <li>
-                    Ongoing performance optimization for large catalogs
+                    I pushed for small performance wins such as loading
+                    skeletons and tighter payloads for key views.
                   </li>
                 </ul>
-                <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
-                  <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                  I didn’t anticipate how much regional flexibility would cost us long-term. What started as thoughtful accommodation turned into a long tail of exceptions we had to maintain indefinitely. Even with very strict scopes, sometimes you just can't please everyone.. and that just the reality. 
-             </blockquote>
-              </div>
-            </div>
-          </section>
-
-          {/* Overcoming Challenges */}
-          <section id="overcoming-challenges" className={styles.section}>
-            <div className={styles.container}>
-              <ScrollRevealText
-                text="Overcoming Challenges"
-                fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={400}
-                className={styles.sectionTitle}
-              />
-              <div className={styles.sectionSubtext}>
-                Navigating Complexity
               </div>
 
-              <div className={styles.contentGrid}>
-                <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>
-                    Promotional rule diversity
-                  </h3>
-                  <p className={styles.blockText}>
-                    Each region operated different promotional structures. We
-                    created a <strong>flexible visual system</strong> that
-                    represented various tier types and discount models without
-                    region-specific UI.
-                  </p>
-                </div>
-                <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>
-                    Data structure evolution
-                  </h3>
-                  <p className={styles.blockText}>
-                    Requirements were discovered during development. We stayed
-                    agile, iterating on backend and frontend simultaneously
-                    rather than following rigid phases.
-                  </p>
-                </div>
-                <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>
-                    Unexpected global rollout
-                  </h3>
-                  <p className={styles.blockText}>
-                    What started as a single-region pilot became global faster
-                    than anticipated. This increased maintenance load but
-                    validated our architectural decisions.
-                  </p>
-                </div>
-                <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>
-                    Small team, global support
-                  </h3>
-                  <p className={styles.blockText}>
-                    We handled support and training across multiple time zones
-                    with a lean team, requiring clear documentation and
-                    intuitive design.
-                  </p>
-                </div>
-                <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>
-                    Never ending scope creep
-                  </h3>
-                  <p className={styles.blockText}>
-               I've mentioned this problem several times already, but it's worth repeating. The scope of the project was always changing, and we were always having to adapt to new requirements. This was especially challenging when we were working with multiple regions, each with their own unique requirements.
-                  </p>
-                </div>
-       
-       
+              <blockquote
+                className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}
+              >
+                <span className={styles.quoteBlockLabel}>In Hindsight</span>
+                I learned that flexibility is only useful if I can maintain it.
+                Next time I would lock regional guardrails earlier so edge
+                cases do not slow every decision.
+              </blockquote>
+
+              <div className={styles.imagePlaceholder}>
+                <div className={styles.placeholderIcon}>🧱</div>
+                <h4 className={styles.placeholderTitle}>Shared vs Local</h4>
+                <p className={styles.placeholderDescription}>
+                  Diagram that shows which parts of the experience are shared
+                  across all regions, such as core components, and which parts
+                  are configurable, such as promotions or content.
+                </p>
               </div>
-              <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
-                  <span className={styles.quoteBlockLabel}>In Hindsight</span>None of the issues were individually serious, but together they slowed us down. Without consistent alignment across regions, even simple decisions took longer than they should have.
-                  </blockquote>
             </div>
           </section>
 
@@ -1030,264 +809,139 @@ export default function ProjectOneCaseStudy() {
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <div className={styles.sectionSubtext}>
-                Measurable Outcomes
-              </div>
+              <div className={styles.sectionSubtext}>What Changed</div>
 
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Business Outcomes</h3>
                 <ul className={styles.blockList}>
                   <li>
-                    <strong>Significant online revenue growth</strong>
-                    <br />
-                    <span
-                      style={{
-                        fontStyle: "italic",
-                        color: "#aaa",
-                        fontSize: "0.95rem",
-                      }}
-                    >
-                      Example: Netherlands grew from ~$400K to $1.9M in one
-                      year
-                    </span>
+                    <strong>Online revenue growth:</strong> for example, the
+                    Netherlands grew from around 400k to 1.9m in one year
+                    through SalesIQ orders.
                   </li>
                   <li>
-                    <strong>Reduced rep workload:</strong> Field reps freed from
-                    order entry to focus on relationships and sales
+                    <strong>Rep workload shifted:</strong> reps spent less time
+                    keying orders and more time on relationships and growth.
                   </li>
                   <li>
-                    <strong>Higher promotional participation:</strong> Clear
-                    visibility drove increased engagement
+                    <strong>Higher promo uptake:</strong> clear progress made
+                    promotions easier to understand and use.
                   </li>
                   <li>
-                    <strong>Increased order accuracy:</strong> Eliminated
-                    miscommunication and manual errors
-                  </li>
-                  <li>
-                    <strong>Faster ordering cycles:</strong> Saved orders and
-                    history dramatically reduced repeat order time
-                  </li>
-                  <li>
-                    <strong>Improved customer satisfaction:</strong> Positive
-                    feedback from independent grocers and major chains
+                    <strong>Improved accuracy:</strong> fewer manual steps
+                    meant fewer mistakes and less rework.
                   </li>
                 </ul>
               </div>
 
               <div className={styles.contentBlock}>
-                <h3 className={styles.blockTitle}>External Validation</h3>
+                <h3 className={styles.blockTitle}>Team Confidence</h3>
                 <p className={styles.blockText}>
-                  External QA feedback noted the UI was{" "}
-                  <strong>professional and polished</strong>. This was
-                  validating for a young internal team building an enterprise
-                  product competing with established B2B platforms.
+                  External QA and stakeholder feedback highlighted the UI as
+                  professional and reliable. For a young internal team, that
+                  validation mattered. It gave us the confidence to take on
+                  more ambitious internal products.
                 </p>
               </div>
 
-              <blockquote className={`${styles.quoteBlock} ${styles.quoteBlock}`}>
-                  <span className={styles.quoteBlockLabel}>Lets go boys!</span> The project was a success, and the team SHOULD be proud of their work. Seeing live metrics of hugely increased uptake in online orders over time was massively gratifying. AUS/NZ region are projected to eclipse over $3M this year, from what started as zero digital orders just afew years ago The lads have earnt it. This was one of our earlier projects, and gave the dev team confidence to tackle bigger projects in the future.
-                  </blockquote>
-              
+              <blockquote className={styles.quoteBlock}>
+                <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                Watching online orders move from zero to multi-million revenue
+                was a clear signal that the design decisions were working in
+                the real world, not just on a Figma board.
+              </blockquote>
+
               <div className={styles.imagePlaceholder}>
                 <div className={styles.placeholderIcon}>📊</div>
-                <h4 className={styles.placeholderTitle}>Impact Metrics Dashboard</h4>
+                <h4 className={styles.placeholderTitle}>Impact Overview</h4>
                 <p className={styles.placeholderDescription}>
-                  Visual presentation of key results and metrics. Show revenue growth charts, adoption rates, order volume increases, and user satisfaction scores. Use clean graphs and data visualizations to demonstrate measurable success.
+                  A simple dashboard style visual showing revenue growth, share
+                  of orders placed online, and a couple of key operational
+                  metrics such as reduced rep entered orders.
                 </p>
               </div>
             </div>
-            
           </section>
 
-          {/* Key Learnings */}
+          {/* Key Learnings / Reflection */}
           <section id="key-learnings" className={styles.section}>
             <div className={styles.container}>
               <ScrollRevealText
-                text="Key Learnings"
+                text="Reflection & Next Steps"
                 fontSize="clamp(2rem, 4vw, 3rem)"
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
               <div className={styles.sectionSubtext}>
-                What Worked and What Didn&apos;t
+                What I Took Forward
               </div>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>What Worked</h3>
+                  <h3 className={styles.blockTitle}>What Worked Well</h3>
                   <ul className={styles.blockList}>
                     <li>
-                      <strong>Familiar mental models:</strong> Leveraging
-                      existing shopping patterns accelerated adoption
+                      Leaning on <strong>familiar shopping patterns</strong> cut
+                      training time and made launch smoother.
                     </li>
                     <li>
-                      <strong>Promotional visibility:</strong> Clear discounts
-                      and tier progress directly influenced purchasing
+                      Making <strong>promotions visible and interactive</strong>{" "}
+                      directly influenced cart size and engagement.
                     </li>
                     <li>
-                      <strong>High-density UI:</strong> Information-rich layouts
-                      served wholesale buyers better than spacious designs
+                      Designing with{" "}
+                      <strong>high density and clear hierarchy</strong> suited
+                      wholesale buyers better than airy layouts.
                     </li>
                     <li>
-                      <strong>Multi-device support:</strong> Tablet and mobile
-                      ordering became heavily used scenarios
+                      Treating <strong>back-end constraints</strong> as part of
+                      the UX brief stopped the design from drifting into
+                      fantasy.
                     </li>
                   </ul>
                 </div>
                 <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>
-                    What Could Have Been Better
-                  </h3>
+                  <h3 className={styles.blockTitle}>What I Would Change</h3>
                   <ul className={styles.blockList}>
                     <li>
-                      <strong>Promotional data standardization:</strong>{" "}
-                      Earlier standardization would have prevented maintenance
-                      complexity
+                      Lock <strong>promo data structures</strong> earlier to
+                      avoid long term maintenance debt.
                     </li>
                     <li>
-                      <strong>Feature prioritization:</strong> Some features saw
-                      little use. More ruthless prioritization would have been
-                      valuable
+                      Cut <strong>low usage features</strong> faster based on
+                      analytics rather than gut feel or loud requests.
                     </li>
                     <li>
-                      <strong>Visual restraint:</strong> A more utilitarian
-                      direction might have been sufficient
+                      Bias even harder toward{" "}
+                      <strong>repeat order workflows</strong> since that is
+                      where most value sits.
                     </li>
                     <li>
-                      <strong>Backend performance:</strong> Faster responses
-                      would have improved perceived performance
+                      Build <strong>design documentation</strong> earlier so
+                      future regions can scale with less hands-on support.
                     </li>
                   </ul>
-                  <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
-                    <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                    I spent too much time polishing features that barely got used. The analytics told us early on which features mattered, but I kept iterating on the wrong things because they were more interesting to design. Lesson learned: data beats intuition, even when intuition feels right.
-                  </blockquote>
                 </div>
               </div>
-            </div>
-          </section>
 
-          {/* What I Would Do Differently */}
-          <section id="what-id-do-differently" className={styles.section}>
-            <div className={styles.container}>
-              <ScrollRevealText
-                text="What I Would Do Differently"
-                fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={400}
-                className={styles.sectionTitle}
-              />
-              <div className={styles.sectionSubtext}>
-                In Hindsight
-              </div>
+              <blockquote
+                className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}
+              >
+                <span className={styles.quoteBlockLabel}>In Hindsight</span>
+                I spent time polishing a few features that users barely touched.
+                The data was clear, but I was more interested in the design
+                problem than the impact. Now I treat analytics as the source of
+                truth, not a nice to have.
+              </blockquote>
 
-              <div className={styles.contentBlock}>
-                <ol
-                  className={styles.blockList}
-                  style={{ listStyleType: "decimal", paddingLeft: "24px" }}
-                >
-                  <li>
-                    <strong>
-                      Define strict promotional data structures early
-                    </strong>{" "}
-                    to avoid technical debt
-                  </li>
-                  <li>
-                    <strong>Cut low-value features sooner</strong> based on
-                    early analytics
-                  </li>
-                  <li>
-                    <strong>
-                      Bias harder toward repeat-order workflows
-                    </strong>{" "}
-                    (the majority use case)
-                  </li>
-                  <li>
-                    <strong>Push for faster backend response times</strong> to
-                    improve perceived performance
-                  </li>
-                  <li>
-                    <strong>
-                      Build comprehensive design documentation earlier
-                    </strong>{" "}
-                    to support global rollout
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </section>
-
-          {/* Future Opportunities */}
-          <section id="future-opportunities" className={styles.section}>
-            <div className={styles.container}>
-              <ScrollRevealText
-                text="Future Opportunities"
-                fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={400}
-                className={styles.sectionTitle}
-              />
-              <div className={styles.sectionSubtext}>
-                Where This Could Go Next
-              </div>
-
-              <div className={styles.contentBlock}>
-                <ul className={styles.blockList}>
-                  <li>
-                    <strong>Streamlined onboarding:</strong> Reduce development
-                    dependency for new customer setup
-                  </li>
-                  <li>
-                    <strong>Performance optimization:</strong> Faster catalog
-                    loading
-                  </li>
-                  <li>
-                    <strong>Intelligent reorder suggestions:</strong> ML-based
-                    recommendations from order history
-                  </li>
-                  <li>
-                    <strong>Simplified promotional management:</strong>{" "}
-                    Self-service tools for regional teams
-                  </li>
-                  <li>
-                    <strong>Region-level configuration:</strong> Enable
-                    customization without engineering involvement
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          {/* Conclusion */}
-          <section id="conclusion" className={styles.section}>
-            <div className={styles.container}>
-              <ScrollRevealText
-                text="Conclusion"
-                fontSize="clamp(2rem, 4vw, 3rem)"
-                fontWeight={400}
-                className={styles.sectionTitle}
-              />
-              <div className={styles.sectionSubtext}>
-                The Bigger Picture
-              </div>
-
-              <div className={styles.contentBlock}>
-                <p className={styles.blockText}>
-                  SalesIQ transformed Oriental Merchant&apos;s global ordering
-                  from an entirely offline process to a scalable digital
-                  platform serving five countries. By prioritizing{" "}
-                  <strong>
-                    familiar patterns, promotional visibility, and workflow
-                    efficiency
-                  </strong>{" "}
-                  over visual experimentation, we created a tool that served
-                  both independent grocers and national chains.
-                </p>
-                <p className={styles.blockText}>
-                  The project reinforced a principle:{" "}
-                  <strong>
-                    understanding user context and mental models matters more
-                    than interface innovation for its own sake
-                  </strong>
-                  .
+              <div className={styles.imagePlaceholder}>
+                <div className={styles.placeholderIcon}>🧠</div>
+                <h4 className={styles.placeholderTitle}>Lessons at a Glance</h4>
+                <p className={styles.placeholderDescription}>
+                  A simple two column list graphic. Left shows what worked, such
+                  as mental models and promo visibility. Right shows what I
+                  would do differently, such as cutting features sooner and
+                  standardising data earlier.
                 </p>
               </div>
             </div>
@@ -1301,8 +955,8 @@ export default function ProjectOneCaseStudy() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>Interested in working together?</h2>
             <p className={styles.ctaText}>
-              I&apos;m always open to discussing new projects, creative ideas, or
-              opportunities to be part of your vision.
+              I am open to new roles, collaborations, and projects where I can
+              bring both UX thinking and front-end delivery.
             </p>
             <div className={styles.ctaButtons}>
               <a

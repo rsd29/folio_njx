@@ -42,15 +42,32 @@ export default function ProjectTwoCaseStudy() {
   const [heroMetaVisible, setHeroMetaVisible] = useState(false);
 
   useEffect(() => {
+    const smootherInstance = ScrollSmoother.get();
+    if (smootherInstance) {
+      requestAnimationFrame(() => {
+        smootherInstance.scrollTo(0, true);
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+  }, []);
+
+  useEffect(() => {
     const toc = tocRef.current;
     const sectionsColumn = sectionsColumnRef.current;
     if (!toc || !sectionsColumn) return;
 
+    const getPinEnd = () => {
+      if (!toc || !sectionsColumn) return "+=0";
+      const distance = sectionsColumn.offsetHeight - toc.offsetHeight;
+      return "+=" + Math.max(0, distance);
+    };
+
     const pinTrigger = ScrollTrigger.create({
       trigger: sectionsColumn,
       pin: toc,
-      start: "top 40px",
-      end: "bottom bottom",
+      start: "top 100px",
+      end: getPinEnd,
       pinSpacing: false,
     });
 
@@ -237,6 +254,13 @@ export default function ProjectTwoCaseStudy() {
                   more than thirty specialised modules used across several regions.
                 </p>
               </div>
+
+              <blockquote className={styles.quoteBlock}>
+                <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                The surest way to retire a spreadsheet is to respect why it
+                existed. Shadowing each team before we touched the UI kept every
+                module grounded in how people already worked.
+              </blockquote>
             </div>
           </section>
 
@@ -272,6 +296,13 @@ export default function ProjectTwoCaseStudy() {
                   people immediate access to the information they relied on.
                 </p>
               </div>
+
+              <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
+                <span className={styles.quoteBlockLabel}>In Hindsight</span>
+                Alignment mattered as much as tooling. When regions synced on the
+                same definitions we moved fast; when they didn&apos;t, we spent
+                days reconciling what “done” meant.
+              </blockquote>
             </div>
           </section>
 
@@ -361,6 +392,14 @@ export default function ProjectTwoCaseStudy() {
                   feel like it belonged in the same ecosystem.
                 </p>
               </div>
+
+              <blockquote className={styles.quoteBlock}>
+                <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                Shared foundations were the only way to balance speed with
+                quality. Once typography, spacing, and interaction patterns were
+                locked, we could ship new modules without renegotiating the
+                basics.
+              </blockquote>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
@@ -709,6 +748,13 @@ export default function ProjectTwoCaseStudy() {
                   validate needs after using the module.
                 </p>
               </div>
+
+              <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
+                <span className={styles.quoteBlockLabel}>In Hindsight</span>
+                Every time we skipped versioning, regional builds drifted. Clear
+                release notes and stricter cutoffs would have saved us a lot of
+                backtracking.
+              </blockquote>
             </div>
           </section>
 
@@ -783,6 +829,14 @@ export default function ProjectTwoCaseStudy() {
                   departments.
                 </p>
               </div>
+
+              <blockquote className={styles.quoteBlock}>
+                <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
+                The biggest win wasn&apos;t any single module; it was giving
+                every team the same source of truth. Once that clicked, requests
+                shifted from “Can you find this file?” to “Can we automate this
+                step?”
+              </blockquote>
             </div>
           </section>
         </div>
