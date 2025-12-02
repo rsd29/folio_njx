@@ -604,7 +604,7 @@ export default function Page() {
                 margin: '0 0 16px 0',
                 lineHeight: 'var(--line-height-tight)'
               }}>Digital Environments</h3>
-              Much like physical environments, digital environments are a reflection of the people using them. At Oriental Merchant,  I've been able to shape how these environments feel and function. I love to set precendent for how things should be done and how they should look, crafting a culture of design that is both functional and beautiful.
+              Much like physical environments, digital environments are a reflection of the people using them. At Oriental Merchant,  I&apos;ve been able to shape how these environments feel and function. I love to set precendent for how things should be done and how they should look, crafting a culture of design that is both functional and beautiful.
             </div>
             
             {/* Frame 3 */}
@@ -693,7 +693,7 @@ export default function Page() {
                 lineHeight: '1.2'
               }}>My Passion</h3>
               I&apos;m passionate about design systems that scale, accessibility that&apos;s built-in rather than 
-              bolted-on, and user research that drives real change in how we build digital experiences. Oh, and I love things that are visually stunning and make you go "wow". Probably explains why I love Japanese design so much.
+              bolted-on, and user research that drives real change in how we build digital experiences. Oh, and I love things that are visually stunning and make you go &quot;wow&quot;. Probably explains why I love Japanese design so much.
             </div>
           </div>
 
@@ -731,7 +731,7 @@ export default function Page() {
                 lineHeight: '1.2'
               }}>Early Days</h3>
               My journey in design began with curiosity about how things work, why they&apos;re built the way they are, 
-              and how design can make technology feel human. Having roots in architectural design, I've always had a facination with the environments humans surround themselves in.
+              and how design can make technology feel human. Having roots in architectural design, I&apos;ve always had a facination with the environments humans surround themselves in.
             </div>
 
             {/* Frame 2 */}
@@ -820,7 +820,7 @@ export default function Page() {
                 lineHeight: '1.2'
               }}>My Approach</h3>
               My approach combines deep user empathy with strategic thinking, ensuring every design 
-              decision serves both user needs and business objectives. With every decision made, the goal is always to create a product that feels just "sweet" for the user. I believe great design isn’t always loud or avant-garde. It lives where usability meets personality, where something simply feels right.
+              decision serves both user needs and business objectives. With every decision made, the goal is always to create a product that feels just &quot;sweet&quot; for the user. I believe great design isn&apos;t always loud or avant-garde. It lives where usability meets personality, where something simply feels right.
             </div>
             {/* Frame 4 */}
             <AnimatedFrame delay={0.4} comment="Embracing the journey of continuous learning and the art of thoughtful craftsmanship.">
