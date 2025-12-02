@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 15px 20px;
-  z-index: 10;
+  z-index: 100000;
 }
 .sideLeft,
 .sideRight {

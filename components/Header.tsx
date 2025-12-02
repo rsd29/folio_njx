@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import TransitionLink from './TransitionLink'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
@@ -73,9 +73,9 @@ export default function Header() {
   return (
     <header className={styles.headerBar}>
       <div className={styles.sideLeft}>
-        <Link href="/" className={styles.logoDiv}>
+        <TransitionLink href="/" className={styles.logoDiv}>
           <Image src="/RSD.png" alt="Logo" width={40} height={40} className={styles.logo} />
-        </Link>
+        </TransitionLink>
         <div className={styles.logoDescDiv}>
           <span 
             className={styles.logoDesc}
@@ -93,7 +93,7 @@ export default function Header() {
       <div className={styles.headerWrapper}>
         <div className={styles.headerInner}>
           {navItems.map((item) => (
-            <Link
+            <TransitionLink
               key={item.href}
               href={item.href}
               scroll={item.href === '/' ? false : true}
@@ -106,7 +106,7 @@ export default function Header() {
               onMouseLeave={() => setHoveredItem(null)}
             >
               {item.label}
-            </Link>
+            </TransitionLink>
           ))}
           {dotStyle.left !== null && (
             <span className={styles.dot} style={{ left: dotStyle.left }} />
@@ -147,7 +147,7 @@ export default function Header() {
               )}
             </a>
           ) : (
-            <Link
+            <TransitionLink
               key={item.href}
               href={item.href}
               className={`${styles.navItem} ${pathname === item.href ? styles.active : ''}`}
@@ -156,7 +156,7 @@ export default function Header() {
               onMouseLeave={() => setHoveredItem(null)}
             >
               {item.label}
-            </Link>
+            </TransitionLink>
           )
         )}
       </div>

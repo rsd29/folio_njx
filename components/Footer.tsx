@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import TransitionLink from './TransitionLink'
 import Image from 'next/image'
 import styles from './Footer.module.css'
 
@@ -10,9 +10,9 @@ export default function Footer() {
       <div className={styles.inner}>
         <div className={styles.topSection}>
           <div className={styles.leftGroup}>
-            <Link href="/" className={styles.logoDiv}>
+            <TransitionLink href="/" className={styles.logoDiv}>
               <Image src="/RSD.png" alt="Logo" width={35} height={35} className={styles.logo} />
-            </Link>
+            </TransitionLink>
             <div className={styles.brandInfo}>
               <h3 className={styles.brandName}>Russell Saw</h3>
               <p className={styles.brandTagline}>UX Designer / Front-End Dev</p>
@@ -20,8 +20,8 @@ export default function Footer() {
           </div>
 
           <nav className={styles.nav}>
-            <Link href="/" className={styles.navLink}>Projects</Link>
-            <Link href="/about" className={styles.navLink}>About</Link>
+            <TransitionLink href="/" className={styles.navLink}>Projects</TransitionLink>
+            <TransitionLink href="/about" className={styles.navLink}>About</TransitionLink>
             <a
               href="https://linkedin.com/in/russellsaw"
               target="_blank"
@@ -30,7 +30,7 @@ export default function Footer() {
             >
               LinkedIn
             </a>
-            <Link href="/off-the-clock" className={styles.navLink}>Off the Clock</Link>
+            <TransitionLink href="/off-the-clock" className={styles.navLink}>Off the Clock</TransitionLink>
           </nav>
 
           <div className={styles.socialLinks}>

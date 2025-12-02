@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import SmoothScroll from '../components/SmoothScroll'
 import Footer from '../components/Footer'
 import NegativeCursor from '../components/NegativeCursor'
-import ClientPageTransition from '../components/ClientPageTransition'
+import { NavigationProvider } from '../components/NavigationProvider'
 import ContactForm from '../components/ContactForm'
 // import PasswordGate from '../components/PasswordGate' // Disabled for now - uncomment to re-enable
 import { Analytics } from "@vercel/analytics/next"
@@ -61,13 +61,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Analytics />
         {/* <PasswordGate> - Disabled for now - uncomment to re-enable */}
-          <NegativeCursor />
-          <Header />
-          <SmoothScroll />
-          <div id="smooth-wrapper">
-            <div id="smooth-content">
-              {children}
-              <ClientPageTransition />
+          <NavigationProvider>
+            <NegativeCursor />
+            <Header />
+            <SmoothScroll />
+            <div id="smooth-wrapper">
+              <div id="smooth-content">
+                {children}
               <div style={{
                 width: '100%',
                 height: '50vh',
@@ -144,9 +144,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   <ContactForm />
                 </div>
               </section>
-              <Footer />
+                <Footer />
+              </div>
             </div>
-          </div>
+            </NavigationProvider>
         {/* </PasswordGate> - Disabled for now - uncomment to re-enable */}
       </body>
     </html>

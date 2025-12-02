@@ -1,11 +1,11 @@
 'use client'
 
-import Link from 'next/link'
+import TransitionLink from '../TransitionLink'
 import styles from './ProjectLayout.module.css'
 
 export default function ProjectTwo() {
   return (
-    <Link href="/projects/project-two" className={styles.projectLink}>
+    <TransitionLink href="/projects/project-two" className={styles.projectLink}>
       <div className={styles.outerContainer}>
         <div className={styles.innerContainer} data-cursor="view-project">
           <div className={styles.innerContentDiv}>
@@ -41,6 +41,6 @@ export default function ProjectTwo() {
           </div>
         </div>
       </div>
-    </Link>
+    </TransitionLink>
   )
 }

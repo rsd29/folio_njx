@@ -112,23 +112,11 @@ export default function Page() {
     // Get index for color variation
     const skillIndex = allSkills.indexOf(skill)
     
-    const getHoverColor = (index: number) => {
-      const colors = [
-        { color: '#ff9a9e', shadow: '255, 154, 158' },
-        { color: '#a8e6cf', shadow: '168, 230, 207' },
-        { color: '#ffd3a5', shadow: '255, 211, 165' },
-        { color: '#fd79a8', shadow: '253, 121, 168' },
-        { color: '#fdcb6e', shadow: '253, 203, 110' },
-        { color: '#6c5ce7', shadow: '108, 92, 231' },
-        { color: '#a29bfe', shadow: '162, 155, 254' },
-        { color: '#74b9ff', shadow: '116, 185, 255' },
-        { color: '#81ecec', shadow: '129, 236, 236' },
-        { color: '#55a3ff', shadow: '85, 163, 255' }
-      ]
-      return colors[index % colors.length]
+    // Use acid green color (same as footer CTA)
+    const colorScheme = {
+      color: '#bcff4e',
+      shadow: '188, 255, 78'
     }
-    
-    const colorScheme = getHoverColor(skillIndex)
     
     return (
       <div 
@@ -203,7 +191,8 @@ export default function Page() {
                 fontFamily: 'var(--font-body)',
                 fontWeight: 300,
                 color: '#999',
-                textAlign: 'left'
+                textAlign: 'left',
+                fontStyle: 'italic'
               }}>
                 {skillDescriptions[skill]}
               </div>
@@ -213,7 +202,7 @@ export default function Page() {
                   lineHeight: '1.2',
                   fontFamily: 'var(--font-body)',
                   fontWeight: 300,
-                  color: '#999',
+                  color: '#bcff4e',
                   textAlign: 'left'
                 }}
                 dangerouslySetInnerHTML={{ __html: personalUsage[skill] }}
@@ -1075,7 +1064,7 @@ My path to enterprise design started with curiosity about how creativity and tec
             alignItems: 'center'
           }}>
             <ScrollRevealText
-              text="Deep in my bag"
+              text="Tools of the Trade"
               fontSize="var(--font-heading-xl)"
               fontWeight={400}
               lineHeight={1.1}

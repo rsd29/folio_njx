@@ -1,35 +1,64 @@
+'use client'
+
+import { useEffect, useState, useRef } from 'react'
+
 export default function Loading() {
+  const [visible, setVisible] = useState(true)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const startTimeRef = useRef<number>(Date.now())
+
+  useEffect(() => {
+    // Reset start time on every mount
+    startTimeRef.current = Date.now()
+    setVisible(true)
+
+    // Always wait at least 1 second
+    const minDisplayTime = 1000 // 1 second in milliseconds
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      setVisible(false)
+    }, minDisplayTime)
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
+  if (!visible) return null
+
   return (
-    <div className="fixed inset-0 z-[9999] pointer-events-none">
-      {/* Loading blur overlay */}
+    <div
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: '#000000',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        zIndex: 9999,
+      }}
+    >
       <div
-        className="absolute inset-0"
         style={{
-          background: 'linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.95) 100%)',
-          backdropFilter: 'blur(40px)',
-          willChange: 'backdrop-filter',
+          color: '#ffffff',
+          fontSize: '1rem',
+          fontFamily: 'var(--font-body)',
+          fontWeight: 400,
         }}
-      />
-      
-      {/* Additional blur layer */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(circle at center, rgba(0,0,0,0.3) 0%, transparent 60%)',
-          backdropFilter: 'blur(20px)',
-        }}
-      />
-      
-      {/* Loading center element */}
-      <div
-        className="loading-pulse absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-        style={{
-          width: '300px',
-          height: '300px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-        }}
-      />
+      >
+        loading
+      </div>
     </div>
   )
 }

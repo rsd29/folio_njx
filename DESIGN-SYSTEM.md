@@ -11,7 +11,7 @@ All font sizes are defined as CSS variables in `app/globals.css` to ensure consi
 | Variable | Size | Pixels | Usage |
 |----------|------|--------|-------|
 | `--font-display` | 4.5rem | 72px | Hero titles on landing page |
-| `--font-heading-xl` | 3.5rem | 56px | Main section titles (Experience, Deep in my bag) |
+| `--font-heading-xl` | 3.5rem | 56px | Main section titles (Experience, Tools of the Trade) |
 | `--font-heading-l` | 2.8rem | 44.8px | Large headings, subsection titles |
 | `--font-heading-m` | 2.2rem | 35.2px | Medium headings, job titles |
 | `--font-heading-s` | 1.5rem | 24px | Small headings, block titles |
