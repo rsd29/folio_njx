@@ -154,9 +154,9 @@ export default function AnimatedRichText({
                 key={`${segmentIdx}-${wordIdx}-${i}`}
                 initial={{
                   opacity: 0,
-                  y: -20,
-                  x: 10,
-                  scale: 0.95,
+                  y: 15,
+                  x: 0,
+                  scale: 0.98,
                   textShadow: glow
                     ? '0 0 3px rgba(255, 255, 255, 0.4), 0 0 6px rgba(255, 255, 255, 0.3)'
                     : isStrong
@@ -177,9 +177,9 @@ export default function AnimatedRichText({
                 transition={{
                   delay: startDelay + (globalIdx * 0.06) / animationSpeed,
                   type: 'spring',
-                  stiffness: 100,
-                  damping: 20,
-                  mass: 1,
+                  stiffness: 120,
+                  damping: 25,
+                  mass: 0.8,
                 }}
                 style={{
                   display: 'inline-block',

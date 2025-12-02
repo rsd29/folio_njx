@@ -1,15 +1,27 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
+import { useEffect, useState } from "react"
 import Image from 'next/image'
 import AnimatedRichText from '../../components/AnimatedRichText'
 import ScrollRevealText from '../../components/ScrollRevealText'
 import AnimatedFrame from '../../components/AnimatedFrame'
+import { ScrollSmoother } from 'gsap/ScrollSmoother'
 
 export default function Page() {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [overlayVisible, setOverlayVisible] = useState(false)
+
+  useEffect(() => {
+    const smootherInstance = ScrollSmoother.get()
+    if (smootherInstance) {
+      requestAnimationFrame(() => {
+        smootherInstance.scrollTo(0, true)
+      })
+    } else if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    }
+  }, [])
   
   const skillDescriptions: { [key: string]: string } = {
     'Adobe Creative Suite': 'Industry-standard design tools including Photoshop, Illustrator, and InDesign for creating compelling visual content and brand assets.',
@@ -319,88 +331,144 @@ export default function Page() {
         `}</style>
       <main style={{ maxWidth: '100%', minHeight: '100vh', backgroundColor: 'var(--background)', color: 'var(--foreground)' }}>
       {/* Hero Section */}
-      <section style={{ 
-        padding: '100px 10%', 
-        minHeight: '100vh', 
-        display: 'flex', 
-        alignItems: 'flex-start', 
-        justifyContent: 'center',
-        flexDirection: 'column',
-        textAlign: 'left'
-      }}>
-        
-
-
-        <div style={{
-          fontFamily: 'var(--font-body)',
-          maxWidth: '100%',
-          marginBottom: '60px',
-          paddingTop: '100px',
-          paddingBottom: '100px',
-          minHeight: '350px',
+      <section
+        style={{
+          padding: '100px 8%',
+          minHeight: '100vh',
           display: 'flex',
-          alignItems: 'center'
-        }}>
-          <div style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'left',
+          contain: 'layout style',
+        }}
+      >
+        <div
+          style={{
             width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0'
-          }}>
-            <AnimatedRichText
-              className="heroSubtext"
-              segments={[
-                { text: 'I create interfaces that make complex business challenges feel simple, so people can focus on' }
-              ]}
-              useFlickerEffect={false}
-              fontSize="clamp(2rem, 3.5vw, 3.2rem)"
-              fontWeight={400}
-              lineHeight={1.2}
-              letterSpacing="-0.01em"
-              animationSpeed={4}
-              marginBottom="0"
-            />
-            <AnimatedRichText
-              className="heroSubtext"
-              segments={[
-                { text: 'what matters most.', color: '#ffffff', isStrong: true, fontFamily: 'var(--font-unifraktur)', fontSize: 'clamp(2.5rem, 4.5vw, 4rem)', glow: true }
-              ]}
-              useFlickerEffect={false}
-              fontSize="clamp(2.5rem, 4.5vw, 4rem)"
-              fontWeight={400}
-              lineHeight={1.1}
-              letterSpacing="-0.01em"
-              animationSpeed={4}
-              startDelay={2}
-              marginTop="0"
-            />
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 1fr)',
+            gap: '80px',
+            alignItems: 'center',
+            contain: 'layout',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '28px',
+              fontFamily: 'var(--font-body)',
+              minHeight: '400px',
+              contain: 'layout style',
+              maxWidth: '100%',
+            }}
+          >
+            <div style={{ 
+              minHeight: 'clamp(4.8rem, 8.4vw, 7.68rem)',
+              contain: 'layout style paint',
+              width: '100%',
+            }}>
+              <AnimatedRichText
+                className="heroSubtext"
+                segments={[
+                  {
+                    text: 'I help teams create products that are intuitive, scalable, and ',
+                  },
+                ]}
+                useFlickerEffect={false}
+                fontSize="clamp(2rem, 3.5vw, 3.2rem)"
+                fontWeight={400}
+                lineHeight={1.2}
+                letterSpacing="-0.03em"
+                animationSpeed={4}
+                marginBottom="0"
+                maxWidth="none"
+              />
+            </div>
+            <div style={{ 
+              minHeight: 'clamp(2.94rem, 5.04vw, 4.83rem)',
+              marginTop: '-30px',
+              contain: 'layout style paint',
+            }}>
+              <AnimatedRichText
+                className="heroSubtext"
+                segments={[
+                  {
+                    text: 'built with purpose.',
+                    color: '#ffffff',
+                    isStrong: true,
+                    fontFamily:
+                      "'Stack Sans Notch', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+                    fontSize: 'clamp(2.8rem, 4.8vw, 4.6rem)',
+                    glow: true,
+                  },
+                ]}
+                useFlickerEffect={false}
+                fontSize="clamp(2.8rem, 4.8vw, 4.6rem)"
+                fontWeight={400}
+                lineHeight={1.05}
+                letterSpacing="-0.02em"
+                animationSpeed={4}
+                startDelay={1.32}
+                marginTop="0"
+              />
+            </div>
+            <p
+              style={{
+                fontSize: 'var(--font-body-l)',
+                color: 'rgba(255,255,255,0.8)',
+                lineHeight: 1.8,
+                margin: '4px 0 0',
+                maxWidth: '1000px',
+                minHeight: '5.4em',
+                contain: 'layout style',
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word',
+              }}
+            >
+ Hello, my names Russell. I’m a UX designer who works across research, design, and development to make products functional, scalable, and easy to use.            </p>
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '16px',
+                marginTop: '16px',
+                minHeight: '48px',
+                contain: 'layout style',
+              }}
+            >
+              {[
+                'Based in Almighty Melbourne',
+                '5+ yrs Designing internal/external Enterprise Products',
+                'Loves to Code and Build',
+                'Open to New Opportunities',
+              ].map((pill) => (
+                <span
+                  key={pill}
+                  style={{
+                    borderRadius: '5px',
+                    border: '1px solid #bcff4e',
+                    padding: '10px 18px',
+                    fontSize: '0.9rem',
+                    letterSpacing: '0.00em',
+               
+                    color: '#bcff4e',
+                  }}
+                >
+                  {pill}
+                </span>
+              ))}
+            </div>
           </div>
+          
+          
         </div>
-
-
-        {/* Separator Line */}
-        <div style={{
-          width: '100%',
-          height: '1px',
-          backgroundColor: '#333',
-          margin: '80px 0',
-          position: 'relative'
-        }}>
-          <div style={{
-            position: 'absolute',
-            top: '-1px',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '200px',
-            height: '3px',
-            background: 'linear-gradient(90deg, transparent 0%, #555 50%, transparent 100%)',
-            borderRadius: '2px'
-          }} />
-        </div>
+      </section>
 
         {/* Scrollable Gallery Section */}
-        <div className="gallery-section" style={{
+        <section className="gallery-section" style={{
           width: '100%',
+          padding: '0 8%',
           marginBottom: '100px',
          
         }}>
@@ -433,7 +501,7 @@ export default function Page() {
               fontFamily: 'var(--font-body)',
               textAlign: 'left'
             }}>
-              Not just the projects, but the person behind them. Here&apos;s a bit of my story and some moments from my recent trip to Japan.
+              Not just the projects, but the person behind them. Here&apos;s a bit of my story and some moments from my recent trip to Asia.
             </p>
           </div>
           
@@ -451,7 +519,7 @@ export default function Page() {
             transform: 'translateY(0px)'
           }}>
             {/* Frame 1 */}
-            <AnimatedFrame delay={0.1} comment="A quiet moment of contemplation, capturing the essence of thoughtful design and personal growth.">
+            <AnimatedFrame delay={0.1} comment="A quiet moment of tranquility, taking in the sights in Hoi Ann.">
               <div style={{
                 width: '100%',
                 aspectRatio: '4/5',
@@ -535,9 +603,8 @@ export default function Page() {
                 fontFamily: 'var(--font-body)',
                 margin: '0 0 16px 0',
                 lineHeight: 'var(--line-height-tight)'
-              }}>Current Work</h3>
-              At Oriental Merchant, I lead UX/UI design across enterprise platforms, transforming 
-              intricate workflows into intuitive interfaces that people actually want to use.
+              }}>Digital Environments</h3>
+              Much like physical environments, digital environments are a reflection of the people using them. At Oriental Merchant,  I've been able to shape how these environments feel and function. I love to set precendent for how things should be done and how they should look, crafting a culture of design that is both functional and beautiful.
             </div>
             
             {/* Frame 3 */}
@@ -626,7 +693,7 @@ export default function Page() {
                 lineHeight: '1.2'
               }}>My Passion</h3>
               I&apos;m passionate about design systems that scale, accessibility that&apos;s built-in rather than 
-              bolted-on, and user research that drives real change in how we build digital experiences.
+              bolted-on, and user research that drives real change in how we build digital experiences. Oh, and I love things that are visually stunning and make you go "wow". Probably explains why I love Japanese design so much.
             </div>
           </div>
 
@@ -662,9 +729,9 @@ export default function Page() {
                 fontFamily: 'var(--font-body)',
                 margin: '0 0 16px 0',
                 lineHeight: '1.2'
-              }}>The Beginning</h3>
-              My journey began with curiosity—about how things work, why they&apos;re built the way they are, 
-              and how design can make technology feel human.
+              }}>Early Days</h3>
+              My journey in design began with curiosity about how things work, why they&apos;re built the way they are, 
+              and how design can make technology feel human. Having roots in architectural design, I've always had a facination with the environments humans surround themselves in.
             </div>
 
             {/* Frame 2 */}
@@ -753,7 +820,7 @@ export default function Page() {
                 lineHeight: '1.2'
               }}>My Approach</h3>
               My approach combines deep user empathy with strategic thinking, ensuring every design 
-              decision serves both user needs and business objectives.
+              decision serves both user needs and business objectives. With every decision made, the goal is always to create a product that feels just "sweet" for the user. I believe great design isn’t always loud or avant-garde. It lives where usability meets personality, where something simply feels right.
             </div>
             {/* Frame 4 */}
             <AnimatedFrame delay={0.4} comment="Embracing the journey of continuous learning and the art of thoughtful craftsmanship.">
@@ -820,28 +887,23 @@ export default function Page() {
         
           </div>
         </div>
-        </div>
+        </section>
         {/* Final Story Text */}
         <div style={{
           maxWidth: '100%',
-                fontSize: 'var(--font-body-l)',          lineHeight: '1.7',
+          fontSize: 'var(--font-body-l)',
+          lineHeight: '1.7',
           fontFamily: 'var(--font-body)',
           fontWeight: 300,
           color: '#ccc',
           textAlign: 'left',
+          padding: '0 8%',
           marginBottom: '120px',
           marginLeft: 'auto',
           marginRight: 'auto',
-
-
-
           transition: 'transform 0.3s ease, box-shadow 0.3s ease'
         }}>
-
-            Before diving into enterprise design, I spent years exploring the intersection of 
-            art and technology. This background gives me a unique perspective on creating 
-            interfaces that don&apos;t just function—they communicate, delight, and guide users 
-            effortlessly through complex digital landscapes.
+My path to enterprise design started with curiosity about how creativity and technology connect. That early mix still influences how I design: practical, human, and quietly expressive.
 <br /><br />
         
             Whether sketching in Figma or prototyping in code, I believe great design happens 
@@ -849,8 +911,6 @@ export default function Page() {
             want to use, not just tolerate.
       
         </div>
-   
-      </section>
 
       {/* Story Section */}
       <section style={{ 

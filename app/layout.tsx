@@ -7,7 +7,7 @@ import ClientPageTransition from '../components/ClientPageTransition'
 import ContactForm from '../components/ContactForm'
 // import PasswordGate from '../components/PasswordGate' // Disabled for now - uncomment to re-enable
 import { Analytics } from "@vercel/analytics/next"
-import { UnifrakturMaguntia } from 'next/font/google'
+import { UnifrakturMaguntia, Inter } from 'next/font/google'
 
 const unifrakturMaguntia = UnifrakturMaguntia({
   weight: ['400'],
@@ -16,6 +16,15 @@ const unifrakturMaguntia = UnifrakturMaguntia({
   display: 'swap',
 })
 
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+  preload: true,
+})
+
+// Stack Sans Notch is not available in next/font/google, so we'll keep it as external but optimize loading
+
 export const metadata = {
   title: 'Russell Saw — UX Portfolio',
   description: 'UX Designer & Developer Portfolio',
@@ -23,15 +32,31 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={unifrakturMaguntia.variable}>
+    <html lang="en" className={`${unifrakturMaguntia.variable} ${inter.variable}`}>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Stack+Sans+Notch:wght@200..700&display=swap"
-          rel="stylesheet"
+        {/* Stack Sans Notch loaded asynchronously to avoid blocking render */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap';
+                link.media = 'print';
+                link.onload = function() { this.media = 'all'; };
+                document.head.appendChild(link);
+              })();
+            `,
+          }}
         />
+        <noscript>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Stack+Sans+Notch:wght@200..700&display=swap"
+            rel="stylesheet"
+          />
+        </noscript>
       </head>
       <body>
         <Analytics />
@@ -46,11 +71,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div style={{
                 width: '100%',
                 height: '50vh',
+                minHeight: '400px',
+                maxHeight: '600px',
                 overflow: 'hidden',
                 position: 'relative',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                contain: 'layout style paint'
               }}>
                 <video
                   autoPlay
@@ -59,6 +87,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   playsInline
                   preload="metadata"
                   style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
                     width: '100%',
                     height: '100%',
                     objectFit: 'cover',
@@ -80,7 +111,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   fontWeight: 300,
                   fontFamily: 'var(--font-body)',
                   letterSpacing: '-0.05em',
-                  lineHeight: 1.1
+                  lineHeight: 1.1,
+                  minHeight: '1.1em'
                 }}>
                   Let&apos;s collaborate, Drop us a line  →
                 </div>

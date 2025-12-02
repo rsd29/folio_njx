@@ -1,10 +1,13 @@
 'use client'
 
 // import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowDownIcon, DownloadIcon } from '@radix-ui/react-icons'
 import styles from './home.module.css'
 import ProjectsSection from '../components/ProjectSection'
+import { ScrollSmoother } from 'gsap/ScrollSmoother'
 
 // Tagline functionality commented out - keeping for potential future use
 // const taglines = [
@@ -22,6 +25,41 @@ import ProjectsSection from '../components/ProjectSection'
 // ]
 
 export default function HomePage() {
+  const pathname = usePathname()
+
+  useEffect(() => {
+    // Reset scroll when navigating to this page
+    const resetScroll = () => {
+      if (typeof window !== 'undefined') {
+        // First, reset window scroll immediately
+        window.scrollTo({ top: 0, behavior: 'auto' })
+        
+        // Then handle ScrollSmoother if available
+        const smootherInstance = ScrollSmoother.get()
+        if (smootherInstance) {
+          // Use multiple requestAnimationFrame to ensure it happens after render
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              smootherInstance.scrollTo(0, true)
+            })
+          })
+        }
+      }
+    }
+
+    // Reset immediately
+    resetScroll()
+
+    // Also reset after delays to catch any late scroll restoration
+    const timeout1 = setTimeout(resetScroll, 50)
+    const timeout2 = setTimeout(resetScroll, 150)
+    
+    return () => {
+      clearTimeout(timeout1)
+      clearTimeout(timeout2)
+    }
+  }, [pathname])
+
   // Tagline functionality commented out - keeping for potential future use
   // const [displayed, setDisplayed] = useState('')
   // const [fullTagline, setFullTagline] = useState('')
