@@ -79,33 +79,58 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     // Hide page content immediately to prevent flash
     // Use requestAnimationFrame to ensure state updates before render
     requestAnimationFrame(() => {
-      // Start blur immediately - will increase to extreme levels
+      // Start blur at 0 and gradually increase to create smooth blur-in effect
       setBlurOpacity(0)
-      blurFadeInTimeoutRef.current = setTimeout(() => {
-        setBlurOpacity(1) // Blur reaches full strength (creates solid color effect)
-      }, 10)
       
-      // Navigate after blur starts (no black overlay needed)
-      setTimeout(() => {
-        router.push(href)
-      }, 100)
+      // Animate blur opacity smoothly from 0 to 1 over 1000ms for smoother feel
+      const blurSteps = 100
+      const blurStepDuration = 10 // 10ms per step = 1000ms total
+      let blurStep = 0
+      
+      blurFadeInTimeoutRef.current = setTimeout(() => {
+        const blurInterval = setInterval(() => {
+          blurStep++
+          const progress = blurStep / blurSteps
+          // Use easing function for smooth acceleration - ease-out cubic for smoother start
+          const easedProgress = 1 - Math.pow(1 - progress, 3) // Ease-out cubic
+          setBlurOpacity(easedProgress)
+          
+          if (blurStep >= blurSteps) {
+            setBlurOpacity(1) // Ensure it reaches exactly 1
+            clearInterval(blurInterval)
+            if (blurIntervalRef.current) {
+              blurIntervalRef.current = null
+            }
+            
+            // Navigate at the apex of the blur (when blur is at maximum)
+            // This happens after blur has fully completed on current page
+            setTimeout(() => {
+              router.push(href)
+            }, 100) // Small delay to ensure blur is fully at peak and feels smooth
+          }
+        }, blurStepDuration)
+        
+        // Store interval ref for cleanup
+        blurIntervalRef.current = blurInterval as any
+      }, 0) // Start immediately
     })
     
     // Staggered fade-in for loading elements
-    // 1. Counter and bar fade in first (100ms delay)
+    // Wait for blur to start before showing loading elements
+    // 1. Counter and bar fade in after blur has started (400ms delay)
     counterBarFadeInTimeoutRef.current = setTimeout(() => {
       setCounterBarOpacity(1)
-    }, 100)
+    }, 400)
     
-    // 2. Left text "Russell Saw" fades in after counter/bar (300ms delay)
+    // 2. Left text "Russell Saw" fades in after counter/bar (600ms delay)
     leftTextFadeInTimeoutRef.current = setTimeout(() => {
       setLeftTextOpacity(1)
-    }, 300)
+    }, 600)
     
-    // 3. Right text "UI / UX" fades in last (500ms delay)
+    // 3. Right text "UI / UX" fades in last (800ms delay)
     rightTextFadeInTimeoutRef.current = setTimeout(() => {
       setRightTextOpacity(1)
-    }, 500)
+    }, 800)
     
     // Fade out after minimum display time
     const minDisplayTime = 2000 // 2 seconds total
@@ -114,7 +139,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     const holdTime = minDisplayTime - fadeInDuration - fadeOutDuration // 800ms hold
     
     // Animate counter from 0 to 100 - when it reaches 100, start fade out immediately
-    const counterDuration = 1200 // 1.2 seconds
+    const counterDuration = 1400 // 1.4 seconds - slightly longer for smoother feel
     const counterSteps = 100
     const counterInterval = counterDuration / counterSteps
     
@@ -148,23 +173,40 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
           setRightTextOpacity(0)
         }, baseFadeOutDelay + 400)
         
-        // Fade out black overlay and blur after text fade out completes
+        // Unblur the new page after text fade out completes
         const textFadeOutComplete = baseFadeOutDelay + 400 + 300 // Wait for text fade out + transition
         timeoutRef.current = setTimeout(() => {
-          // Fade out blur first
+          // Animate blur opacity smoothly from 1 to 0 (unblur) over 1000ms for smoother feel
+          const unblurSteps = 100
+          const unblurStepDuration = 10 // 10ms per step = 1000ms total
+          let unblurStep = 0
+          
           blurFadeOutTimeoutRef.current = setTimeout(() => {
-            setBlurOpacity(0)
+            const unblurInterval = setInterval(() => {
+              unblurStep++
+              const progress = unblurStep / unblurSteps
+              // Use easing function for smooth deceleration - ease-in cubic for smoother end
+              const easedProgress = Math.pow(progress, 3) // Ease-in cubic
+              setBlurOpacity(1 - easedProgress) // Go from 1 to 0
+              
+              if (unblurStep >= unblurSteps) {
+                setBlurOpacity(0) // Ensure it reaches exactly 0
+                clearInterval(unblurInterval)
+                
+                // Clean up transition state after unblur completes
+                fadeOutTimeoutRef.current = setTimeout(() => {
+                  setIsTransitioning(false)
+                  setCounter(0)
+                  setCounterBarOpacity(0)
+                  setLeftTextOpacity(0)
+                  setRightTextOpacity(0)
+                  setBlurOpacity(0)
+                  pendingHrefRef.current = null
+                  isManualTransitionRef.current = false
+                }, 100)
+              }
+            }, unblurStepDuration)
           }, 0)
-          fadeOutTimeoutRef.current = setTimeout(() => {
-            setIsTransitioning(false)
-            setCounter(0)
-            setCounterBarOpacity(0)
-            setLeftTextOpacity(0)
-            setRightTextOpacity(0)
-            setBlurOpacity(0)
-            pendingHrefRef.current = null
-            isManualTransitionRef.current = false
-          }, fadeOutDuration)
         }, textFadeOutComplete)
       }
     }, counterInterval)
@@ -347,18 +389,22 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
   // Blur amount increases dramatically to create "fade to color" effect
   // At max blur, the page should become a single color
   // Use easing curve for more dramatic blur progression
-  // Only calculate blur effects when actually transitioning
-  const easedBlurOpacity = isMounted && isTransitioning && blurOpacity > 0 ? 1 - Math.pow(1 - blurOpacity, 2) : 0 // Ease-in for dramatic blur
-  const blurAmount = easedBlurOpacity * 120 // Increased to 120px for even more extreme effect
+  // Only calculate blur effects when actually transitioning AND blurOpacity is active
+  const easedBlurOpacity = (isTransitioning && blurOpacity > 0) ? 1 - Math.pow(1 - blurOpacity, 2) : 0 // Ease-in for dramatic blur
+  const blurAmount = easedBlurOpacity * 120 // Max blur 120px
   
   // Scale effect - page slightly shrinks as it blurs (creates depth)
-  const scaleAmount = isMounted && isTransitioning ? 1 - (blurOpacity * 0.05) : 1 // Slight scale down (5% max)
+  // Only apply when transitioning with active blur
+  const scaleAmount = (isTransitioning && blurOpacity > 0) ? 1 - (blurOpacity * 0.05) : 1 // Slight scale down (5% max)
   
   // Brightness adjustment - slightly darken as blur increases
-  const brightnessAmount = isMounted && isTransitioning ? 1 - (blurOpacity * 0.3) : 1 // Darken by 30% max
+  // Only apply when transitioning with active blur
+  const brightnessAmount = (isTransitioning && blurOpacity > 0) ? 1 - (blurOpacity * 0.3) : 1 // Darken by 30% max
   
-  // Calculate opacity - ensure consistent numeric values
-  const pageOpacity = isMounted && isTransitioning ? 1 - (blurOpacity * 0.8) : 1
+  // Calculate opacity - page fades out as blur increases
+  // CRITICAL: Always show content at full opacity when NOT transitioning
+  // Ensure minimum opacity of 0.2 even during transition to prevent complete invisibility
+  const pageOpacity = (isTransitioning && blurOpacity > 0) ? Math.max(0.2, 1 - (blurOpacity * 0.8)) : 1
 
   // Separate persistent components from page content
   const persistentComponents: React.ReactNode[] = []
@@ -397,27 +443,22 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       >
         {persistentComponents}
       </div>
-      {/* Page content wrapper - fades out, scales, and blurs during transition */}
+      {/* Page content wrapper - always visible, blur overlay handles the transition effect */}
       <div
         style={{
-          opacity: isMounted ? pageOpacity : 1,
-          transform: isMounted && isTransitioning ? `scale(${scaleAmount})` : 'scale(1)',
-          filter: isMounted && isTransitioning ? `brightness(${brightnessAmount})` : 'brightness(1)',
+          opacity: 1, // Always fully visible
           visibility: 'visible',
           position: 'relative',
-          zIndex: 10,
-          transition: isMounted && isTransitioning 
-            ? 'opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), filter 0.7s cubic-bezier(0.4, 0, 0.2, 1)' 
-            : isMounted ? 'opacity 0.3s ease-in, transform 0.3s ease-in, filter 0.3s ease-in' : 'none',
-          transformOrigin: 'center center',
+          zIndex: 1,
+          width: '100%',
           pointerEvents: isTransitioning ? 'none' : 'auto',
         }}
       >
         {contentToRender}
       </div>
-      {isTransitioning && blurAmount > 0 && (
+      {isTransitioning && blurOpacity > 0 && (
         <>
-          {/* Extreme blur overlay - creates "fade to color" effect */}
+          {/* Blur overlay - blurs current page out, then unblurs new page in */}
           <div
             style={{
               position: 'fixed',
@@ -427,14 +468,15 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
               bottom: 0,
               width: '100%',
               height: '100%',
+              backgroundColor: 'transparent',
               backdropFilter: `blur(${blurAmount}px) saturate(${1 + (blurOpacity * 0.5)})`,
               WebkitBackdropFilter: `blur(${blurAmount}px) saturate(${1 + (blurOpacity * 0.5)})`,
               pointerEvents: 'none',
               zIndex: 99998,
-              transition: 'backdrop-filter 0.7s cubic-bezier(0.4, 0, 0.2, 1), -webkit-backdrop-filter 0.7s cubic-bezier(0.4, 0, 0.2, 1)',
+              opacity: 1, // Always fully opaque - blur amount controls the effect
             }}
           />
-          {/* Loading counter and bar - above black overlay */}
+          {/* Loading counter and bar - above blur overlay */}
           <div
             style={{
               position: 'fixed',
@@ -481,7 +523,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
               />
             </div>
           </div>
-          {/* Bottom right corner text - above black overlay */}
+          {/* Bottom right corner text - above blur overlay */}
           <div
             style={{
               position: 'fixed',
@@ -501,7 +543,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
           >
             UI / UX 
           </div>
-
+          {/* Bottom left corner text - above blur overlay */}
           <div
             style={{
               position: 'fixed',
