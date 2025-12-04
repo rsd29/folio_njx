@@ -13,6 +13,241 @@ interface NavigationContextType {
 
 const NavigationContext = createContext<NavigationContextType | null>(null)
 
+/**
+ * ANIMATION CONFIGURATION
+ * 
+ * All variables that control the blur/unblur transition animation.
+ * Adjust these values to change the feel and timing of the animation.
+ * 
+ * ═══════════════════════════════════════════════════════════════
+ * QUICK GUIDE TO TUNING THE ANIMATION
+ * ═══════════════════════════════════════════════════════════════
+ * 
+ * 🎯 SPEED & TIMING:
+ *   - Lower values = faster/snappier animation
+ *   - Higher values = slower/smoother animation
+ *   - Total duration = steps × stepDuration (in milliseconds)
+ * 
+ * 📈 EASING POWER (how the animation accelerates/decelerates):
+ *   - 1 = linear (constant speed, no acceleration)
+ *   - 2 = quadratic (gentle curve)
+ *   - 3 = cubic (more dramatic curve) ← DEFAULT
+ *   - 4 = quartic (very dramatic curve)
+ *   - Higher = more dramatic acceleration/deceleration
+ * 
+ * 💡 PRO TIPS:
+ *   - For snappier feel: Reduce steps, reduce stepDuration, increase easingPower
+ *   - For smoother feel: Increase steps, increase stepDuration, decrease easingPower
+ *   - For dramatic blur: Increase maxBlur, increase blurEasingPower
+ *   - For subtle blur: Decrease maxBlur, decrease blurEasingPower
+ *   - For faster transitions: Reduce all delay values
+ *   - For more dramatic page effects: Increase scaleDown, brightnessReduction, opacityFade
+ * 
+ * 🎨 VISUAL EFFECTS:
+ *   - maxBlur: How abstracted the page becomes (60-200px range works well)
+ *   - scaleDown: How much the page shrinks (0-0.1 range, 0.05 = 5% shrink)
+ *   - brightnessReduction: How dark the page gets (0-0.5 range, 0.3 = 30% darker)
+ *   - opacityFade: How transparent the page becomes (0.5-1 range, 0.8 = fades to 20% opacity)
+ * 
+ * ⚡ PERFORMANCE:
+ *   - More steps = smoother but more CPU intensive
+ *   - 50-100 steps is usually a good balance
+ *   - Step duration of 5-15ms works well for most cases
+ */
+const ANIMATION_CONFIG = {
+  // ===== BLUR-IN ANIMATION (when transition starts) =====
+  blurIn: {
+    // Number of animation steps (more steps = smoother but more CPU intensive)
+    // Recommended: 50-150 (default: 100)
+    steps: 100,
+    
+    // Duration of each step in milliseconds
+    // Total blur-in duration = steps * stepDuration
+    // Example: 100 steps * 10ms = 1000ms (1 second)
+    // Recommended: 5-20ms (default: 10ms)
+    stepDuration: 10,
+    
+    // Easing function power for blur-in
+    // Higher = more dramatic acceleration (starts slow, ends fast)
+    // 1 = linear, 2 = quadratic, 3 = cubic, 4 = quartic
+    // Recommended: 2-4 (default: 3 for ease-out cubic)
+    easingPower: 2,
+  },
+
+  // ===== BLUR-OUT/UNBLUR ANIMATION (when transition ends) =====
+  blurOut: {
+    // Number of animation steps for unblur
+    // Recommended: 50-150 (default: 100)
+    steps: 100,
+    
+    // Duration of each step in milliseconds
+    // Total blur-out duration = steps * stepDuration
+    // Example: 100 steps * 10ms = 1000ms (1 second)
+    // Recommended: 5-20ms (default: 10ms)
+    stepDuration: 5,
+    
+    // Easing function power for blur-out
+    // Higher = more dramatic deceleration (starts fast, ends slow)
+    // 1 = linear, 2 = quadratic, 3 = cubic, 4 = quartic
+    // Recommended: 2-4 (default: 3 for ease-in cubic)
+    easingPower: 2,
+  },
+
+  // ===== VISUAL BLUR EFFECT INTENSITY =====
+  blurEffect: {
+    // Maximum blur amount in pixels
+    // Higher = more blur (page becomes more abstracted)
+    // Recommended: 60-200px (default: 120px)
+    maxBlur: 120,
+    
+    // Additional easing multiplier for blur amount
+    // Makes blur increase more dramatically than opacity
+    // Higher = blur ramps up faster
+    // Recommended: 1-3 (default: 2)
+    blurEasingPower: 2,
+    
+    // Saturation boost as blur increases (0-1 range)
+    // Higher = more color saturation during blur
+    // Recommended: 0-1 (default: 0.5)
+    saturationBoost: 0.5,
+  },
+
+  // ===== PAGE TRANSFORM EFFECTS =====
+  pageTransform: {
+    // Scale down amount (0-1 range)
+    // Higher = page shrinks more during blur
+    // Example: 0.05 = 5% shrink, 0.1 = 10% shrink
+    // Recommended: 0-0.1 (default: 0.05)
+    scaleDown: 0.05,
+    
+    // Brightness reduction (0-1 range)
+    // Higher = page gets darker during blur
+    // Example: 0.3 = 30% darker, 0.5 = 50% darker
+    // Recommended: 0-0.5 (default: 0.3)
+    brightnessReduction: 0.3,
+    
+    // Opacity fade amount (0-1 range)
+    // Higher = page fades more during blur
+    // Example: 0.8 = fades to 20% opacity, 0.5 = fades to 50% opacity
+    // Note: Minimum opacity is always 0.2 to prevent complete invisibility
+    // Recommended: 0.5-1 (default: 0.8)
+    opacityFade: 0.8,
+    
+    // Minimum opacity during transition (prevents page from disappearing completely)
+    // Recommended: 0.1-0.3 (default: 0.2)
+    minOpacity: 0.2,
+  },
+
+  // ===== LOADING ELEMENTS FADE-IN TIMING =====
+  fadeIn: {
+    // Delay before counter/bar appears (in milliseconds)
+    // Higher = longer wait before showing loading elements
+    // Recommended: 200-800ms (default: 400ms)
+    counterBarDelay: 400,
+    
+    // Delay before left text appears (in milliseconds)
+    // Recommended: 400-1000ms (default: 600ms)
+    leftTextDelay: 600,
+    
+    // Delay before right text appears (in milliseconds)
+    // Recommended: 600-1200ms (default: 800ms)
+    rightTextDelay: 800,
+    
+    // Transition duration for fade-in (CSS transition)
+    // Recommended: 200-500ms (default: 300ms)
+    transitionDuration: 300,
+  },
+
+  // ===== COUNTER ANIMATION =====
+  counter: {
+    // Total duration for counter to go from 0 to 100 (in milliseconds)
+    // Higher = counter animates slower
+    // Recommended: 1000-2000ms (default: 1400ms)
+    duration: 1400,
+    
+    // Number of steps for counter animation
+    // More steps = smoother counter animation
+    // Recommended: 50-200 (default: 100)
+    steps: 100,
+    
+    // Easing function power for counter
+    // Higher = counter starts slow, speeds up at end
+    // Recommended: 2-4 (default: 3)
+    easingPower: 3,
+  },
+
+  // ===== LOADING ELEMENTS FADE-OUT TIMING =====
+  fadeOut: {
+    // Base delay before fade-out starts (in milliseconds)
+    // Usually 0, but can add delay if needed
+    // Recommended: 0-200ms (default: 0ms)
+    baseDelay: 0,
+    
+    // Stagger delay between counter/bar and left text (in milliseconds)
+    // Higher = more time between each element fading out
+    // Recommended: 100-400ms (default: 200ms)
+    staggerDelay: 200,
+    
+    // Stagger delay between left text and right text (in milliseconds)
+    // Recommended: 100-400ms (default: 200ms)
+    staggerDelay2: 200,
+    
+    // Transition duration for fade-out (CSS transition)
+    // Recommended: 200-500ms (default: 300ms)
+    transitionDuration: 300,
+  },
+
+  // ===== NAVIGATION TIMING =====
+  navigation: {
+    // Delay before navigating to new page (in milliseconds)
+    // Happens at peak blur (when blur is at maximum)
+    // Higher = longer wait at peak blur before navigation
+    // Recommended: 0-300ms (default: 100ms)
+    delayAtPeak: 0,
+    
+    // Delay after text fade-out before starting unblur (in milliseconds)
+    // Higher = longer pause before revealing new page
+    // Recommended: 200-600ms (default: 300ms)
+    delayBeforeUnblur: 300,
+    
+    // Delay after unblur completes before cleaning up (in milliseconds)
+    // Recommended: 50-200ms (default: 100ms)
+    cleanupDelay: 100,
+  },
+
+  // ===== BROWSER NAVIGATION (back/forward button) =====
+  browserNav: {
+    // Blur steps for browser navigation (can be different from manual transition)
+    // Recommended: 50-100 (default: 60)
+    blurSteps: 60,
+    
+    // Blur step duration for browser navigation
+    // Recommended: 8-15ms (default: 12ms)
+    blurStepDuration: 12,
+    
+    // Fade-in delays for browser navigation
+    counterBarDelay: 100,
+    leftTextDelay: 300,
+    rightTextDelay: 500,
+    
+    // Counter duration for browser navigation
+    // Recommended: 1000-1500ms (default: 1200ms)
+    counterDuration: 1200,
+    
+    // Minimum display time for loading screen (in milliseconds)
+    // Recommended: 1500-3000ms (default: 2000ms)
+    minDisplayTime: 2000,
+    
+    // Fade-in duration for browser navigation (in milliseconds)
+    // Recommended: 400-800ms (default: 600ms)
+    fadeInDuration: 600,
+    
+    // Fade-out duration for browser navigation (in milliseconds)
+    // Recommended: 400-800ms (default: 600ms)
+    fadeOutDuration: 600,
+  },
+} as const
+
 export function useNavigation() {
   const context = useContext(NavigationContext)
   if (!context) {
@@ -82,17 +317,17 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       // Start blur at 0 and gradually increase to create smooth blur-in effect
       setBlurOpacity(0)
       
-      // Animate blur opacity smoothly from 0 to 1 over 1000ms for smoother feel
-      const blurSteps = 100
-      const blurStepDuration = 10 // 10ms per step = 1000ms total
+      // Animate blur opacity smoothly from 0 to 1
+      const blurSteps = ANIMATION_CONFIG.blurIn.steps
+      const blurStepDuration = ANIMATION_CONFIG.blurIn.stepDuration
       let blurStep = 0
       
       blurFadeInTimeoutRef.current = setTimeout(() => {
         const blurInterval = setInterval(() => {
           blurStep++
           const progress = blurStep / blurSteps
-          // Use easing function for smooth acceleration - ease-out cubic for smoother start
-          const easedProgress = 1 - Math.pow(1 - progress, 3) // Ease-out cubic
+          // Use easing function for smooth acceleration
+          const easedProgress = 1 - Math.pow(1 - progress, ANIMATION_CONFIG.blurIn.easingPower)
           setBlurOpacity(easedProgress)
           
           if (blurStep >= blurSteps) {
@@ -106,7 +341,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
             // This happens after blur has fully completed on current page
             setTimeout(() => {
               router.push(href)
-            }, 100) // Small delay to ensure blur is fully at peak and feels smooth
+            }, ANIMATION_CONFIG.navigation.delayAtPeak)
           }
         }, blurStepDuration)
         
@@ -117,20 +352,20 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     
     // Staggered fade-in for loading elements
     // Wait for blur to start before showing loading elements
-    // 1. Counter and bar fade in after blur has started (400ms delay)
+    // 1. Counter and bar fade in after blur has started
     counterBarFadeInTimeoutRef.current = setTimeout(() => {
       setCounterBarOpacity(1)
-    }, 400)
+    }, ANIMATION_CONFIG.fadeIn.counterBarDelay)
     
-    // 2. Left text "Russell Saw" fades in after counter/bar (600ms delay)
+    // 2. Left text "Russell Saw" fades in after counter/bar
     leftTextFadeInTimeoutRef.current = setTimeout(() => {
       setLeftTextOpacity(1)
-    }, 600)
+    }, ANIMATION_CONFIG.fadeIn.leftTextDelay)
     
-    // 3. Right text "UI / UX" fades in last (800ms delay)
+    // 3. Right text "UI / UX" fades in last
     rightTextFadeInTimeoutRef.current = setTimeout(() => {
       setRightTextOpacity(1)
-    }, 800)
+    }, ANIMATION_CONFIG.fadeIn.rightTextDelay)
     
     // Fade out after minimum display time
     const minDisplayTime = 2000 // 2 seconds total
@@ -139,8 +374,8 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     const holdTime = minDisplayTime - fadeInDuration - fadeOutDuration // 800ms hold
     
     // Animate counter from 0 to 100 - when it reaches 100, start fade out immediately
-    const counterDuration = 1400 // 1.4 seconds - slightly longer for smoother feel
-    const counterSteps = 100
+    const counterDuration = ANIMATION_CONFIG.counter.duration
+    const counterSteps = ANIMATION_CONFIG.counter.steps
     const counterInterval = counterDuration / counterSteps
     
     let currentStep = 0
@@ -148,7 +383,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       currentStep++
       const progress = Math.min(currentStep / counterSteps, 1)
       // Use easing function for smooth animation
-      const easedProgress = 1 - Math.pow(1 - progress, 3) // Ease out cubic
+      const easedProgress = 1 - Math.pow(1 - progress, ANIMATION_CONFIG.counter.easingPower)
       const counterValue = Math.floor(easedProgress * 100)
       // Ensure it reaches 100
       setCounter(currentStep >= counterSteps ? 100 : counterValue)
@@ -159,34 +394,34 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
           clearInterval(counterIntervalRef.current)
         }
         // Start fade out immediately when counter reaches 100
-        const baseFadeOutDelay = 0 // No delay after 100
+        const baseFadeOutDelay = ANIMATION_CONFIG.fadeOut.baseDelay
         // Counter and bar fade out first
         counterBarFadeOutTimeoutRef.current = setTimeout(() => {
           setCounterBarOpacity(0)
         }, baseFadeOutDelay)
-        // Left text fades out second (200ms after counter/bar)
+        // Left text fades out second
         leftTextFadeOutTimeoutRef.current = setTimeout(() => {
           setLeftTextOpacity(0)
-        }, baseFadeOutDelay + 200)
-        // Right text fades out last (400ms after counter/bar)
+        }, baseFadeOutDelay + ANIMATION_CONFIG.fadeOut.staggerDelay)
+        // Right text fades out last
         rightTextFadeOutTimeoutRef.current = setTimeout(() => {
           setRightTextOpacity(0)
-        }, baseFadeOutDelay + 400)
+        }, baseFadeOutDelay + ANIMATION_CONFIG.fadeOut.staggerDelay + ANIMATION_CONFIG.fadeOut.staggerDelay2)
         
         // Unblur the new page after text fade out completes
-        const textFadeOutComplete = baseFadeOutDelay + 400 + 300 // Wait for text fade out + transition
+        const textFadeOutComplete = baseFadeOutDelay + ANIMATION_CONFIG.fadeOut.staggerDelay + ANIMATION_CONFIG.fadeOut.staggerDelay2 + ANIMATION_CONFIG.navigation.delayBeforeUnblur
         timeoutRef.current = setTimeout(() => {
-          // Animate blur opacity smoothly from 1 to 0 (unblur) over 1000ms for smoother feel
-          const unblurSteps = 100
-          const unblurStepDuration = 10 // 10ms per step = 1000ms total
+          // Animate blur opacity smoothly from 1 to 0 (unblur)
+          const unblurSteps = ANIMATION_CONFIG.blurOut.steps
+          const unblurStepDuration = ANIMATION_CONFIG.blurOut.stepDuration
           let unblurStep = 0
           
           blurFadeOutTimeoutRef.current = setTimeout(() => {
             const unblurInterval = setInterval(() => {
               unblurStep++
               const progress = unblurStep / unblurSteps
-              // Use easing function for smooth deceleration - ease-in cubic for smoother end
-              const easedProgress = Math.pow(progress, 3) // Ease-in cubic
+              // Use easing function for smooth deceleration
+              const easedProgress = Math.pow(progress, ANIMATION_CONFIG.blurOut.easingPower)
               setBlurOpacity(1 - easedProgress) // Go from 1 to 0
               
               if (unblurStep >= unblurSteps) {
@@ -203,7 +438,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
                   setBlurOpacity(0)
                   pendingHrefRef.current = null
                   isManualTransitionRef.current = false
-                }, 100)
+                }, ANIMATION_CONFIG.navigation.cleanupDelay)
               }
             }, unblurStepDuration)
           }, 0)
@@ -216,18 +451,18 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     const fallbackTimeout = setTimeout(() => {
       // Only trigger if fade out hasn't started yet (check if timeoutRef is still null)
       if (!timeoutRef.current) {
-        const baseFadeOutDelay = 0
+        const baseFadeOutDelay = ANIMATION_CONFIG.fadeOut.baseDelay
         counterBarFadeOutTimeoutRef.current = setTimeout(() => {
           setCounterBarOpacity(0)
         }, baseFadeOutDelay)
         leftTextFadeOutTimeoutRef.current = setTimeout(() => {
           setLeftTextOpacity(0)
-        }, baseFadeOutDelay + 200)
+        }, baseFadeOutDelay + ANIMATION_CONFIG.fadeOut.staggerDelay)
         rightTextFadeOutTimeoutRef.current = setTimeout(() => {
           setRightTextOpacity(0)
-        }, baseFadeOutDelay + 400)
+        }, baseFadeOutDelay + ANIMATION_CONFIG.fadeOut.staggerDelay + ANIMATION_CONFIG.fadeOut.staggerDelay2)
         
-        const textFadeOutComplete = baseFadeOutDelay + 400 + 300
+        const textFadeOutComplete = baseFadeOutDelay + ANIMATION_CONFIG.fadeOut.staggerDelay + ANIMATION_CONFIG.fadeOut.staggerDelay2 + ANIMATION_CONFIG.navigation.delayBeforeUnblur
         timeoutRef.current = setTimeout(() => {
           blurFadeOutTimeoutRef.current = setTimeout(() => {
             setBlurOpacity(0)
@@ -275,8 +510,8 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       setBlurOpacity(0)
       blurFadeInTimeoutRef.current = setTimeout(() => {
         let blurProgress = 0
-        const blurSteps = 60
-        const blurStepDuration = 12
+        const blurSteps = ANIMATION_CONFIG.browserNav.blurSteps
+        const blurStepDuration = ANIMATION_CONFIG.browserNav.blurStepDuration
         blurIntervalRef.current = setInterval(() => {
           blurProgress += 1 / blurSteps
           if (blurProgress >= 1) {
@@ -297,31 +532,31 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       // Staggered fade-in for loading elements
       counterBarFadeInTimeoutRef.current = setTimeout(() => {
         setCounterBarOpacity(1)
-      }, 100)
+      }, ANIMATION_CONFIG.browserNav.counterBarDelay)
       
       leftTextFadeInTimeoutRef.current = setTimeout(() => {
         setLeftTextOpacity(1)
-      }, 300)
+      }, ANIMATION_CONFIG.browserNav.leftTextDelay)
       
       rightTextFadeInTimeoutRef.current = setTimeout(() => {
         setRightTextOpacity(1)
-      }, 500)
+      }, ANIMATION_CONFIG.browserNav.rightTextDelay)
       
-      const minDisplayTime = 2000 // 2 seconds total
-      const fadeInDuration = 600
-      const fadeOutDuration = 600
-      const holdTime = minDisplayTime - fadeInDuration - fadeOutDuration // 800ms hold
+      const minDisplayTime = ANIMATION_CONFIG.browserNav.minDisplayTime
+      const fadeInDuration = ANIMATION_CONFIG.browserNav.fadeInDuration
+      const fadeOutDuration = ANIMATION_CONFIG.browserNav.fadeOutDuration
+      const holdTime = minDisplayTime - fadeInDuration - fadeOutDuration
       
       // Animate counter from 0 to 100 (finishes before fade out starts)
-      const counterDuration = 1200 // 1.2 seconds - finishes before fade out
-      const counterSteps = 100
+      const counterDuration = ANIMATION_CONFIG.browserNav.counterDuration
+      const counterSteps = ANIMATION_CONFIG.counter.steps
       const counterInterval = counterDuration / counterSteps
       
       let currentStep = 0
       counterIntervalRef.current = setInterval(() => {
         currentStep++
         const progress = Math.min(currentStep / counterSteps, 1)
-        const easedProgress = 1 - Math.pow(1 - progress, 3) // Ease out cubic
+        const easedProgress = 1 - Math.pow(1 - progress, ANIMATION_CONFIG.counter.easingPower)
         const counterValue = Math.floor(easedProgress * 100)
         // Ensure it reaches 100
         setCounter(currentStep >= counterSteps ? 100 : counterValue)
@@ -336,18 +571,18 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       
       // Fade out loading elements before black overlay fades out (staggered in reverse order)
       const baseFadeOutDelay = fadeInDuration + holdTime - 300
-      // Counter and bar fade out first
-      counterBarFadeOutTimeoutRef.current = setTimeout(() => {
-        setCounterBarOpacity(0)
-      }, baseFadeOutDelay)
-      // Left text fades out second (200ms after counter/bar)
-      leftTextFadeOutTimeoutRef.current = setTimeout(() => {
-        setLeftTextOpacity(0)
-      }, baseFadeOutDelay + 200)
-      // Right text fades out last (400ms after counter/bar)
-      rightTextFadeOutTimeoutRef.current = setTimeout(() => {
-        setRightTextOpacity(0)
-      }, baseFadeOutDelay + 400)
+        // Counter and bar fade out first
+        counterBarFadeOutTimeoutRef.current = setTimeout(() => {
+          setCounterBarOpacity(0)
+        }, baseFadeOutDelay)
+        // Left text fades out second
+        leftTextFadeOutTimeoutRef.current = setTimeout(() => {
+          setLeftTextOpacity(0)
+        }, baseFadeOutDelay + ANIMATION_CONFIG.fadeOut.staggerDelay)
+        // Right text fades out last
+        rightTextFadeOutTimeoutRef.current = setTimeout(() => {
+          setRightTextOpacity(0)
+        }, baseFadeOutDelay + ANIMATION_CONFIG.fadeOut.staggerDelay + ANIMATION_CONFIG.fadeOut.staggerDelay2)
       
       timeoutRef.current = setTimeout(() => {
         // Fade out blur first
@@ -390,21 +625,29 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
   // At max blur, the page should become a single color
   // Use easing curve for more dramatic blur progression
   // Only calculate blur effects when actually transitioning AND blurOpacity is active
-  const easedBlurOpacity = (isTransitioning && blurOpacity > 0) ? 1 - Math.pow(1 - blurOpacity, 2) : 0 // Ease-in for dramatic blur
-  const blurAmount = easedBlurOpacity * 120 // Max blur 120px
+  const easedBlurOpacity = (isTransitioning && blurOpacity > 0) 
+    ? 1 - Math.pow(1 - blurOpacity, ANIMATION_CONFIG.blurEffect.blurEasingPower) 
+    : 0
+  const blurAmount = easedBlurOpacity * ANIMATION_CONFIG.blurEffect.maxBlur
   
   // Scale effect - page slightly shrinks as it blurs (creates depth)
   // Only apply when transitioning with active blur
-  const scaleAmount = (isTransitioning && blurOpacity > 0) ? 1 - (blurOpacity * 0.05) : 1 // Slight scale down (5% max)
+  const scaleAmount = (isTransitioning && blurOpacity > 0) 
+    ? 1 - (blurOpacity * ANIMATION_CONFIG.pageTransform.scaleDown) 
+    : 1
   
   // Brightness adjustment - slightly darken as blur increases
   // Only apply when transitioning with active blur
-  const brightnessAmount = (isTransitioning && blurOpacity > 0) ? 1 - (blurOpacity * 0.3) : 1 // Darken by 30% max
+  const brightnessAmount = (isTransitioning && blurOpacity > 0) 
+    ? 1 - (blurOpacity * ANIMATION_CONFIG.pageTransform.brightnessReduction) 
+    : 1
   
   // Calculate opacity - page fades out as blur increases
   // CRITICAL: Always show content at full opacity when NOT transitioning
-  // Ensure minimum opacity of 0.2 even during transition to prevent complete invisibility
-  const pageOpacity = (isTransitioning && blurOpacity > 0) ? Math.max(0.2, 1 - (blurOpacity * 0.8)) : 1
+  // Ensure minimum opacity even during transition to prevent complete invisibility
+  const pageOpacity = (isTransitioning && blurOpacity > 0) 
+    ? Math.max(ANIMATION_CONFIG.pageTransform.minOpacity, 1 - (blurOpacity * ANIMATION_CONFIG.pageTransform.opacityFade)) 
+    : 1
 
   // Separate persistent components from page content
   const persistentComponents: React.ReactNode[] = []
@@ -469,8 +712,8 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
               width: '100%',
               height: '100%',
               backgroundColor: 'transparent',
-              backdropFilter: `blur(${blurAmount}px) saturate(${1 + (blurOpacity * 0.5)})`,
-              WebkitBackdropFilter: `blur(${blurAmount}px) saturate(${1 + (blurOpacity * 0.5)})`,
+              backdropFilter: `blur(${blurAmount}px) saturate(${1 + (blurOpacity * ANIMATION_CONFIG.blurEffect.saturationBoost)})`,
+              WebkitBackdropFilter: `blur(${blurAmount}px) saturate(${1 + (blurOpacity * ANIMATION_CONFIG.blurEffect.saturationBoost)})`,
               pointerEvents: 'none',
               zIndex: 99998,
               opacity: 1, // Always fully opaque - blur amount controls the effect
@@ -490,7 +733,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
               zIndex: 100000,
               pointerEvents: 'none',
               opacity: counterBarOpacity,
-              transition: 'opacity 0.3s ease-in-out',
+              transition: `opacity ${ANIMATION_CONFIG.fadeIn.transitionDuration}ms ease-in-out`,
             }}
           >
             <div
@@ -538,7 +781,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
               zIndex: 100000,
               pointerEvents: 'none',
               opacity: rightTextOpacity,
-              transition: 'opacity 0.3s ease-in-out',
+              transition: `opacity ${ANIMATION_CONFIG.fadeIn.transitionDuration}ms ease-in-out`,
             }}
           >
             UI / UX 
@@ -558,7 +801,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
               zIndex: 100000,
               pointerEvents: 'none',
               opacity: leftTextOpacity,
-              transition: 'opacity 0.3s ease-in-out',
+              transition: `opacity ${ANIMATION_CONFIG.fadeIn.transitionDuration}ms ease-in-out`,
             }}
           >
             Russell Saw 
