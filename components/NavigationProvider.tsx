@@ -1,10 +1,8 @@
 'use client'
 
-import React, { createContext, useContext, useEffect, useState, useRef, useCallback } from 'react'
+import React, { createContext, useContext, useEffect, useState, useRef } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import Header from './Header'
-import NegativeCursor from './NegativeCursor'
-import SmoothScroll from './SmoothScroll'
+
 
 interface NavigationContextType {
   startTransition: (href: string) => void
@@ -263,12 +261,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
   const [leftTextOpacity, setLeftTextOpacity] = useState(0)
   const [rightTextOpacity, setRightTextOpacity] = useState(0)
   const [counter, setCounter] = useState(0)
-  const [isMounted, setIsMounted] = useState(false)
   
-  // Ensure client-side only rendering to avoid hydration mismatch
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
   const pathname = usePathname()
   const router = useRouter()
   const pendingHrefRef = useRef<string | null>(null)
@@ -285,6 +278,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
   const leftTextFadeOutTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const rightTextFadeOutTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const counterIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const fallbackTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const isManualTransitionRef = useRef(false)
 
   const startTransition = (href: string) => {
@@ -310,6 +304,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     if (leftTextFadeOutTimeoutRef.current) clearTimeout(leftTextFadeOutTimeoutRef.current)
     if (rightTextFadeOutTimeoutRef.current) clearTimeout(rightTextFadeOutTimeoutRef.current)
     if (counterIntervalRef.current) clearInterval(counterIntervalRef.current)
+    if (fallbackTimeoutRef.current) clearTimeout(fallbackTimeoutRef.current)
     
     // Hide page content immediately to prevent flash
     // Use requestAnimationFrame to ensure state updates before render
@@ -346,7 +341,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
         }, blurStepDuration)
         
         // Store interval ref for cleanup
-        blurIntervalRef.current = blurInterval as any
+        blurIntervalRef.current = blurInterval as unknown as NodeJS.Timeout
       }, 0) // Start immediately
     })
     
@@ -366,12 +361,6 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     rightTextFadeInTimeoutRef.current = setTimeout(() => {
       setRightTextOpacity(1)
     }, ANIMATION_CONFIG.fadeIn.rightTextDelay)
-    
-    // Fade out after minimum display time
-    const minDisplayTime = 2000 // 2 seconds total
-    const fadeInDuration = 600
-    const fadeOutDuration = 600
-    const holdTime = minDisplayTime - fadeInDuration - fadeOutDuration // 800ms hold
     
     // Animate counter from 0 to 100 - when it reaches 100, start fade out immediately
     const counterDuration = ANIMATION_CONFIG.counter.duration
@@ -448,7 +437,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     
     // Fallback: if counter somehow doesn't reach 100 within expected time, trigger fade out
     // This is a safety mechanism (shouldn't normally be needed)
-    const fallbackTimeout = setTimeout(() => {
+    fallbackTimeoutRef.current = setTimeout(() => {
       // Only trigger if fade out hasn't started yet (check if timeoutRef is still null)
       if (!timeoutRef.current) {
         const baseFadeOutDelay = ANIMATION_CONFIG.fadeOut.baseDelay
@@ -476,7 +465,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
             setBlurOpacity(0)
             pendingHrefRef.current = null
             isManualTransitionRef.current = false
-          }, fadeOutDuration)
+          }, ANIMATION_CONFIG.fadeOut.transitionDuration)
         }, textFadeOutComplete)
       }
     }, counterDuration + 200) // Safety timeout: counter duration + buffer
@@ -505,6 +494,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       if (blurFadeInTimeoutRef.current) clearTimeout(blurFadeInTimeoutRef.current)
       if (blurFadeOutTimeoutRef.current) clearTimeout(blurFadeOutTimeoutRef.current)
       if (counterIntervalRef.current) clearInterval(counterIntervalRef.current)
+      if (fallbackTimeoutRef.current) clearTimeout(fallbackTimeoutRef.current)
       
       // Start blur immediately - will increase to extreme levels with smooth easing
       setBlurOpacity(0)
@@ -618,6 +608,7 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
       if (blurFadeOutTimeoutRef.current) clearTimeout(blurFadeOutTimeoutRef.current)
       if (blurIntervalRef.current) clearInterval(blurIntervalRef.current)
       if (counterIntervalRef.current) clearInterval(counterIntervalRef.current)
+      if (fallbackTimeoutRef.current) clearTimeout(fallbackTimeoutRef.current)
     }
   }, [])
 
@@ -630,25 +621,6 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     : 0
   const blurAmount = easedBlurOpacity * ANIMATION_CONFIG.blurEffect.maxBlur
   
-  // Scale effect - page slightly shrinks as it blurs (creates depth)
-  // Only apply when transitioning with active blur
-  const scaleAmount = (isTransitioning && blurOpacity > 0) 
-    ? 1 - (blurOpacity * ANIMATION_CONFIG.pageTransform.scaleDown) 
-    : 1
-  
-  // Brightness adjustment - slightly darken as blur increases
-  // Only apply when transitioning with active blur
-  const brightnessAmount = (isTransitioning && blurOpacity > 0) 
-    ? 1 - (blurOpacity * ANIMATION_CONFIG.pageTransform.brightnessReduction) 
-    : 1
-  
-  // Calculate opacity - page fades out as blur increases
-  // CRITICAL: Always show content at full opacity when NOT transitioning
-  // Ensure minimum opacity even during transition to prevent complete invisibility
-  const pageOpacity = (isTransitioning && blurOpacity > 0) 
-    ? Math.max(ANIMATION_CONFIG.pageTransform.minOpacity, 1 - (blurOpacity * ANIMATION_CONFIG.pageTransform.opacityFade)) 
-    : 1
-
   // Separate persistent components from page content
   const persistentComponents: React.ReactNode[] = []
   const pageContent: React.ReactNode[] = []
