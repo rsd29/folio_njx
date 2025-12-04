@@ -109,8 +109,6 @@ export default function Page() {
     
     const isSelected = selectedSkill === skill
     
-    // Get index for color variation
-    const skillIndex = allSkills.indexOf(skill)
     
     // Use acid green color (same as footer CTA)
     const colorScheme = {
