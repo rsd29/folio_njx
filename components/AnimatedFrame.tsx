@@ -13,8 +13,6 @@ export default function AnimatedFrame({ children, delay = 0, style, comment }: A
   const [isVisible, setIsVisible] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const frameRef = useRef<HTMLDivElement>(null)
-  const glareRef = useRef<HTMLDivElement>(null)
-  const animationFrameRef = useRef<number | null>(null)
 
   useEffect(() => {
     const currentRef = frameRef.current
@@ -44,136 +42,25 @@ export default function AnimatedFrame({ children, delay = 0, style, comment }: A
     }
   }, [])
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!frameRef.current) return
-
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
-      }
-
-      animationFrameRef.current = requestAnimationFrame(() => {
-        if (!frameRef.current) return
-
-        const rect = frameRef.current.getBoundingClientRect()
-        const centerX = rect.left + rect.width / 2
-        const centerY = rect.top + rect.height / 2
-
-        const deltaX = e.clientX - centerX
-        const deltaY = e.clientY - centerY
-
-        const maxRotation = 2
-        const rotateY = (deltaX / (rect.width / 2)) * maxRotation
-        const rotateX = -(deltaY / (rect.height / 2)) * maxRotation
-
-        const x = ((e.clientX - rect.left) / rect.width) * 100
-        const y = ((e.clientY - rect.top) / rect.height) * 100
-        
-        const isWithinBounds = 
-          e.clientX >= rect.left && 
-          e.clientX <= rect.right && 
-          e.clientY >= rect.top && 
-          e.clientY <= rect.bottom
-
-        const scale = isWithinBounds ? 1.02 : 1
-        const shadowIntensity = isWithinBounds ? 0.4 : 0.2
-        const shadowBlur = 20 + Math.abs(rotateX) + Math.abs(rotateY)
-        
-        frameRef.current.style.transform = `translateY(0) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(${scale})`
-        frameRef.current.style.filter = `drop-shadow(${rotateY * -2}px ${rotateX * 2}px ${shadowBlur}px rgba(0, 0, 0, ${shadowIntensity}))`
-
-        if (glareRef.current) {
-          const glareOpacity = isWithinBounds ? 0.12 : 0
-          glareRef.current.style.background = `radial-gradient(circle 400px at ${Math.max(0, Math.min(100, x))}% ${Math.max(0, Math.min(100, y))}%, rgba(255, 255, 255, ${glareOpacity}), transparent 80%)`
-        }
-        
-        setIsHovered(isWithinBounds)
-      })
-    }
-
-    let rafId: number | null = null
-    let ticking = false
-    
-    const throttledMouseMove = (e: MouseEvent) => {
-      if (!ticking) {
-        rafId = requestAnimationFrame(() => {
-          handleMouseMove(e)
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    const handleMouseLeave = () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
-      }
-      if (rafId) {
-        cancelAnimationFrame(rafId)
-      }
-      
-      if (frameRef.current) {
-        frameRef.current.style.transform = 'translateY(0) perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)'
-        frameRef.current.style.filter = 'drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.2))'
-      }
-      if (glareRef.current) {
-        glareRef.current.style.background = 'radial-gradient(circle 400px at 50% 50%, rgba(255, 255, 255, 0), transparent 80%)'
-      }
-      setIsHovered(false)
-      ticking = false
-    }
-
-    window.addEventListener('mousemove', throttledMouseMove, { passive: true })
-    window.addEventListener('mouseleave', handleMouseLeave)
-
-    return () => {
-      window.removeEventListener('mousemove', throttledMouseMove)
-      window.removeEventListener('mouseleave', handleMouseLeave)
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
-      }
-      if (rafId) {
-        cancelAnimationFrame(rafId)
-      }
-    }
-  }, [])
-
-  // No more state-based calculations - using direct DOM manipulation
-
   return (
     <div
       ref={frameRef}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       style={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(40px)',
+        transform: isVisible 
+          ? (isHovered ? 'translateY(0) scale(1.03)' : 'translateY(0) scale(1)')
+          : 'translateY(40px) scale(1)',
         transition: isVisible 
-          ? 'opacity 0.3s ease-out, transform 0.3s ease-out, filter 0.3s ease-out' 
-          : `opacity 0.8s ease-out ${delay}s, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)`,
-        transformStyle: 'preserve-3d',
+          ? 'opacity 0.15s ease-out, transform 0.15s ease-out, filter 0.15s ease-out' 
+          : `opacity 0.3s ease-out ${delay}s, transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)`,
         filter: 'drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.2))',
-        willChange: 'transform, filter', // Optimize for animations
+        willChange: 'transform', // Optimize for animations
         position: 'relative',
         ...style
       }}
     >
-      {/* Cursor-following glare effect */}
-      <div
-        ref={glareRef}
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'radial-gradient(circle 400px at 50% 50%, rgba(255, 255, 255, 0), transparent 80%)',
-          pointerEvents: 'none',
-          borderRadius: 'inherit',
-          zIndex: 10,
-          transition: 'opacity 0.4s ease-out, background 0.2s ease-out',
-          mixBlendMode: 'soft-light',
-          willChange: 'background, opacity' // Optimize for animations
-        }}
-      />
       {children}
       
       {/* Hover text box */}
@@ -195,7 +82,7 @@ export default function AnimatedFrame({ children, delay = 0, style, comment }: A
             lineHeight: '1.3',
             transform: isHovered ? 'translateY(0) scale(1)' : 'translateY(8px) scale(0.95)',
             opacity: isHovered ? 1 : 0,
-            transition: 'transform 0.15s ease-out, opacity 0.15s ease-out',
+            transition: 'transform 0.1s ease-out, opacity 0.1s ease-out',
             pointerEvents: 'none',
             zIndex: 20,
             maxHeight: '60px',

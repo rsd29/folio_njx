@@ -5,6 +5,7 @@ import Image from 'next/image'
 import AnimatedRichText from '../../components/AnimatedRichText'
 import ScrollRevealText from '../../components/ScrollRevealText'
 import AnimatedFrame from '../../components/AnimatedFrame'
+import GuideLine from '../../components/GuideLine'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 
 export default function Page() {
@@ -265,6 +266,18 @@ export default function Page() {
     }
   }
 
+  // Section IDs for the guide line (in order of appearance)
+  const gallerySectionIds = [
+    'story-text-1',      // Right column, first
+    'gallery-frame-1',   // Left column, first
+    'gallery-frame-2',   // Right column, second
+    'story-text-2',      // Left column, second
+    'story-text-3',      // Right column, third
+    'gallery-frame-3',   // Left column, third
+    'gallery-frame-4',   // Right column, fourth
+    'story-text-4',      // Left column, fourth
+  ]
+
   return (
     <>
         <style jsx>{`
@@ -386,7 +399,7 @@ export default function Page() {
                     isStrong: true,
                     fontFamily:
                       "'Stack Sans Notch', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                    fontSize: 'clamp(2.8rem, 4.8vw, 4.6rem)',
+                    fontSize: 'clamp(5rem, 4.8vw, 4.6rem)',
                     glow: true,
                   },
                 ]}
@@ -425,7 +438,7 @@ export default function Page() {
               }}
             >
               {[
-                'Based in Almighty Melbourne',
+                'Based in Melbourne',
                 '5+ yrs Designing internal/external Enterprise Products',
                 'Loves to Code and Build',
                 'Open to New Opportunities',
@@ -433,7 +446,7 @@ export default function Page() {
                 <span
                   key={pill}
                   style={{
-                    borderRadius: '5px',
+                    borderRadius: '50px',
                     border: '1px solid #bcff4e',
                     padding: '10px 18px',
                     fontSize: '0.9rem',
@@ -457,7 +470,7 @@ export default function Page() {
           width: '100%',
           padding: '0 8%',
           marginBottom: '100px',
-         
+          position: 'relative', // For absolute positioning of guide line
         }}>
           <div style={{
             textAlign: 'center',
@@ -477,20 +490,26 @@ export default function Page() {
               className="scrollRevealText"
             />
             </div>
-            <p style={{
-              fontSize: 'var(--font-body-l)',
-              fontWeight: 300,
-              lineHeight: 'var(--line-height-relaxed)',
-              color: 'white',
-              marginTop: '24px',
-              maxWidth: '100%',
-              marginRight: 'auto',
-              fontFamily: 'var(--font-body)',
-              textAlign: 'left'
-            }}>
+            <p 
+              id="behind-the-work-text"
+              style={{
+                fontSize: 'var(--font-body-l)',
+                fontWeight: 300,
+                lineHeight: 'var(--line-height-relaxed)',
+                color: 'white',
+                marginTop: '24px',
+                maxWidth: '100%',
+                marginRight: 'auto',
+                fontFamily: 'var(--font-body)',
+                textAlign: 'left'
+              }}>
               Not just the projects, but the person behind them. Here&apos;s a bit of my story and some moments from my recent trip to Asia.
             </p>
           </div>
+          
+          <GuideLine 
+            startElementId="story-text-1"
+          />
           
           <div style={{
             display: 'grid',
@@ -507,7 +526,7 @@ export default function Page() {
           }}>
             {/* Frame 1 */}
             <AnimatedFrame delay={0.1} comment="A quiet moment of tranquility, taking in the sights in Hoi Ann.">
-              <div style={{
+              <div id="gallery-frame-1" style={{
                 width: '100%',
                 aspectRatio: '4/5',
                 padding: '10px',
@@ -566,7 +585,7 @@ export default function Page() {
             </AnimatedFrame>
 
             {/* Story Text 2 - Left side */}
-            <div className="story-text-card" style={{
+            <div id="story-text-2" className="story-text-card" style={{
               fontSize: 'var(--font-body-l)',
               color: '#ccc',
               fontFamily: 'var(--font-body)',
@@ -596,7 +615,7 @@ export default function Page() {
             
             {/* Frame 3 */}
             <AnimatedFrame delay={0.3} comment="Inspired by the beauty and precision of Japanese design philosophy, finding new perspectives.">
-              <div style={{
+              <div id="gallery-frame-3" style={{
                 width: '100%',
                 aspectRatio: '4/5',
                 padding: '10px',
@@ -654,7 +673,7 @@ export default function Page() {
               </div>
             </AnimatedFrame>
                       {/* Story Text 4 - Left side */}
-                      <div className="story-text-card" style={{
+                      <div id="story-text-4" className="story-text-card" style={{
               fontSize: 'var(--font-body-l)',
               color: '#ccc',
               fontFamily: 'var(--font-body)',
@@ -692,7 +711,7 @@ export default function Page() {
             transform: 'translateY(0px)'
           }}>
             {/* Story Text 1 - Starting at top right */}
-            <div className="story-text-card" style={{
+            <div id="story-text-1" className="story-text-card" style={{
               fontSize: 'var(--font-body-l)',
               color: '#ccc',
               fontFamily: 'var(--font-body)',
@@ -723,7 +742,7 @@ export default function Page() {
 
             {/* Frame 2 */}
             <AnimatedFrame delay={0.2} comment="Lost in the flow of creative work, where ideas take shape and innovation happens naturally.">
-              <div style={{
+              <div id="gallery-frame-2" style={{
                 width: '100%',
                 aspectRatio: '4/5',
                 padding: '10px',
@@ -782,7 +801,7 @@ export default function Page() {
             </AnimatedFrame>
             
                     {/* Story Text 3 */}
-                    <div className="story-text-card" style={{
+                    <div id="story-text-3" className="story-text-card" style={{
               fontSize: 'var(--font-body-l)',
               color: '#ccc',
               fontFamily: 'var(--font-body)',
@@ -811,7 +830,7 @@ export default function Page() {
             </div>
             {/* Frame 4 */}
             <AnimatedFrame delay={0.4} comment="Embracing the journey of continuous learning and the art of thoughtful craftsmanship.">
-              <div style={{
+              <div id="gallery-frame-4" style={{
                 width: '100%',
                 aspectRatio: '4/5',
                 padding: '10px',
