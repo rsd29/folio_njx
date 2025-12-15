@@ -74,7 +74,7 @@ export default function Header() {
     <header className={styles.headerBar}>
       <div className={styles.sideLeft}>
         <TransitionLink href="/" className={styles.logoDiv}>
-          <Image src="/RSD.png" alt="Logo" width={40} height={40} className={styles.logo} />
+          <Image src="/logo.png" alt="Logo" width={64} height={64} className={styles.logo} />
         </TransitionLink>
         <div className={styles.logoDescDiv}>
           <span 

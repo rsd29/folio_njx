@@ -708,6 +708,51 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
               transition: `opacity ${ANIMATION_CONFIG.fadeIn.transitionDuration}ms ease-in-out`,
             }}
           >
+            {/* Logo fill animation (syncs with counter/bar) */}
+            <div
+              aria-hidden="true"
+              style={{
+                position: 'relative',
+                width: '140px',
+                height: '44px',
+                marginBottom: '6px',
+              }}
+            >
+              {/* Base logo (subtle) */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  backgroundColor: 'rgba(188, 255, 78, 0.18)',
+                  maskImage: 'url(/logo.png)',
+                  WebkitMaskImage: 'url(/logo.png)',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskSize: 'contain',
+                  WebkitMaskSize: 'contain',
+                  maskPosition: 'center',
+                  WebkitMaskPosition: 'center',
+                }}
+              />
+              {/* Filled logo (acid green), clipped left->right by progress */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  backgroundColor: '#bcff4e',
+                  maskImage: 'url(/logo.png)',
+                  WebkitMaskImage: 'url(/logo.png)',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskSize: 'contain',
+                  WebkitMaskSize: 'contain',
+                  maskPosition: 'center',
+                  WebkitMaskPosition: 'center',
+                  clipPath: `inset(0 ${Math.max(0, 100 - counter)}% 0 0)`,
+                  transition: 'clip-path 80ms linear',
+                }}
+              />
+            </div>
             <div
               style={{
                 color: '#bcff4e',

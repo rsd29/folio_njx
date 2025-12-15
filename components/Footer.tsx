@@ -11,7 +11,7 @@ export default function Footer() {
         <div className={styles.topSection}>
           <div className={styles.leftGroup}>
             <TransitionLink href="/" className={styles.logoDiv}>
-              <Image src="/RSD.png" alt="Logo" width={35} height={35} className={styles.logo} />
+              <Image src="/logo.png" alt="Logo" width={58} height={58} className={styles.logo} />
             </TransitionLink>
             <div className={styles.brandInfo}>
               <h3 className={styles.brandName}>Russell Saw</h3>

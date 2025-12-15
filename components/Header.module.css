@@ -21,28 +21,22 @@
 }
 
 .logo {
-  height: 35px;
+  height: 56px;
   width: auto;
   object-fit: contain;
   display: block;
   transition: all ease-in-out 0.3s;
-  padding: 5px;
+  padding: 0;
   z-index: 5;
+  /* Force the new logo to render white regardless of original color. */
+  filter: brightness(0) invert(1);
 }
 
 .logoDiv{
   position: relative;
-  clip-path: polygon(
-    5px 0%,
-    100% 0%, 
-    100% calc(100% - 7px),
-    calc(100% - 7px) 100%,
-    0% 100%, 
-    0% 5px
-  );
   display: inline-block;
-  background: rgba(58, 58, 58, 0.516);
-  backdrop-filter: blur(10px) !important;
+  background: none;
+  backdrop-filter: none !important;
 }
 
 .logoDesc {

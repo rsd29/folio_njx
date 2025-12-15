@@ -5,7 +5,6 @@ import Image from 'next/image'
 import AnimatedRichText from '../../components/AnimatedRichText'
 import ScrollRevealText from '../../components/ScrollRevealText'
 import AnimatedFrame from '../../components/AnimatedFrame'
-import GuideLine from '../../components/GuideLine'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 
 export default function Page() {
@@ -290,6 +289,229 @@ export default function Page() {
             font-style: italic;
           }
 
+          /* About hero */
+          .about-hero {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(96px, 10vh, 140px) 8%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+            contain: layout style;
+          }
+
+          .about-hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+          }
+
+          .about-hero-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.55) saturate(1.05) contrast(1.05);
+          }
+
+          .about-hero-bgOverlay {
+            position: absolute;
+            inset: 0;
+            background:
+              radial-gradient(1200px 700px at 25% 20%, rgba(0, 0, 0, 0.35), transparent 60%),
+              linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65));
+          }
+
+          .about-hero-inner {
+            width: 100%;
+            max-width: none;
+            margin: 0 auto;
+            contain: layout;
+            position: relative;
+            z-index: 1;
+          }
+
+          .about-hero-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            font-family: var(--font-body);
+            max-width: 100%;
+            contain: layout style;
+          }
+
+          .about-hero-kicker {
+            font-size: 0.9rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.55);
+            margin: 0 0 6px;
+          }
+
+          .about-hero-heading {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: none;
+            text-wrap: balance;
+          }
+
+          .about-hero-lede {
+            font-size: var(--font-body-l);
+            color: rgba(255, 255, 255, 0.82);
+            line-height: 1.75;
+            margin: 6px 0 0;
+            max-width: none;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+          }
+
+          .about-hero-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 14px;
+            min-height: 48px;
+            contain: layout style;
+          }
+
+          .about-hero-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 999px;
+            border: 1px solid rgba(188, 255, 78, 0.78);
+            padding: 10px 18px;
+            font-size: 0.92rem;
+            letter-spacing: 0;
+            line-height: 1.15;
+            color: #bcff4e;
+            background: rgba(188, 255, 78, 0.06);
+            transition:
+              transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              background 180ms ease,
+              border-color 180ms ease,
+              box-shadow 180ms ease,
+              color 180ms ease,
+              border-width 180ms ease,
+              padding 180ms ease;
+            user-select: none;
+          }
+
+          .about-hero-pill:hover {
+            border-color: rgba(230, 255, 155, 0.95);
+            border-width: 2px;
+            padding: 9px 17px; /* compensate for border-width to avoid layout shift */
+            color: #e6ff9b;
+            background: rgba(188, 255, 78, 0.12);
+            box-shadow:
+              0 0 0 1px rgba(188, 255, 78, 0.22),
+              0 16px 40px rgba(0, 0, 0, 0.45);
+            transform: translateY(-2px);
+          }
+
+          /* Experience timeline */
+          .experience-list {
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+          }
+
+          .experience-item {
+            --experience-dot-center: 15px; /* distance from top of row to dot center */
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 56px minmax(0, 2fr);
+            gap: 60px;
+            align-items: start;
+          }
+
+          .experience-mid {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-self: stretch;
+          }
+
+          .experience-mid::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            top: -40px;   /* half of the 80px gap */
+            bottom: -40px;/* half of the 80px gap */
+            background: rgba(255, 255, 255, 0.18);
+          }
+
+          .experience-item--first .experience-mid::before {
+            top: var(--experience-dot-center); /* start at dot center */
+          }
+
+          .experience-item--last .experience-mid::before {
+            bottom: calc(100% - var(--experience-dot-center)); /* end at dot center */
+          }
+
+          .experience-dot {
+            position: absolute;
+            left: 50%;
+            top: calc(var(--experience-dot-center) - 5px); /* dot size is 10px */
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.28);
+            box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.04);
+            z-index: 1;
+          }
+
+          .experience-dot--current {
+            background: #bcff4e;
+            box-shadow:
+              0 0 0 6px rgba(188, 255, 78, 0.10),
+              0 0 18px rgba(188, 255, 78, 0.35);
+          }
+
+          @media (max-width: 860px) {
+            .experience-item {
+              grid-template-columns: 1fr;
+              gap: 18px;
+            }
+            .experience-mid {
+              display: none;
+            }
+          }
+
+          @media (max-width: 900px) {
+            .about-hero-heading {
+              max-width: none;
+            }
+          }
+
+          @media (max-width: 640px) {
+            .about-hero {
+              padding: 92px 6%;
+            }
+
+            .about-hero-heading {
+              max-width: 100%;
+            }
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .about-hero-video {
+              display: none;
+            }
+
+            .about-hero-bgOverlay {
+              background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.75));
+            }
+          }
+
           .skill-word.selected {
             opacity: 1 !important;
             color: #ffffff !important;
@@ -331,137 +553,68 @@ export default function Page() {
         `}</style>
       <main style={{ maxWidth: '100%', minHeight: '100vh', backgroundColor: 'var(--background)', color: 'var(--foreground)' }}>
       {/* Hero Section */}
-      <section
-        style={{
-          padding: '100px 8%',
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'left',
-          contain: 'layout style',
-        }}
-      >
-        <div
-          style={{
-            width: '100%',
-            display: 'grid',
-            gridTemplateColumns: 'minmax(0, 3fr) minmax(0, 1fr)',
-            gap: '80px',
-            alignItems: 'center',
-            contain: 'layout',
-          }}
-        >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '28px',
-              fontFamily: 'var(--font-body)',
-              minHeight: '400px',
-              contain: 'layout style',
-              maxWidth: '100%',
-            }}
+      <section className="about-hero">
+        <div className="about-hero-bg" aria-hidden="true">
+          <video
+            className="about-hero-video"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
           >
-            <div style={{ 
-              minHeight: 'clamp(4.8rem, 8.4vw, 7.68rem)',
-              contain: 'layout style paint',
-              width: '100%',
-            }}>
-              <AnimatedRichText
-                className="heroSubtext"
-                segments={[
-                  {
-                    text: 'I help teams create products that are intuitive, scalable, and ',
-                  },
-                ]}
-                useFlickerEffect={false}
-                fontSize="clamp(2rem, 3.5vw, 3.2rem)"
-                fontWeight={400}
-                lineHeight={1.2}
-                letterSpacing="-0.03em"
-                animationSpeed={4}
-                marginBottom="0"
-                maxWidth="none"
-              />
+            <source src="https://cdn.pixabay.com/video/2024/10/08/235285_large.mp4" type="video/mp4" />
+          </video>
+          <div className="about-hero-bgOverlay" />
+        </div>
+        <div className="about-hero-inner">
+          <div className="about-hero-copy">
+            <p className="about-hero-kicker">About</p>
+
+            <div className="about-hero-heading">
+              <div style={{ 
+                minHeight: 'clamp(3.4rem, 6.2vw, 5.2rem)',
+                contain: 'layout style paint',
+                width: '100%',
+              }}>
+                <AnimatedRichText
+                  className="heroSubtext"
+                  segments={[
+                    {
+                      text: 'I like solving messy problems and turning them into something people actually enjoy using.',
+                    },
+                  ]}
+                  useFlickerEffect={false}
+                  fontSize="clamp(1.9rem, 3.2vw, 2.8rem)"
+                  fontWeight={400}
+                  lineHeight={1.18}
+                  letterSpacing="-0.03em"
+                  animationSpeed={4}
+                  marginBottom="0"
+                  maxWidth="none"
+                />
+              </div>
+
+    
             </div>
-            <div style={{ 
-              minHeight: 'clamp(2.94rem, 5.04vw, 4.83rem)',
-              marginTop: '-30px',
-              contain: 'layout style paint',
-            }}>
-              <AnimatedRichText
-                className="heroSubtext"
-                segments={[
-                  {
-                    text: 'built with purpose.',
-                    color: '#ffffff',
-                    isStrong: true,
-                    fontFamily:
-                      "'Stack Sans Notch', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-                    fontSize: 'clamp(5rem, 4.8vw, 4.6rem)',
-                    glow: true,
-                  },
-                ]}
-                useFlickerEffect={false}
-                fontSize="clamp(2.8rem, 4.8vw, 4.6rem)"
-                fontWeight={400}
-                lineHeight={1.05}
-                letterSpacing="-0.02em"
-                animationSpeed={4}
-                startDelay={1.32}
-                marginTop="0"
-              />
-            </div>
-            <p
-              style={{
-                fontSize: 'var(--font-body-l)',
-                color: 'rgba(255,255,255,0.8)',
-                lineHeight: 1.8,
-                margin: '4px 0 0',
-                maxWidth: '1000px',
-                minHeight: '5.4em',
-                contain: 'layout style',
-                wordWrap: 'break-word',
-                overflowWrap: 'break-word',
-              }}
-            >
- Hello, my names Russell. I’m a UX designer who works across research, design, and development to make products functional, scalable, and easy to use.            </p>
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '16px',
-                marginTop: '16px',
-                minHeight: '48px',
-                contain: 'layout style',
-              }}
-            >
+
+            <p className="about-hero-lede">
+              Hello, my name’s Russell. I’m a UX designer who works across research, design, and development to make products functional, scalable, and easy to use.
+            </p>
+
+            <div className="about-hero-pills">
               {[
                 'Based in Melbourne',
-                '5+ yrs Designing internal/external Enterprise Products',
+                '5+ yrs Designing Enterprise Products',
                 'Loves to Code and Build',
                 'Open to New Opportunities',
               ].map((pill) => (
-                <span
-                  key={pill}
-                  style={{
-                    borderRadius: '50px',
-                    border: '1px solid #bcff4e',
-                    padding: '10px 18px',
-                    fontSize: '0.9rem',
-                    letterSpacing: '0.00em',
-               
-                    color: '#bcff4e',
-                  }}
-                >
+                <span key={pill} className="about-hero-pill">
                   {pill}
                 </span>
               ))}
             </div>
           </div>
-          
-          
         </div>
       </section>
 
@@ -473,19 +626,21 @@ export default function Page() {
           position: 'relative', // For absolute positioning of guide line
         }}>
           <div style={{
-            textAlign: 'center',
+            textAlign: 'left',
             marginBottom: '80px',
             height: '180px',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            transform: 'scale(0.95)',
+            transformOrigin: 'center',
           }}>
-            <div style={{ height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
             <ScrollRevealText
-              text="Behind the work"
+              text="A bit more personal.."
               fontSize="var(--font-heading-l)"
-              fontWeight={400}
-              lineHeight={1.1}
+              fontWeight={500}
+              lineHeight={1}
               letterSpacing="var(--letter-spacing-normal)"
               className="scrollRevealText"
             />
@@ -498,24 +653,23 @@ export default function Page() {
                 lineHeight: 'var(--line-height-relaxed)',
                 color: 'white',
                 marginTop: '24px',
-                maxWidth: '100%',
-                marginRight: 'auto',
+                maxWidth: '72ch',
                 fontFamily: 'var(--font-body)',
-                textAlign: 'left'
+                textAlign: 'left',
+                marginLeft: 0,
+                marginRight: 'auto',
               }}>
-              Not just the projects, but the person behind them. Here&apos;s a bit of my story and some moments from my recent trip to Asia.
+              What you build comes from where you’ve been. Here’s a bit of that — and some photos from my time wandering through Asia.
             </p>
           </div>
-          
-          <GuideLine 
-            startElementId="story-text-1"
-          />
           
           <div style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
-            gap: '80px',
-            alignItems: 'start'
+            gap: '60px',
+            alignItems: 'start',
+            transform: 'scale(0.95)',
+            transformOrigin: 'center'
           }}>
           {/* Left Column - Alternating Pattern */}
           <div className="gallery-left" style={{
@@ -529,7 +683,7 @@ export default function Page() {
               <div id="gallery-frame-1" style={{
                 width: '100%',
                 aspectRatio: '4/5',
-                padding: '10px',
+                padding: '8px',
                 border: '1px solid #282828',
                 borderRadius: '12px',
                 backgroundImage: 'linear-gradient(to bottom, rgba(155, 155, 155, 0.12) 0%, rgba(77, 77, 77, 0.222) 12%, transparent 50%)',
@@ -592,14 +746,16 @@ export default function Page() {
               fontWeight: 300,
               lineHeight: '1.7',
               margin: '0',
-              padding: '40px',
-              backgroundColor: 'rgba(17, 17, 17, 0.8)',
-              border: '1px solid #333',
+              padding: '32px',
+              backgroundColor: 'rgba(17, 17, 17, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '12px',
-              backdropFilter: 'blur(10px)',
+              backdropFilter: 'blur(30px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+              opacity: 0.75,
               transform: 'perspective(1000px) rotateX(2deg) translateZ(10px)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease',
               cursor: 'pointer'
             }}>
               <h3 style={{
@@ -618,7 +774,7 @@ export default function Page() {
               <div id="gallery-frame-3" style={{
                 width: '100%',
                 aspectRatio: '4/5',
-                padding: '10px',
+                padding: '8px',
                 border: '1px solid #282828',
                 borderRadius: '12px',
                 backgroundImage: 'linear-gradient(to bottom, rgba(155, 155, 155, 0.12) 0%, rgba(77, 77, 77, 0.222) 12%, transparent 50%)',
@@ -680,14 +836,16 @@ export default function Page() {
               fontWeight: 300,
               lineHeight: '1.7',
               margin: '0',
-              padding: '40px',
-              backgroundColor: 'rgba(17, 17, 17, 0.8)',
-              border: '1px solid #333',
+              padding: '32px',
+              backgroundColor: 'rgba(17, 17, 17, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '12px',
-              backdropFilter: 'blur(10px)',
+              backdropFilter: 'blur(30px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+              opacity: 0.75,
               transform: 'perspective(1000px) rotateX(2deg) translateZ(10px)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease',
               cursor: 'pointer'
             }}>
               <h3 style={{
@@ -718,14 +876,16 @@ export default function Page() {
               fontWeight: 300,
               lineHeight: '1.7',
               margin: '0',
-              padding: '40px',
-              backgroundColor: 'rgba(17, 17, 17, 0.8)',
-              border: '1px solid #333',
+              padding: '32px',
+              backgroundColor: 'rgba(17, 17, 17, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '12px',
-              backdropFilter: 'blur(10px)',
+              backdropFilter: 'blur(30px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+              opacity: 0.75,
               transform: 'perspective(1000px) rotateX(-2deg) translateZ(10px)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease',
               cursor: 'pointer'
             }}>
               <h3 style={{
@@ -745,7 +905,7 @@ export default function Page() {
               <div id="gallery-frame-2" style={{
                 width: '100%',
                 aspectRatio: '4/5',
-                padding: '10px',
+                padding: '8px',
                 border: '1px solid #282828',
                 borderRadius: '12px',
                 backgroundImage: 'linear-gradient(to bottom, rgba(155, 155, 155, 0.12) 0%, rgba(77, 77, 77, 0.222) 12%, transparent 50%)',
@@ -808,14 +968,16 @@ export default function Page() {
               fontWeight: 300,
               lineHeight: '1.7',
               margin: '0',
-              padding: '40px',
-              backgroundColor: 'rgba(17, 17, 17, 0.8)',
-              border: '1px solid #333',
+              padding: '32px',
+              backgroundColor: 'rgba(17, 17, 17, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '12px',
-              backdropFilter: 'blur(10px)',
+              backdropFilter: 'blur(30px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+              opacity: 0.75,
               transform: 'perspective(1000px) rotateX(-2deg) translateZ(10px)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease',
               cursor: 'pointer'
             }}>
               <h3 style={{
@@ -833,7 +995,7 @@ export default function Page() {
               <div id="gallery-frame-4" style={{
                 width: '100%',
                 aspectRatio: '4/5',
-                padding: '10px',
+                padding: '8px',
                 border: '1px solid #282828',
                 borderRadius: '12px',
                 backgroundImage: 'linear-gradient(to bottom, rgba(155, 155, 155, 0.12) 0%, rgba(77, 77, 77, 0.222) 12%, transparent 50%)',
@@ -895,28 +1057,39 @@ export default function Page() {
         </div>
         </section>
         {/* Final Story Text */}
-        <div style={{
-          maxWidth: '100%',
-          fontSize: 'var(--font-body-l)',
-          lineHeight: '1.7',
-          fontFamily: 'var(--font-body)',
-          fontWeight: 300,
-          color: '#ccc',
-          textAlign: 'left',
-          padding: '0 8%',
-          marginBottom: '120px',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          transition: 'transform 0.3s ease, box-shadow 0.3s ease'
-        }}>
+        <section
+          style={{
+            width: '100%',
+            padding: '0 20px',
+            marginBottom: '120px',
+          }}
+        >
+          <div
+            id="my-path-to-enterprise"
+            style={{
+              width: '80%',
+              fontSize: 'var(--font-body-l)',
+              lineHeight: '1.7',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 300,
+              color: '#ccc',
+              textAlign: 'left',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            }}
+          >
 My path to enterprise design started with curiosity about how creativity and technology connect. That early mix still influences how I design: practical, human, and quietly expressive.
 <br /><br />
         
             Whether sketching in Figma or prototyping in code, I believe great design happens 
-            at the intersection of craft and strategy. The result? Interfaces people actually 
+            at the intersection of craft and strategy.
+            <br /><br />
+             The result? Interfaces people actually 
             want to use, not just tolerate.
       
-        </div>
+          </div>
+        </section>
 
       {/* Story Section */}
       <section style={{ 
@@ -942,9 +1115,9 @@ My path to enterprise design started with curiosity about how creativity and tec
             />
           </div>
           
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '80px' }}>
+          <div className="experience-list">
             {/* Oriental Merchant */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '60px', alignItems: 'start' }}>
+            <div className="experience-item experience-item--first">
               <div>
                 <div style={{
                   fontSize: 'var(--font-heading-m)',
@@ -971,6 +1144,9 @@ My path to enterprise design started with curiosity about how creativity and tec
                   2022 - Present
                 </div>
               </div>
+              <div className="experience-mid" aria-hidden="true">
+                <div className="experience-dot experience-dot--current" />
+              </div>
               <div style={{
               fontSize: 'var(--font-body-l)',
                 color: '#ccc',
@@ -983,7 +1159,7 @@ My path to enterprise design started with curiosity about how creativity and tec
             </div>
 
             {/* Freelance */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '60px', alignItems: 'start' }}>
+            <div className="experience-item">
               <div>
                 <div style={{
                   fontSize: 'var(--font-heading-m)',
@@ -1010,6 +1186,9 @@ My path to enterprise design started with curiosity about how creativity and tec
                   2025
                 </div>
               </div>
+              <div className="experience-mid" aria-hidden="true">
+                <div className="experience-dot" />
+              </div>
               <div style={{
                   fontSize: 'var(--font-body-l)',
                 color: '#ccc',
@@ -1021,7 +1200,7 @@ My path to enterprise design started with curiosity about how creativity and tec
               </div>
             </div>
             {/* Previous Role */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '60px', alignItems: 'start' }}>
+            <div className="experience-item experience-item--last">
               <div>
                 <div style={{
                   fontSize: 'var(--font-heading-m)',
@@ -1047,6 +1226,9 @@ My path to enterprise design started with curiosity about how creativity and tec
                 }}>
                   2021 - 2022
                 </div>
+              </div>
+              <div className="experience-mid" aria-hidden="true">
+                <div className="experience-dot" />
               </div>
               <div style={{
                    fontSize: 'var(--font-body-l)',
@@ -1081,7 +1263,7 @@ My path to enterprise design started with curiosity about how creativity and tec
             alignItems: 'center'
           }}>
             <ScrollRevealText
-              text="Tools of the Trade"
+              text="Behind the Interface"
               fontSize="var(--font-heading-xl)"
               fontWeight={400}
               lineHeight={1.1}
