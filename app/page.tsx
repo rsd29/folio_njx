@@ -88,11 +88,8 @@ export default function HomePage() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return
-
-    // Respect reduced motion: keep content visible, no pin/scrub.
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      return
-    }
+    // Safety: if this component is ever kept alive across route changes, only run hero wiring on `/`.
+    if (pathname !== '/') return
 
     const section = heroSectionRef.current
     const stage = heroStageRef.current
@@ -102,6 +99,43 @@ export default function HomePage() {
     if (!section || !stage || !overlay || !signature || !content) return
 
     gsap.registerPlugin(ScrollTrigger)
+    // Respect reduced motion: keep everything visible, no pin/scrub.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Clear any stale inline styles that could have been left by ScrollTrigger on cached restores.
+      gsap.set([section, stage, overlay, signature, content], { clearProps: 'all' })
+      gsap.set([signature, content], { opacity: 1, filter: 'blur(0px)', y: 0, pointerEvents: 'auto' })
+      return
+    }
+
+    // ScrollSmoother is only enabled on non-touch devices (see `components/SmoothScroll.tsx`).
+    // If we create ScrollTriggers before ScrollSmoother is ready, they can bind to the wrong scroller
+    // and later get "stuck" at the faded-out state when scrolling back up.
+    const navAny = navigator as Navigator & { msMaxTouchPoints?: number }
+    const isTouchDevice =
+      'ontouchstart' in window || (navigator.maxTouchPoints ?? 0) > 0 || (navAny.msMaxTouchPoints ?? 0) > 0
+
+    const restartCssAnimation = (el: HTMLElement) => {
+      // Forces the CSS keyframes to replay (important if the page is restored from cache).
+      el.style.animation = 'none'
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      el.offsetHeight
+      el.style.animation = ''
+    }
+
+    let tl: gsap.core.Timeline | null = null
+    let initTimeout = 0
+    let refreshTimeout = 0
+    let visibilityFallbackTimeout = 0
+
+    // Reset any stale inline styles first so the signature can't come back "stuck invisible".
+    const animatedBits = signature.querySelectorAll(
+      `.${styles.heroSignatureName}, .${styles.heroSignatureRoleWrapper}, .${styles.heroSignatureRole}, .${styles.heroSignatureRole2}`,
+    )
+    gsap.set([signature, ...Array.from(animatedBits)], { clearProps: 'all' })
+    restartCssAnimation(signature)
+    Array.from(animatedBits).forEach((node) => {
+      if (node instanceof HTMLElement) restartCssAnimation(node)
+    })
 
     // Initial state: show signature, hide content until scroll reveal begins.
     gsap.set(content, { opacity: 0, filter: 'blur(22px)', y: 24, pointerEvents: 'none' })
@@ -114,32 +148,50 @@ export default function HomePage() {
     gsap.set(section, { height: '100vh' })
     gsap.set(overlay, { opacity: 1, filter: 'blur(0px)' })
 
-    let tl: gsap.core.Timeline | null = null
-    const init = () => {
-      const smoother = ScrollSmoother.get()
+    const init = (smoother: ScrollSmoother | null) => {
+      // Force top-of-page before creating triggers so ScrollTrigger doesn't initialize at a scrolled progress.
+      window.scrollTo({ top: 0, behavior: 'auto' })
+      if (smoother) {
+        smoother.scrollTo(0, true)
+      }
+
       const scroller = smoother ? (smoother.wrapper() as Element) : undefined
       let hasTakenOver = false
+
+        // Match the Projects "case study frame" size precisely by measuring the first project card.
+        // Cards are 80% width inside a padded container, so a naive `scale: 0.8` is slightly larger than the card.
+        const stageWidth = stage.getBoundingClientRect().width || window.innerWidth
+        const firstCard = document.querySelector('[data-cursor="view-project"]') as HTMLElement | null
+        const cardWidth = firstCard?.getBoundingClientRect().width
+        const targetScale =
+          cardWidth && stageWidth ? Math.max(0.5, Math.min(1, cardWidth / stageWidth)) : 0.8
 
       tl = gsap.timeline({
         defaults: { ease: 'none' },
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-          end: '+=260%',
+          // 50% more scroll distance for the same animation sequence (260% → 390%)
+          end: '+=390%',
           scrub: true,
           pin: true,
           anticipatePin: 1,
           scroller,
+          // If ScrollTrigger refreshes while we're away from the top, make sure the overlay/signature
+          // aren't left in an invisible state when returning.
+          onEnterBack: () => {
+            gsap.set(overlay, { opacity: 1, filter: 'blur(0px)' })
+          },
           onUpdate: (self) => {
             // Hand-off: once scrolling begins, stop the CSS entrance animations from overriding GSAP.
             if (!hasTakenOver && self.progress > 0) {
               hasTakenOver = true
 
-              const animatedBits = signature.querySelectorAll(
+              const bits = signature.querySelectorAll(
                 `.${styles.heroSignatureName}, .${styles.heroSignatureRoleWrapper}, .${styles.heroSignatureRole}, .${styles.heroSignatureRole2}`,
               )
 
-              gsap.set([signature, ...Array.from(animatedBits)], {
+              gsap.set([signature, ...Array.from(bits)], {
                 // Prevent keyframes from fighting the scroll-driven animation.
                 animation: 'none',
                 // Ensure a stable "fully revealed" baseline before we animate out.
@@ -160,22 +212,14 @@ export default function HomePage() {
 
       // Slower, smoother reveal (original feel): short hold, then a longer crossfade/blur.
       tl.to({}, { duration: 0.12 })
-      tl.to(
-        signature,
-        { opacity: 0, filter: 'blur(34px)', y: -16, duration: 0.55 },
-        0.12,
-      )
-      tl.to(
-        content,
-        { opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.55 },
-        0.12,
-      )
+      tl.to(signature, { opacity: 0, filter: 'blur(34px)', y: -16, duration: 0.55 }, 0.12)
+      tl.to(content, { opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.55 }, 0.12)
 
       // Phase 2: encapsulate + shrink (scroll-linked).
-      // Corner radius grows to 30px while the whole hero "stage" shrinks and rounds.
+      // Match the Projects "case study frame" sizing: match measured card width + ~12px radius.
       tl.to(stage, {
-        scale: 0.88,
-        borderRadius: 30,
+        scale: targetScale,
+        borderRadius: 12,
         duration: 0.9,
       })
 
@@ -187,44 +231,73 @@ export default function HomePage() {
         duration: 0.5,
       })
 
-      // Phase 4: collapse the entire hero (100vh → 0) for an unexpected transition into Projects.
-      tl.to([section, stage], {
-        height: 0,
-        borderRadius: 0,
-        duration: 0.8,
-      })
+      // No collapse phase — after the overlay fades, we simply unpin into Projects.
 
-      // Remove the post-collapse gap by collapsing ScrollTrigger's pin spacer alongside the hero.
-      const st = tl.scrollTrigger as unknown as { pinSpacer?: HTMLElement }
-      const spacer = st?.pinSpacer
-      if (spacer) {
-        gsap.set(spacer, { overflow: 'hidden', willChange: 'height' })
-        tl.to(
-          spacer,
-          {
-            height: 0,
-            paddingTop: 0,
-            paddingBottom: 0,
-            marginTop: 0,
-            marginBottom: 0,
-            duration: 0.8,
-          },
-          '<',
-        )
-      }
-
+      // Refresh on next tick too (helps when ScrollSmoother/Next restores scroll asynchronously).
       ScrollTrigger.refresh()
+      refreshTimeout = window.setTimeout(() => {
+        ScrollTrigger.refresh()
+        tl?.scrollTrigger?.update()
+      }, 50)
     }
 
-    // Wait a beat so ScrollSmoother (created in `components/SmoothScroll`) can initialize first.
-    const initTimeout = window.setTimeout(init, 160)
+    // Wait for ScrollSmoother (created in `components/SmoothScroll`) on desktop.
+    // On touch devices, SmoothScroll is disabled so we should bind to the window scroller immediately.
+    if (isTouchDevice) {
+      initTimeout = window.setTimeout(() => init(null), 0)
+    } else {
+      const start = window.performance?.now?.() ?? Date.now()
+      const waitForSmoother = () => {
+        const smoother = ScrollSmoother.get()
+        if (smoother) {
+          init(smoother)
+          return
+        }
+        const now = window.performance?.now?.() ?? Date.now()
+        if (now - start > 1200) {
+          // Fallback: still initialize so the page remains usable even if SmoothScroll didn't boot.
+          init(null)
+          return
+        }
+        initTimeout = window.setTimeout(waitForSmoother, 50)
+      }
+      initTimeout = window.setTimeout(waitForSmoother, 0)
+    }
+
+    // Safety net: if the signature is still invisible after the entrance animation window,
+    // force a sane visible baseline. This covers rare cases where cached inline styles
+    // (opacity:0 / animation:none) win and the CSS keyframes don't replay.
+    visibilityFallbackTimeout = window.setTimeout(() => {
+      const sig = heroSignatureRef.current
+      const ov = heroOverlayRef.current
+      if (!sig || !ov) return
+
+      const bits = sig.querySelectorAll(
+        `.${styles.heroSignatureName}, .${styles.heroSignatureRoleWrapper}, .${styles.heroSignatureRole}, .${styles.heroSignatureRole2}`,
+      )
+
+      const probe = (bits[0] as HTMLElement | undefined) || sig
+      const opacity = Number.parseFloat(window.getComputedStyle(probe).opacity || '0')
+      if (opacity >= 0.15) return
+
+      gsap.set(ov, { opacity: 1, filter: 'blur(0px)' })
+      gsap.set([sig, ...Array.from(bits)], {
+        opacity: 1,
+        filter: 'blur(0px)',
+        y: 0,
+        animation: '',
+        clearProps: 'transform',
+      })
+    }, 650)
 
     return () => {
       window.clearTimeout(initTimeout)
+      window.clearTimeout(refreshTimeout)
+      window.clearTimeout(visibilityFallbackTimeout)
       tl?.scrollTrigger?.kill()
       tl?.kill()
     }
-  }, [])
+  }, [pathname])
 
   // Tagline functionality commented out - keeping for potential future use
   // const [displayed, setDisplayed] = useState('')
@@ -320,7 +393,7 @@ export default function HomePage() {
                       className={`${styles.heroLead} ${styles.heroLeadLine2}`}
                       style={{ animationDelay: '0.25s' }}
                     >
-                      Enterprise UX Designer at Oriental Merchant, blending design and code to drive meaningful
+                      Currently an Enterprise UX Designer at Oriental Merchant, blending design and code to drive meaningful
                       business outcomes.
                     </p>
                   </div>

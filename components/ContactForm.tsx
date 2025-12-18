@@ -7,7 +7,12 @@ interface StatusState {
   message?: string
 }
 
-export default function ContactForm() {
+type ContactFormProps = {
+  onSuccess?: () => void
+  showSuccessTag?: boolean
+}
+
+export default function ContactForm({ onSuccess, showSuccessTag = true }: ContactFormProps) {
   const [status, setStatus] = useState<StatusState>({ type: 'idle' })
   const [isHoveringSend, setIsHoveringSend] = useState(false)
 
@@ -41,6 +46,7 @@ export default function ContactForm() {
 
       setStatus({ type: 'success', message: 'Thanks! I’ll be in touch soon.' })
       form.reset()
+      onSuccess?.()
     } catch (error) {
       setStatus({ type: 'error', message: (error as Error).message })
     }
@@ -144,7 +150,7 @@ export default function ContactForm() {
         >
           {isSubmitting ? 'Sending…' : 'Send'}
         </button>
-        {status.type !== 'idle' && status.message && (
+        {status.type !== 'idle' && status.message && (showSuccessTag || status.type !== 'success') && (
           <span
             style={{
               fontSize: '0.85rem',

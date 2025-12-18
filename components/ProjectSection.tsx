@@ -6,7 +6,14 @@ export default function ProjectsSection() {
   return (
     <section
       id="case-studies"
-      style={{ width: '100%', gap: 120, display: 'flex', flexDirection: 'column', padding: '150px 20px'}}
+      style={{
+        width: '100%',
+        gap: 120,
+        display: 'flex',
+        flexDirection: 'column',
+        // Reduce the post-hero gap: smaller top padding, keep roomy bottom padding.
+        padding: '24px 20px 150px',
+      }}
     >
       <div className={styles.projectsHeader}>
         <h2 className={styles.projectsTitle}>Projects</h2>

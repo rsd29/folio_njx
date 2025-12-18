@@ -264,6 +264,27 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
   
   const pathname = usePathname()
   const router = useRouter()
+
+  // Prevent browser back/forward from restoring scroll position.
+  // With ScrollSmoother + ScrollTrigger pages (like the home hero), restored scroll can re-enter a page
+  // with the hero timeline already progressed, leaving signature text invisible.
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const previous = window.history.scrollRestoration
+    try {
+      window.history.scrollRestoration = 'manual'
+    } catch {
+      // ignore
+    }
+    return () => {
+      try {
+        window.history.scrollRestoration = previous
+      } catch {
+        // ignore
+      }
+    }
+  }, [])
+
   const pendingHrefRef = useRef<string | null>(null)
   const previousPathRef = useRef<string | null>(null)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)

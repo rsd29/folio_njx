@@ -1,16 +1,25 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from 'next/image'
 import AnimatedRichText from '../../components/AnimatedRichText'
 import ScrollRevealText from '../../components/ScrollRevealText'
 import AnimatedFrame from '../../components/AnimatedFrame'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 export default function Page() {
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [overlayVisible, setOverlayVisible] = useState(false)
+  const aboutHeroSectionRef = useRef<HTMLElement | null>(null)
+  const aboutHeroFrame1Ref = useRef<HTMLDivElement | null>(null)
+  const aboutHeroFrame2Ref = useRef<HTMLDivElement | null>(null)
+  const lighthouseCardRef = useRef<HTMLDivElement | null>(null)
+  const lighthouseMetricValueRefs = useRef<Array<HTMLParagraphElement | null>>([])
+  const lighthouseCountTweensRef = useRef<Array<gsap.core.Tween | null>>([])
+  const lighthouseHasPlayedRef = useRef(false)
 
   useEffect(() => {
     const smootherInstance = ScrollSmoother.get()
@@ -20,6 +29,203 @@ export default function Page() {
       })
     } else if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'auto' })
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const section = aboutHeroSectionRef.current
+    const frame1 = aboutHeroFrame1Ref.current
+    const frame2 = aboutHeroFrame2Ref.current
+    if (!section || !frame1 || !frame2) return
+
+    gsap.registerPlugin(ScrollTrigger)
+
+    // Respect reduced motion: show Frame 2 immediately, no pin/scrub.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.set([section, frame1, frame2], { clearProps: 'all' })
+      gsap.set(frame1, { display: 'none' })
+      gsap.set(frame2, { opacity: 1, filter: 'blur(0px)', y: 0, pointerEvents: 'auto' })
+      return
+    }
+
+    const navAny = navigator as Navigator & { msMaxTouchPoints?: number }
+    const isTouchDevice =
+      'ontouchstart' in window || (navigator.maxTouchPoints ?? 0) > 0 || (navAny.msMaxTouchPoints ?? 0) > 0
+
+    let tl: gsap.core.Timeline | null = null
+    let initTimeout = 0
+    let refreshTimeout = 0
+
+    // Initial state: Frame 1 visible, Frame 2 hidden until scroll reveal begins.
+    gsap.set(frame1, { opacity: 1, filter: 'blur(0px)', y: 0, pointerEvents: 'auto' })
+    gsap.set(frame2, { opacity: 0, filter: 'blur(22px)', y: 24, pointerEvents: 'none' })
+
+    const init = (smoother: ScrollSmoother | null) => {
+      const scroller = smoother ? (smoother.wrapper() as Element) : undefined
+      let hasTakenOver = false
+
+      tl = gsap.timeline({
+        defaults: { ease: 'none' },
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          // Add a buffer so users can "overscroll" while Frame 2 stays readable before unpin.
+          end: '+=260%',
+          scrub: true,
+          pin: true,
+          anticipatePin: 1,
+          scroller,
+          onUpdate: (self) => {
+            // Enable interactions once frame 2 is mostly revealed.
+            const allowFrame2 = self.progress > 0.55
+            frame2.style.pointerEvents = allowFrame2 ? 'auto' : 'none'
+            frame1.style.pointerEvents = allowFrame2 ? 'none' : 'auto'
+
+            // Hand-off: once scrolling begins, prevent any CSS entrance animations from fighting GSAP.
+            if (!hasTakenOver && self.progress > 0) {
+              hasTakenOver = true
+              gsap.set([frame1, frame2], {
+                animation: 'none',
+                clearProps: 'transform',
+              })
+            }
+          },
+        },
+      })
+
+      // Match the Projects hero: short hold, then a smooth blur crossfade.
+      tl.to({}, { duration: 0.12 })
+      tl.to(frame1, { opacity: 0, filter: 'blur(34px)', y: -16, duration: 0.55 }, 0.12)
+      tl.to(frame2, { opacity: 1, filter: 'blur(0px)', y: 0, duration: 0.55 }, 0.12)
+
+      // Hold the final (Frame 2 revealed) state for a bit before releasing the pin.
+      tl.to({}, { duration: 0.55 })
+
+      ScrollTrigger.refresh()
+      refreshTimeout = window.setTimeout(() => {
+        ScrollTrigger.refresh()
+        tl?.scrollTrigger?.update()
+      }, 50)
+    }
+
+    if (isTouchDevice) {
+      initTimeout = window.setTimeout(() => init(null), 0)
+    } else {
+      // Wait briefly for ScrollSmoother (created in `components/SmoothScroll`) to avoid binding to the wrong scroller.
+      const start = window.performance?.now?.() ?? Date.now()
+      const waitForSmoother = () => {
+        const smoother = ScrollSmoother.get()
+        if (smoother) {
+          init(smoother)
+          return
+        }
+        const now = window.performance?.now?.() ?? Date.now()
+        if (now - start > 1200) {
+          init(null)
+          return
+        }
+        initTimeout = window.setTimeout(waitForSmoother, 50)
+      }
+      waitForSmoother()
+    }
+
+    return () => {
+      window.clearTimeout(initTimeout)
+      window.clearTimeout(refreshTimeout)
+      tl?.scrollTrigger?.kill()
+      tl?.kill()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const card = lighthouseCardRef.current
+    if (!card) return
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) return
+
+    const resetCount = () => {
+      lighthouseCountTweensRef.current.forEach((t) => t?.kill())
+      lighthouseCountTweensRef.current = []
+
+      lighthouseMetricValueRefs.current.slice(0, 4).forEach((el) => {
+        if (!el) return
+        el.textContent = '0'
+      })
+    }
+
+    const play = () => {
+      // Subtle entrance for all stat squares in this section.
+      const squares = document.querySelectorAll(
+        '.this-website-stats .this-website-statSquare',
+      ) as unknown as HTMLElement[]
+
+      gsap.fromTo(
+        squares,
+        { opacity: 0, y: 10, filter: 'blur(6px)' },
+        {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          duration: 0.55,
+          ease: 'power2.out',
+          stagger: 0.07,
+          clearProps: 'transform',
+        },
+      )
+
+      // Slower count-up for the 4 Lighthouse numbers (resets + replays on enter/enterBack).
+      const targets = [98, 100, 100, 100]
+      lighthouseMetricValueRefs.current.slice(0, 4).forEach((el, idx) => {
+        if (!el) return
+        const target = targets[idx] ?? 0
+        const obj = { value: 0 }
+        el.textContent = '0'
+
+        const tween = gsap.to(obj, {
+          value: target,
+          duration: 1.8,
+          ease: 'power2.out',
+          delay: idx * 0.06,
+          onUpdate: () => {
+            el.textContent = String(Math.round(obj.value))
+          },
+        })
+        lighthouseCountTweensRef.current[idx] = tween
+      })
+    }
+
+    // Use ScrollTrigger so it can replay when scrolling up/down.
+    const st = ScrollTrigger.create({
+      trigger: card,
+      // Wider active window prevents spurious enter/leave around the boundaries.
+      start: 'top 78%',
+      end: 'bottom 22%',
+      invalidateOnRefresh: true,
+      onEnter: () => {
+        if (lighthouseHasPlayedRef.current) return
+        resetCount()
+        play()
+        lighthouseHasPlayedRef.current = true
+      },
+      onEnterBack: () => {
+        // Play only once.
+        if (lighthouseHasPlayedRef.current) return
+        resetCount()
+        play()
+        lighthouseHasPlayedRef.current = true
+      },
+    })
+
+    return () => {
+      st.kill()
+      // On unmount, kill tweens/triggers only (no reset needed).
+      lighthouseCountTweensRef.current.forEach((t) => t?.kill())
+      lighthouseCountTweensRef.current = []
     }
   }, [])
   
@@ -293,20 +499,32 @@ export default function Page() {
           .about-hero {
             position: relative;
             overflow: hidden;
-            padding: clamp(96px, 10vh, 140px) 8%;
+            padding: calc(clamp(96px, 10vh, 140px) + 10px) 8%;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: left;
             contain: layout style;
+            background: var(--background);
           }
 
           .about-hero-bg {
             position: absolute;
-            inset: 0;
+            top: calc(clamp(14px, 2.6vw, 44px) + 14px);
+            bottom: clamp(14px, 2.6vw, 44px);
+            left: 8%;
+            right: 8%;
             z-index: 0;
             pointer-events: none;
+            border-radius: clamp(18px, 2.2vw, 32px);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow:
+              0 0 0 1px rgba(255, 255, 255, 0.04),
+              inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            transform-origin: center;
+            transform: scale(0.95) translateZ(0);
           }
 
           .about-hero-video {
@@ -328,7 +546,7 @@ export default function Page() {
 
           .about-hero-inner {
             width: 100%;
-            max-width: none;
+            max-width: 1120px;
             margin: 0 auto;
             contain: layout;
             position: relative;
@@ -336,12 +554,230 @@ export default function Page() {
           }
 
           .about-hero-copy {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            align-items: start;
+            gap: 0;
             font-family: var(--font-body);
             max-width: 100%;
             contain: layout style;
+            position: relative;
+          }
+
+          .about-hero-frame {
+            grid-area: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+          }
+
+          .about-hero-frame1 {
+            max-width: 100%;
+          }
+
+          .about-hero-frame2 {
+            max-width: 72ch;
+            gap: 14px;
+          }
+
+          .about-hero-intro {
+            margin: 0;
+            font-family: var(--font-heading);
+            font-weight: 300;
+            letter-spacing: -0.06em;
+            line-height: 0.98;
+            color: rgba(255, 255, 255, 0.92);
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            text-wrap: balance;
+          }
+
+          .about-hero-introSubtext {
+            margin: 10px 0 0;
+            font-size: var(--font-body-l);
+            font-weight: 300;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.78);
+            max-width: 90ch;
+            text-wrap: pretty;
+          }
+
+          /* This website section */
+          .this-website-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+            gap: 60px;
+            align-items: start;
+          }
+
+          .this-website-introCard {
+            padding: 28px;
+            background-color: rgba(17, 17, 17, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 14px;
+            backdrop-filter: blur(24px) saturate(160%);
+            -webkit-backdrop-filter: blur(24px) saturate(160%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+          }
+
+          .this-website-introP {
+            margin: 0;
+            font-size: var(--font-body-l);
+            line-height: 1.7;
+            font-family: var(--font-body);
+            font-weight: 300;
+            color: #ccc;
+            max-width: 80ch;
+          }
+
+          .this-website-introP + .this-website-introP {
+            margin-top: 14px;
+          }
+
+          .this-website-stats {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+          }
+
+          .this-website-lighthouseCard {
+            grid-column: 1 / -1;
+            padding: 18px 18px;
+            background-color: rgba(17, 17, 17, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 12px;
+            backdrop-filter: blur(24px) saturate(160%);
+            -webkit-backdrop-filter: blur(24px) saturate(160%);
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+          }
+
+          .this-website-lighthouseHeader {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+          }
+
+          .this-website-lighthouseTitle {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #888;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin: 0;
+          }
+
+          .this-website-lighthouseScore {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 8px;
+            font-family: var(--font-body);
+            color: #ddd;
+            margin: 0;
+            white-space: nowrap;
+          }
+
+          .this-website-lighthouseScore strong {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: #e6ff9b;
+            letter-spacing: -0.02em;
+          }
+
+          .this-website-lighthouseScore span {
+            font-size: 0.95rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.72);
+          }
+
+          .this-website-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(132px, 1fr));
+            gap: 10px;
+          }
+
+          .this-website-metric {
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+          }
+
+          .this-website-statSquare {
+            will-change: transform, opacity, filter;
+            transition:
+              transform 200ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 200ms ease,
+              border-color 200ms ease,
+              background-color 200ms ease;
+          }
+
+          .this-website-statSquare:hover {
+            transform: translateY(-2px);
+            border-color: rgba(188, 255, 78, 0.25);
+            box-shadow:
+              0 12px 32px rgba(0, 0, 0, 0.35),
+              inset 0 1px 0 rgba(255, 255, 255, 0.10);
+          }
+
+          @media (prefers-reduced-motion: reduce) {
+            .this-website-statSquare {
+              transition: none;
+            }
+            .this-website-statSquare:hover {
+              transform: none;
+            }
+          }
+
+          .this-website-metricLabel {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.68);
+            letter-spacing: 0.02em;
+            text-transform: none;
+            margin: 0 0 6px 0;
+            line-height: 1.15;
+            text-wrap: balance;
+            white-space: normal;
+          }
+
+          /* The Journey section */
+          #the-journey-text {
+            font-size: var(--font-body-l);
+            font-weight: 300;
+            line-height: var(--line-height-relaxed);
+            color: #ffffff;
+            margin: 0 0 56px 0;
+            max-width: 72ch;
+            font-family: var(--font-body);
+            text-align: left;
+            margin-left: 0;
+            margin-right: auto;
+          }
+
+          .this-website-metricValue {
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #bcff4e;
+            letter-spacing: -0.01em;
+          }
+
+          @media (max-width: 960px) {
+            .this-website-metrics {
+              grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+          }
+
+          @media (max-width: 960px) {
+            .this-website-grid {
+              grid-template-columns: 1fr;
+              gap: 26px;
+            }
+            .this-website-stats {
+              grid-template-columns: 1fr;
+            }
           }
 
           .about-hero-kicker {
@@ -355,17 +791,17 @@ export default function Page() {
           .about-hero-heading {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            max-width: none;
+            gap: 8px;
+            max-width: 62ch;
             text-wrap: balance;
           }
 
           .about-hero-lede {
-            font-size: var(--font-body-l);
+            font-size: var(--font-body-m);
             color: rgba(255, 255, 255, 0.82);
-            line-height: 1.75;
+            line-height: 1.6;
             margin: 6px 0 0;
-            max-width: none;
+            max-width: 66ch;
             word-wrap: break-word;
             overflow-wrap: break-word;
           }
@@ -494,7 +930,16 @@ export default function Page() {
 
           @media (max-width: 640px) {
             .about-hero {
-              padding: 92px 6%;
+              padding: 102px 6%;
+            }
+
+            .about-hero-bg {
+              top: 24px;
+              bottom: 12px;
+              left: 6%;
+              right: 6%;
+              border-radius: 18px;
+              transform: translateZ(0);
             }
 
             .about-hero-heading {
@@ -553,7 +998,7 @@ export default function Page() {
         `}</style>
       <main style={{ maxWidth: '100%', minHeight: '100vh', backgroundColor: 'var(--background)', color: 'var(--foreground)' }}>
       {/* Hero Section */}
-      <section className="about-hero">
+      <section ref={aboutHeroSectionRef} className="about-hero">
         <div className="about-hero-bg" aria-hidden="true">
           <video
             className="about-hero-video"
@@ -569,50 +1014,57 @@ export default function Page() {
         </div>
         <div className="about-hero-inner">
           <div className="about-hero-copy">
-            <p className="about-hero-kicker">About</p>
-
-            <div className="about-hero-heading">
-              <div style={{ 
-                minHeight: 'clamp(3.4rem, 6.2vw, 5.2rem)',
-                contain: 'layout style paint',
-                width: '100%',
-              }}>
-                <AnimatedRichText
-                  className="heroSubtext"
-                  segments={[
-                    {
-                      text: 'I like solving messy problems and turning them into something people actually enjoy using.',
-                    },
-                  ]}
-                  useFlickerEffect={false}
-                  fontSize="clamp(1.9rem, 3.2vw, 2.8rem)"
-                  fontWeight={400}
-                  lineHeight={1.18}
-                  letterSpacing="-0.03em"
-                  animationSpeed={4}
-                  marginBottom="0"
-                  maxWidth="none"
-                />
-              </div>
-
-    
+            {/* Frame 1 */}
+            <div ref={aboutHeroFrame1Ref} className="about-hero-frame about-hero-frame1">
+              <h1 className="about-hero-intro">Hi, I&apos;m Russell.</h1>
+              <p className="about-hero-introSubtext">
+                Thanks for checking out my website. Here’s a little about what I do and how I think.
+              </p>
             </div>
 
-            <p className="about-hero-lede">
-              Hello, my name’s Russell. I’m a UX designer who works across research, design, and development to make products functional, scalable, and easy to use.
-            </p>
+            {/* Frame 2 (current hero content) */}
+            <div ref={aboutHeroFrame2Ref} className="about-hero-frame about-hero-frame2">
+           
 
-            <div className="about-hero-pills">
-              {[
-                'Based in Melbourne',
-                '5+ yrs Designing Enterprise Products',
-                'Loves to Code and Build',
-                'Open to New Opportunities',
-              ].map((pill) => (
-                <span key={pill} className="about-hero-pill">
-                  {pill}
-                </span>
-              ))}
+              <div className="about-hero-heading">
+                <div style={{ 
+                  minHeight: 'clamp(3.4rem, 6.2vw, 5.2rem)',
+                  contain: 'layout style paint',
+                  width: '100%',
+                }}>
+                  <AnimatedRichText
+                    className="heroSubtext"
+                    segments={[
+                      {
+                        text: 'I like solving messy problems and turning them into something people actually enjoy using.',
+                      },
+                    ]}
+                    useFlickerEffect={false}
+                    fontSize="clamp(1.65rem, 2.6vw, 2.35rem)"
+                    fontWeight={400}
+                    lineHeight={1.14}
+                    letterSpacing="-0.03em"
+                    animationSpeed={4}
+                    marginBottom="0"
+                    maxWidth="62ch"
+                  />
+                </div>
+              </div>
+
+
+
+              <div className="about-hero-pills">
+                {[
+                  'Based in Melbourne',
+                  '5+ yrs Designing Enterprise Products',
+                  'Loves to Code and Build',
+                  'Open to New Opportunities',
+                ].map((pill) => (
+                  <span key={pill} className="about-hero-pill">
+                    {pill}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -625,41 +1077,30 @@ export default function Page() {
           marginBottom: '100px',
           position: 'relative', // For absolute positioning of guide line
         }}>
-          <div style={{
-            textAlign: 'left',
-            marginBottom: '80px',
-            height: '180px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            transform: 'scale(0.95)',
-            transformOrigin: 'center',
-          }}>
-            <div style={{ height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}>
-            <ScrollRevealText
-              text="A bit more personal.."
-              fontSize="var(--font-heading-l)"
-              fontWeight={500}
-              lineHeight={1}
-              letterSpacing="var(--letter-spacing-normal)"
-              className="scrollRevealText"
-            />
+          <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+            <div style={{
+              fontFamily: 'var(--font-heading)',
+              marginBottom: '56px',
+              color: 'var(--foreground)',
+              height: '80px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+            }}>
+              <ScrollRevealText
+                text="The Journey.."
+                fontSize="var(--font-heading-xl)"
+                fontWeight={400}
+                lineHeight={1.1}
+                letterSpacing="var(--letter-spacing-normal)"
+                className="scrollRevealText"
+              />
             </div>
+
             <p 
-              id="behind-the-work-text"
-              style={{
-                fontSize: 'var(--font-body-l)',
-                fontWeight: 300,
-                lineHeight: 'var(--line-height-relaxed)',
-                color: 'white',
-                marginTop: '24px',
-                maxWidth: '72ch',
-                fontFamily: 'var(--font-body)',
-                textAlign: 'left',
-                marginLeft: 0,
-                marginRight: 'auto',
-              }}>
-              What you build comes from where you’ve been. Here’s a bit of that — and some photos from my time wandering through Asia.
+              id="the-journey-text"
+            >
+              What you build comes from where you’ve been. Here’s a bit of that, and some photos from my time wandering through Asia.
             </p>
           </div>
           
@@ -1250,7 +1691,7 @@ My path to enterprise design started with curiosity about how creativity and tec
 
       {/* Skills Section */}
       <section style={{ 
-        padding: '200px 10% 400px 10%',
+        padding: '200px 10% 220px 10%',
         backgroundColor: '#111111'
       }}>
         <div style={{ maxWidth: '100%', margin: '0 auto' }}>
@@ -1463,6 +1904,109 @@ My path to enterprise design started with curiosity about how creativity and tec
             )}
           </div>
 
+        </div>
+      </section>
+
+      {/* This Website Section */}
+      <section style={{ 
+        padding: '0 10% 220px 10%',
+        backgroundColor: '#111111'
+      }}>
+        <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+          <div style={{
+            fontFamily: 'var(--font-heading)',
+            marginBottom: '80px',
+            color: 'var(--foreground)',
+            height: '80px',
+            display: 'flex',
+            alignItems: 'center'
+          }}>
+            <ScrollRevealText
+              text="About This Site"
+              fontSize="var(--font-heading-xl)"
+              fontWeight={400}
+              lineHeight={1.1}
+              letterSpacing="var(--letter-spacing-normal)"
+              className="scrollRevealText"
+            />
+          </div>
+
+          <div className="this-website-grid">
+            <div className="this-website-introCard">
+              <p className="this-website-introP">
+              A deliberately minimal portfolio built with the same principles I apply to production products: performance first, clarity over noise.              </p>
+              <p className="this-website-introP">
+              Designed, built, and shipped end-to-end.              </p>
+            </div>
+
+            <div className="this-website-stats">
+              <div ref={lighthouseCardRef} className="this-website-lighthouseCard this-website-statSquare">
+                <div className="this-website-lighthouseHeader">
+                  <p className="this-website-lighthouseTitle">Google PageSpeed / Lighthouse</p>
+                </div>
+                <div className="this-website-metrics">
+                  {[
+                    { label: 'Performance', value: '98' },
+                    { label: 'Accessibility', value: '100' },
+                    { label: 'Best Practices', value: '100' },
+                    { label: 'SEO', value: '100' },
+                  ].map((m) => (
+                    <div key={m.label} className="this-website-metric this-website-statSquare">
+                      <p className="this-website-metricLabel">{m.label}</p>
+                      <p
+                        ref={(el) => {
+                          const idx = ['Performance', 'Accessibility', 'Best Practices', 'SEO'].indexOf(m.label)
+                          if (idx >= 0) lighthouseMetricValueRefs.current[idx] = el
+                        }}
+                        className="this-website-metricValue"
+                      >
+                        {m.value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {[
+                { label: 'Framework', value: 'Next.js 16 (App Router) + React 19' },
+                { label: 'Language', value: 'TypeScript' },
+                { label: 'Motion', value: 'GSAP (ScrollTrigger/ScrollSmoother), Lenis, Framer Motion' },
+                { label: 'Hosting + analytics', value: 'Vercel + Vercel Analytics' },
+                { label: 'Contact', value: 'Route Handler + Resend email API' },
+                { label: 'Site metadata', value: '“Russell Saw — UX Portfolio”' },
+              ].map((item) => (
+                <div key={item.label} className="story-text-card this-website-statSquare" style={{
+                  padding: '18px 18px',
+                  backgroundColor: 'rgba(17, 17, 17, 0.28)',
+                  border: '1px solid rgba(255, 255, 255, 0.10)',
+                  borderRadius: '12px',
+                  backdropFilter: 'blur(24px) saturate(160%)',
+                  WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+                  boxShadow: '0 8px 26px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08)',
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease',
+                  cursor: 'default'
+                }}>
+                  <div style={{
+                    fontSize: '0.9rem',
+                    fontWeight: 500,
+                    color: '#888',
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    marginBottom: '8px'
+                  }}>
+                    {item.label}
+                  </div>
+                  <div style={{
+                    fontSize: 'var(--font-body-m)',
+                    fontWeight: 300,
+                    color: '#ddd',
+                    lineHeight: 1.5
+                  }}>
+                    {item.value}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </main>

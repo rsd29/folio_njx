@@ -15,6 +15,7 @@ if (typeof window !== "undefined") {
 }
 
 const CASE_STUDY_SECTIONS = [
+  { id: "at-a-glance", label: "At a Glance" },
   { id: "introduction", label: "Introduction" },
   { id: "starting-point", label: "The Starting Point" },
   { id: "why-omis-mattered", label: "Why OMIS Mattered" },
@@ -166,11 +167,11 @@ export default function ProjectTwoCaseStudy() {
               </div>
               <div className={styles.metaItem}>
                 <span className={styles.metaLabel}>Timeline</span>
-                <span className={styles.metaValue}>2023-2025</span>
+                <span className={styles.metaValue}>2023–2025</span>
               </div>
               <div className={styles.metaItem}>
-                <span className={styles.metaLabel}>Regions</span>
-                <span className={styles.metaValue}>Multiple regions & departments</span>
+                <span className={styles.metaLabel}>Scope</span>
+                <span className={styles.metaValue}>Multi-region, multi-department ERP (30+ modules)</span>
               </div>
             </div>
           </div>
@@ -215,6 +216,28 @@ export default function ProjectTwoCaseStudy() {
         </nav>
 
         <div className={styles.sectionsColumn} ref={sectionsColumnRef}>
+          <section id="at-a-glance" className={styles.section}>
+            <div className={styles.container}>
+              <ScrollRevealText
+                text="At a Glance (TL;DR)"
+                fontSize="clamp(2rem, 4vw, 3rem)"
+                fontWeight={400}
+                className={styles.sectionTitle}
+              />
+              <div className={styles.sectionSubtext}>Quick overview</div>
+
+              <div className={styles.contentBlock}>
+                <ul className={styles.blockList}>
+                  <li>Replaced a fragmented, spreadsheet-driven operation with a unified ERP</li>
+                  <li>Digitised core workflows across sales, procurement, logistics, warehousing, and shipping</li>
+                  <li>Designed and built 30+ modules used daily across multiple regions</li>
+                  <li>Introduced UX foundations and a design system to a team with no prior UX practice</li>
+                  <li>Reduced operational friction, improved data accuracy, and created a single source of truth</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
           <section id="introduction" className={styles.section}>
             <div className={styles.container}>
               <ScrollRevealText
@@ -228,38 +251,48 @@ export default function ProjectTwoCaseStudy() {
               </div>
 
               <div className={styles.contentBlock}>
+                <h3 className={styles.blockTitle}>Visual Callout 1 (Hero Context)</h3>
+                <ul className={styles.blockList}>
+                  <li>
+                    <strong>Image suggestion:</strong> A single composite screenshot or blurred overview of OMIS showing
+                    multiple modules (navigation + dense data table).
+                  </li>
+                  <li>
+                    <strong>Purpose:</strong> Immediately signals scale and seriousness. This tells reviewers: “This is
+                    not a toy app.”
+                  </li>
+                  <li>
+                    <strong>Effort level:</strong> One stitched screenshot or even a tasteful blur with labels.
+                  </li>
+                </ul>
+              </div>
+
+              <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  Before OMIS existed, Oriental Merchant was running a multi-country
-                  supply chain on tools that were never designed to handle that
-                  level of complexity. Staff were juggling enormous Excel files,
-                  hand-built VBA tools, paper-based workflows, and long email
-                  chains to complete even the simplest tasks. Delivery routes were
-                  planned on printed maps. Sales reps had to switch between six
-                  different spreadsheets to create an order. Procurement
-                  forecasting often meant inspecting dozens of tabs across multiple
-                  files. Every region had its own version of the truth, and no one
-                  had a complete view of operations.
+                  Before OMIS, Oriental Merchant operated a multi-country supply chain using tools never designed for
+                  that scale. Teams relied on large Excel files, VBA macros, paper workflows, and email handovers to
+                  complete everyday tasks. Delivery routes were planned on printed maps. Sales reps switched between
+                  multiple spreadsheets to place orders. Forecasting required manually reconciling dozens of tabs
+                  across files.
                 </p>
                 <p className={styles.blockText}>
-                  The company was functioning through sheer experience and effort,
-                  not through systems. OMIS was created to change that. It became
-                  the first attempt to connect the entire organisation through a
-                  shared platform that digitised core workflows, reduced
-                  bottlenecks, and gave people the information they needed without
-                  waiting on others.
+                  The business functioned through experience and effort rather than systems.
                 </p>
                 <p className={styles.blockText}>
-                  I led the UX design and front-end implementation from the very
-                  beginning, shaping how the platform looks, behaves, and supports
-                  more than thirty specialised modules used across several regions.
+                  OMIS was created to change that. It became the first platform to connect the organisation through a
+                  shared system that digitised known workflows, reduced bottlenecks, and gave teams immediate access
+                  to reliable data.
+                </p>
+                <p className={styles.blockText}>
+                  I led UX design and front-end implementation from the beginning, shaping how the platform looks,
+                  behaves, and scales across regions and departments.
                 </p>
               </div>
 
               <blockquote className={styles.quoteBlock}>
                 <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                The surest way to retire a spreadsheet is to respect why it
-                existed. Shadowing each team before we touched the UI kept every
-                module grounded in how people already worked.
+                The fastest way to replace a spreadsheet is to respect why it existed. Shadowing teams before
+                touching the UI kept every module grounded in real work.
               </blockquote>
             </div>
           </section>
@@ -272,36 +305,32 @@ export default function ProjectTwoCaseStudy() {
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <div className={styles.sectionSubtext}>Digitising known workflows</div>
+              <div className={styles.sectionSubtext}>Digitising known workflows, not reinventing the business</div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  Oriental Merchant had no ERP. Every department built its own
-                  processes through Excel, email, and manual handovers. These tools
-                  were created by people who understood the business well, but
-                  their limitations were obvious:
+                  Oriental Merchant had no ERP. Each department built its own processes using Excel, email, and
+                  manual handovers.
                 </p>
+                <h3 className={styles.blockTitle}>Key limitations:</h3>
                 <ul className={styles.blockList}>
-                  <li>Each team maintained separate files and rules</li>
-                  <li>Reports took hours to prepare</li>
-                  <li>Forecasting meant cross-referencing many spreadsheets</li>
-                  <li>Delivery routes were drawn manually every morning</li>
-                  <li>Order history was stored in binders</li>
-                  <li>Input validation was inconsistent</li>
-                  <li>Regions developed their own habits and logic</li>
+                  <li>Separate files and inconsistent rules by team</li>
+                  <li>Time-consuming reporting and forecasting</li>
+                  <li>Manual route planning</li>
+                  <li>Paper-based order history</li>
+                  <li>Inconsistent input validation</li>
+                  <li>Region-specific logic and definitions</li>
                 </ul>
                 <p className={styles.blockText}>
-                  OMIS was not designed to reinvent the company. It was designed to
-                  digitise known workflows, remove unnecessary friction, and give
-                  people immediate access to the information they relied on.
+                  OMIS was designed to digitise these existing workflows, remove unnecessary friction, and make
+                  trusted information immediately accessible.
                 </p>
               </div>
 
               <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
                 <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                Alignment mattered as much as tooling. When regions synced on the
-                same definitions we moved fast; when they didn&apos;t, we spent
-                days reconciling what “done” meant.
+                Alignment mattered as much as tooling. When regions agreed on definitions, progress was fast. When
+                they didn’t, reconciliation slowed everything down.
               </blockquote>
             </div>
           </section>
@@ -315,21 +344,31 @@ export default function ProjectTwoCaseStudy() {
                 className={styles.sectionTitle}
               />
               <div className={styles.sectionSubtext}>
-                The company had grown past what manual tools could support
+                The business had outgrown manual tools
               </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
                   Teams were spending more time finding information than using it.
                 </p>
+                <h3 className={styles.blockTitle}>Needs by function:</h3>
                 <ul className={styles.blockList}>
-                  <li>Sales reps needed live stock and pricing data.</li>
-                  <li>Procurement needed a single place to plan national replenishment.</li>
-                  <li>Logistics needed to eliminate hours of manual route planning.</li>
-                  <li>Managers needed transparency over operations instead of chasing files.</li>
+                  <li>
+                    <strong>Sales:</strong> Live stock, pricing, promotions, and customer history
+                  </li>
+                  <li>
+                    <strong>Procurement:</strong> Centralised national replenishment planning
+                  </li>
+                  <li>
+                    <strong>Logistics:</strong> Elimination of manual route planning and paper-based proof of delivery
+                  </li>
+                  <li>
+                    <strong>Management:</strong> Real-time operational visibility without chasing files
+                  </li>
                 </ul>
                 <p className={styles.blockText}>
-                  OMIS became the central platform that brought these needs together.
+                  OMIS became the central platform teams actually relied on instead of juggling files, emails, and
+                  workarounds.
                 </p>
               </div>
             </div>
@@ -349,26 +388,23 @@ export default function ProjectTwoCaseStudy() {
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  I served as the lead UX designer and one of the primary front-end
-                  developers on the project. My responsibilities included:
+                  I owned UX design and front-end execution across the platform.
                 </p>
+                <h3 className={styles.blockTitle}>Key responsibilities:</h3>
                 <ul className={styles.blockList}>
-                  <li>Designing and wireframing every module in OMIS</li>
-                  <li>Creating the platform structure and navigation</li>
-                  <li>Building a design system to support dozens of internal applications</li>
-                  <li>Working directly with department heads to understand workflows deeply</li>
-                  <li>Translating their processes into clear digital interfaces</li>
-                  <li>Running discovery sessions and shadowing staff</li>
-                  <li>Collaborating with backend engineers to define feasible solutions</li>
-                  <li>Presenting modules to regional teams</li>
-                  <li>Creating training materials, onboarding guides, and stakeholder presentations</li>
+                  <li>Designed and wireframed every OMIS module</li>
+                  <li>Defined platform structure and navigation</li>
+                  <li>Built a scalable design system for internal tools</li>
+                  <li>Led discovery sessions and shadowed staff across departments</li>
+                  <li>Translated operational workflows into digital interfaces</li>
+                  <li>Collaborated closely with backend engineers on feasibility and data models</li>
+                  <li>Presented modules to regional teams and stakeholders</li>
+                  <li>Created training materials and onboarding documentation</li>
                 </ul>
                 <p className={styles.blockText}>
-                  The development team had strong engineering expertise, but little
-                  exposure to UX. I introduced design principles such as
-                  hierarchy, contrast, spacing, and interaction patterns. This
-                  created a shared language that helped us work more effectively as
-                  a team.
+                  The engineering team had strong technical capability but limited UX exposure. I introduced core
+                  design principles, hierarchy, spacing, contrast, and interaction patterns, so we could stop
+                  debating UI basics and move faster with more confidence.
                 </p>
               </div>
             </div>
@@ -383,44 +419,39 @@ export default function ProjectTwoCaseStudy() {
                 className={styles.sectionTitle}
               />
               <div className={styles.sectionSubtext}>
-                OMIS needed to support nearly every operational team in the business
+                One platform, many operational roles
               </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  Each module had its own requirements, but everything needed to
-                  feel like it belonged in the same ecosystem.
+                  OMIS supports nearly every operational team. Each module had unique requirements, but all needed
+                  to feel part of a cohesive system.
                 </p>
               </div>
 
               <blockquote className={styles.quoteBlock}>
                 <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                Shared foundations were the only way to balance speed with
-                quality. Once typography, spacing, and interaction patterns were
-                locked, we could ship new modules without renegotiating the
-                basics.
+                Shared foundations were the only way to scale. Once the basics were locked, new modules could ship
+                without renegotiating design decisions.
               </blockquote>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Sales</h3>
                   <p className={styles.blockText}>
-                    Customer ordering, promotions and pricing, sales history,
-                    customer delivery information, SKU search, account data
+                    Ordering, pricing, promotions, customer history, SKU search
                   </p>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Procurement</h3>
                   <p className={styles.blockText}>
-                    Stock forecasting, supplier planning, warehouse allocation,
-                    container planning, inventory visibility, inter-warehouse transfers
+                    Forecasting, supplier planning, warehouse allocation, container planning
                   </p>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Logistics</h3>
                   <p className={styles.blockText}>
-                    Transport management, daily route planning, live driver tracking,
-                    signature capture, photo evidence, route history
+                    Route planning, driver tracking, proof of delivery, route history
                   </p>
                 </div>
                 <div className={styles.contentBlock}>
@@ -432,13 +463,13 @@ export default function ProjectTwoCaseStudy() {
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Shipping</h3>
                   <p className={styles.blockText}>
-                    Container registry, purchase order registry, best-before-date tracking
+                    Container registry, purchase orders, best-before tracking
                   </p>
                 </div>
                 <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>Admin and IT</h3>
+                  <h3 className={styles.blockTitle}>Admin / IT</h3>
                   <p className={styles.blockText}>
-                    User permissions, module access, image storage
+                    User permissions, module access, asset management
                   </p>
                 </div>
               </div>
@@ -460,47 +491,47 @@ export default function ProjectTwoCaseStudy() {
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Sales</h3>
-                  <p className={styles.blockText}>
-                    Order creation involved many spreadsheets and slow
-                    cross-checking. Customer history and stock data were difficult
-                    to find. Promotions varied by region.
-                  </p>
+                  <ul className={styles.blockList}>
+                    <li>Slow, fragmented order creation</li>
+                    <li>Poor visibility of stock and customer history</li>
+                    <li>Region-specific promotions</li>
+                  </ul>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Logistics</h3>
-                  <p className={styles.blockText}>
-                    Drivers had no digital tools. There was no tracking, no proof of
-                    delivery, and no route history. Planning took hours.
-                  </p>
+                  <ul className={styles.blockList}>
+                    <li>No digital tools for drivers</li>
+                    <li>No tracking or proof of delivery</li>
+                    <li>Hours spent planning routes</li>
+                  </ul>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Procurement</h3>
-                  <p className={styles.blockText}>
-                    Forecasting required intense manual effort. Warehouse splits
-                    were inconsistent. Container plans relied heavily on
-                    individual experience and were not centralised.
-                  </p>
+                  <ul className={styles.blockList}>
+                    <li>Manual, error-prone forecasting</li>
+                    <li>Inconsistent warehouse allocation</li>
+                    <li>No centralised container planning</li>
+                  </ul>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Shipping</h3>
-                  <p className={styles.blockText}>
-                    Container records were scattered across files and emails.
-                  </p>
+                  <ul className={styles.blockList}>
+                    <li>Container records spread across emails and files</li>
+                  </ul>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Company-wide</h3>
-                  <p className={styles.blockText}>
-                    There was no centralised data, slow communication, and
-                    constant duplication. Mistakes were common because validation
-                    varied across spreadsheets.
-                  </p>
+                  <ul className={styles.blockList}>
+                    <li>No single source of truth</li>
+                    <li>Heavy duplication and validation errors</li>
+                    <li>Slow communication between teams</li>
+                  </ul>
                 </div>
               </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  OMIS had to solve each of these issues without overwhelming users
-                  or removing the logic they trusted.
+                  OMIS needed to solve these without overwhelming users or discarding trusted logic.
                 </p>
               </div>
             </div>
@@ -515,7 +546,24 @@ export default function ProjectTwoCaseStudy() {
                 className={styles.sectionTitle}
               />
               <div className={styles.sectionSubtext}>
-                Guardrails for every module
+                Guardrails applied across every module
+              </div>
+
+              <div className={styles.contentBlock}>
+                <h3 className={styles.blockTitle}>Visual Callout 2 (Design System Foundations)</h3>
+                <ul className={styles.blockList}>
+                  <li>
+                    <strong>Image suggestion:</strong> One clean frame showing typography scale, spacing, buttons,
+                    form fields, and table styles side-by-side.
+                  </li>
+                  <li>
+                    <strong>Purpose:</strong> Proves you didn’t just talk about consistency, you built it. This
+                    reassures senior designers instantly.
+                  </li>
+                  <li>
+                    <strong>Effort level:</strong> Export directly from Figma. No mock scenarios needed.
+                  </li>
+                </ul>
               </div>
 
               <div className={styles.contentBlock}>
@@ -523,36 +571,27 @@ export default function ProjectTwoCaseStudy() {
                   <li>
                     <strong>Respect existing mental models</strong>
                     <br />
-                    Many staff were experienced with spreadsheets. AG Grid
-                    preserved familiar behaviour such as multi-row copy,
-                    drag-to-fill, and rapid filtering.
+                    Spreadsheet-like behaviour (via AG Grid) preserved speed and familiarity.
                   </li>
                   <li>
                     <strong>Gate user input</strong>
                     <br />
-                    Open text fields were replaced with dropdowns, selectors, and
-                    auto-search wherever possible. This improved accuracy and
-                    reduced support requests.
+                    Dropdowns, selectors, and auto-search replaced free text to improve accuracy.
                   </li>
                   <li>
                     <strong>Break workflows into steps</strong>
                     <br />
-                    Complex modules like PO planning were divided into clear stages
-                    to reduce cognitive load.
+                    Complex processes were staged to reduce cognitive load.
                   </li>
                   <li>
                     <strong>Use automation responsibly</strong>
                     <br />
-                    Automation handled suggestions and repetitive calculations, but
-                    users retained the ability to override values. Tooltips
-                    explained the logic behind automated fields.
+                    Automation suggested values; users retained control. Tooltips explained logic.
                   </li>
                   <li>
                     <strong>Build consistency through foundations</strong>
                     <br />
-                    Typography, spacing, interaction patterns, and page headers
-                    were consistent across modules. Layouts were tailored to each
-                    workflow.
+                    Shared typography, spacing, and interaction patterns across modules.
                   </li>
                 </ul>
               </div>
@@ -573,34 +612,34 @@ export default function ProjectTwoCaseStudy() {
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  The design system provided structure without restricting functionality.
-                  It included:
+                  The design system existed to solve real problems: shipping faster, avoiding rework, and keeping
+                  modules feeling familiar as the system grew.
                 </p>
               </div>
 
               <div className={styles.contentGrid}>
                 <div className={styles.contentBlock}>
-                  <h3 className={styles.blockTitle}>Shared foundations</h3>
+                  <h3 className={styles.blockTitle}>Foundations</h3>
                   <ul className={styles.blockList}>
-                    <li>Typography scale, spacing rules, standardised headers</li>
+                    <li>Typography scale and spacing rules</li>
+                    <li>Standardised headers and layouts</li>
                     <li>Departmental colour coding</li>
-                    <li>Consistent icons</li>
                   </ul>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Components</h3>
                   <ul className={styles.blockList}>
                     <li>SKU search with advanced filtering</li>
-                    <li>AG Grid table variations</li>
-                    <li>Forms, step flows, drawers and modals, validation patterns</li>
+                    <li>AG Grid table patterns</li>
+                    <li>Forms, step flows, drawers, modals, validation</li>
                   </ul>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Interaction patterns</h3>
                   <ul className={styles.blockList}>
-                    <li>Inline validation and clear success feedback</li>
-                    <li>Tooltip explanations</li>
-                    <li>Expand and collapse behaviour for dense content</li>
+                    <li>Inline validation and feedback</li>
+                    <li>Tooltips for complex logic</li>
+                    <li>Expand/collapse for dense content</li>
                   </ul>
                 </div>
               </div>
@@ -620,10 +659,25 @@ export default function ProjectTwoCaseStudy() {
               </div>
 
               <div className={styles.contentBlock}>
+                <h3 className={styles.blockTitle}>Visual Callout 3 (Complexity Management)</h3>
+                <ul className={styles.blockList}>
+                  <li>
+                    <strong>Image suggestion:</strong> One screenshot of the PO workflow showing staged steps (or a
+                    dense table with tooltips/overrides visible).
+                  </li>
+                  <li>
+                    <strong>Purpose:</strong> Demonstrates how you handle complexity without hiding it. This is your
+                    strongest “enterprise UX” proof.
+                  </li>
+                  <li>
+                    <strong>Effort level:</strong> One real screen. Annotate lightly if needed.
+                  </li>
+                </ul>
+              </div>
+
+              <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  The PO System was the most complex part of OMIS. Procurement
-                  needed to manage replenishment across four national warehouses
-                  and align with vendor schedules.
+                  The PO System coordinated replenishment across four national warehouses.
                 </p>
               </div>
 
@@ -634,20 +688,16 @@ export default function ProjectTwoCaseStudy() {
                     <li>Large volumes of data</li>
                     <li>Dependent decisions</li>
                     <li>Complex forecasting logic</li>
-                    <li>Warehouse splits</li>
-                    <li>Container planning</li>
-                    <li>Validation at every step</li>
+                    <li>Warehouse splits and container planning</li>
                   </ul>
                 </div>
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Solution</h3>
                   <ul className={styles.blockList}>
-                    <li>Structured workflow into stages</li>
+                    <li>Clear, staged workflow</li>
                     <li>Automated suggestions with manual overrides</li>
                     <li>Tooltips explaining calculations</li>
-                    <li>Expandable tables</li>
-                    <li>Multi-layer validation</li>
-                    <li>Clear success flow</li>
+                    <li>Expandable tables and layered validation</li>
                   </ul>
                 </div>
               </div>
@@ -667,9 +717,25 @@ export default function ProjectTwoCaseStudy() {
               </div>
 
               <div className={styles.contentBlock}>
+                <h3 className={styles.blockTitle}>Visual Callout 4 (End-to-End Workflow)</h3>
+                <ul className={styles.blockList}>
+                  <li>
+                    <strong>Image suggestion:</strong> Two-up image: logistics dashboard + driver app screen (route
+                    list, signature/photo capture).
+                  </li>
+                  <li>
+                    <strong>Purpose:</strong> Shows systems thinking across roles, devices, and constraints (offline,
+                    field use). Very high signal.
+                  </li>
+                  <li>
+                    <strong>Effort level:</strong> One dashboard screenshot + one mobile screen.
+                  </li>
+                </ul>
+              </div>
+
+              <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  Before TMS, delivery routes were planned manually with printed
-                  maps. Drivers had no digital tools or proof-of-delivery workflow.
+                  Before TMS, routes were planned using printed maps and paper manifests.
                 </p>
               </div>
 
@@ -677,7 +743,7 @@ export default function ProjectTwoCaseStudy() {
                 <div className={styles.contentBlock}>
                   <h3 className={styles.blockTitle}>Constraints</h3>
                   <ul className={styles.blockList}>
-                    <li>Offline mode</li>
+                    <li>Offline capability</li>
                     <li>Simple driver interactions</li>
                     <li>Manager visibility</li>
                     <li>Signature and photo capture</li>
@@ -688,9 +754,8 @@ export default function ProjectTwoCaseStudy() {
                   <ul className={styles.blockList}>
                     <li>Automated route generation</li>
                     <li>Offline-capable driver app</li>
-                    <li>Local caching and sync on reconnect</li>
-                    <li>Logistics dashboard</li>
-                    <li>Digital route history</li>
+                    <li>Local caching with sync on reconnect</li>
+                    <li>Logistics dashboard and digital route history</li>
                   </ul>
                 </div>
               </div>
@@ -711,18 +776,20 @@ export default function ProjectTwoCaseStudy() {
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  The Sales Ordering Program replaced a scattered workflow
-                  involving many spreadsheets.
+                  The Sales Ordering Program unified multiple spreadsheets into a single interface.
                 </p>
               </div>
 
               <div className={styles.contentBlock}>
                 <h3 className={styles.blockTitle}>Improvements</h3>
-                <p className={styles.blockText}>
-                  High-speed SKU search, consolidated customer information,
-                  real-time stock visibility, integrated promotions, parallel and
-                  saved orders, built-in validation.
-                </p>
+                <ul className={styles.blockList}>
+                  <li>High-speed SKU search</li>
+                  <li>Consolidated customer information</li>
+                  <li>Real-time stock visibility</li>
+                  <li>Integrated promotions</li>
+                  <li>Parallel and saved orders</li>
+                  <li>Built-in validation</li>
+                </ul>
               </div>
             </div>
           </section>
@@ -736,24 +803,23 @@ export default function ProjectTwoCaseStudy() {
                 className={styles.sectionTitle}
               />
               <div className={styles.sectionSubtext}>
-                Adapting without fragmenting the system
+                Adapting without fragmenting the platform
               </div>
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  Different regions required different rules. For example, Australia
-                  used a structured promotional system while the Netherlands and the
-                  UK were more flexible. Modules were adapted without breaking
-                  overall structure. Feature requests were versioned so teams could
-                  validate needs after using the module.
+                  Regions required different rules. For example, Australia used structured promotions, while the UK
+                  and Netherlands required more flexibility.
+                </p>
+                <p className={styles.blockText}>
+                  Modules were adapted without breaking overall structure. Feature requests were versioned so teams
+                  could validate needs after real usage.
                 </p>
               </div>
 
               <blockquote className={`${styles.quoteBlock} ${styles.quoteBlockHonest}`}>
                 <span className={styles.quoteBlockLabel}>In Hindsight</span>
-                Every time we skipped versioning, regional builds drifted. Clear
-                release notes and stricter cutoffs would have saved us a lot of
-                backtracking.
+                Skipping versioning caused regional drift. Clear release cutoffs would have prevented rework.
               </blockquote>
             </div>
           </section>
@@ -766,21 +832,35 @@ export default function ProjectTwoCaseStudy() {
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <div className={styles.sectionSubtext}>Efficiency across departments</div>
+              <div className={styles.sectionSubtext}>Measurable operational improvements</div>
+
+              <div className={styles.contentBlock}>
+                <h3 className={styles.blockTitle}>Visual Callout 5 (Outcome Proof)</h3>
+                <ul className={styles.blockList}>
+                  <li>
+                    <strong>Image suggestion:</strong> Before/after comparison or a simple flow diagram showing
+                    spreadsheet chaos → OMIS workflow.
+                  </li>
+                  <li>
+                    <strong>Purpose:</strong> Visually reinforces impact without needing metrics. This helps
+                    non-design hiring managers “get it” fast.
+                  </li>
+                  <li>
+                    <strong>Effort level:</strong> Extremely low. Even a diagram or redacted spreadsheet vs OMIS
+                    screen works.
+                  </li>
+                </ul>
+              </div>
 
               <div className={styles.contentBlock}>
                 <ul className={styles.blockList}>
-                  <li>Efficiency improved significantly across all departments.</li>
-                  <li>Order creation and route planning became faster.</li>
-                  <li>Procurement gained a unified system for replenishment.</li>
-                  <li>Staff no longer relied on email for data.</li>
-                  <li>Accuracy increased due to consistent validation.</li>
-                  <li>Managers gained instant access to history and analytics.</li>
-                  <li>Delivery proof became digital and searchable.</li>
-                  <li>
-                    Modules expanded from seven to more than thirty and now support
-                    multiple regions.
-                  </li>
+                  <li>Order creation and route planning reduced from hours to minutes</li>
+                  <li>Procurement planning centralised nationally</li>
+                  <li>Validation significantly reduced input errors</li>
+                  <li>Email dependency removed for operational data</li>
+                  <li>Managers gained real-time visibility and historical insight</li>
+                  <li>Proof of delivery became digital and searchable</li>
+                  <li>Platform expanded from 7 to 30+ modules across regions</li>
                 </ul>
               </div>
             </div>
@@ -794,16 +874,15 @@ export default function ProjectTwoCaseStudy() {
                 fontWeight={400}
                 className={styles.sectionTitle}
               />
-              <div className={styles.sectionSubtext}>Personal takeaways</div>
+              <div className={styles.sectionSubtext}>Key takeaways</div>
 
               <div className={styles.contentBlock}>
                 <ul className={styles.blockList}>
-                  <li>How to break down complex workflows into smaller steps</li>
-                  <li>How to design for users who rely on familiar spreadsheet behaviour</li>
-                  <li>How to use a design system as a foundation, not a limitation</li>
-                  <li>How to manage scope through versioning</li>
-                  <li>How to communicate clearly with stakeholders and engineers</li>
-                  <li>How to design confidently within complex constraints</li>
+                  <li>How to break complex workflows into manageable steps</li>
+                  <li>How to design for users dependent on spreadsheet speed</li>
+                  <li>How to scale systems through design foundations</li>
+                  <li>How to manage scope using versioning</li>
+                  <li>How to communicate across business, design, and engineering</li>
                 </ul>
               </div>
             </div>
@@ -821,21 +900,15 @@ export default function ProjectTwoCaseStudy() {
 
               <div className={styles.contentBlock}>
                 <p className={styles.blockText}>
-                  Seeing staff rely on OMIS every day is rewarding. The platform
-                  has made daily work faster, clearer, and more consistent across
-                  the organisation. It continues to grow as new modules are added
-                  and existing ones are refined. I am proud to have contributed to
-                  a system that supports so many people across multiple regions and
-                  departments.
+                  OMIS is now part of everyday work across the organisation. It continues to evolve as new modules
+                  are added and existing ones refined.
                 </p>
               </div>
 
               <blockquote className={styles.quoteBlock}>
                 <span className={styles.quoteBlockLabel}>Thinking Aloud</span>
-                The biggest win wasn&apos;t any single module; it was giving
-                every team the same source of truth. Once that clicked, requests
-                shifted from “Can you find this file?” to “Can we automate this
-                step?”
+                The biggest win wasn’t any single module, it was creating a shared source of truth. Once that
+                existed, teams shifted from chasing files to improving workflows.
               </blockquote>
             </div>
           </section>

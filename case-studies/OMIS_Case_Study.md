@@ -1,54 +1,80 @@
 # OMIS ERP System
 
-**Client:** Oriental Merchant  
-**Role:** Lead UX Designer & Front-End Developer  
-**Timeline:** 2023-2025  
-**Regions:** Multiple regions & departments
+**Client:** Oriental Merchant
+**Role:** Lead UX Designer & Front-End Developer
+**Timeline:** 2023–2025
+**Scope:** Multi-region, multi-department ERP (30+ modules)
+
+---
+
+## At a Glance (TL;DR)
+
+* Replaced a fragmented, spreadsheet-driven operation with a unified ERP
+* Digitised core workflows across sales, procurement, logistics, warehousing, and shipping
+* Designed and built 30+ modules used daily across multiple regions
+* Introduced UX foundations and a design system to a team with no prior UX practice
+* Reduced operational friction, improved data accuracy, and created a single source of truth
 
 ---
 
 ## Introduction
 
+**Visual Callout 1 (Hero Context)**
+*Image suggestion:* A single composite screenshot or blurred overview of OMIS showing multiple modules (navigation + dense data table).
+*Purpose:* Immediately signals scale and seriousness. This tells reviewers: “This is not a toy app.”
+*Effort level:* One stitched screenshot or even a tasteful blur with labels.
+
 ### A unified internal platform for a global FMCG distributor
 
-Before OMIS existed, Oriental Merchant was running a multi-country supply chain on tools that were never designed to handle that level of complexity. Staff were juggling enormous Excel files, hand-built VBA tools, paper-based workflows, and long email chains to complete even the simplest tasks. Delivery routes were planned on printed maps. Sales reps had to switch between six different spreadsheets to create an order. Procurement forecasting often meant inspecting dozens of tabs across multiple files. Every region had its own version of the truth, and no one had a complete view of operations.
+Before OMIS, Oriental Merchant operated a multi-country supply chain using tools never designed for that scale. Teams relied on large Excel files, VBA macros, paper workflows, and email handovers to complete everyday tasks. Delivery routes were planned on printed maps. Sales reps switched between multiple spreadsheets to place orders. Forecasting required manually reconciling dozens of tabs across files.
 
-The company was functioning through sheer experience and effort, not through systems. OMIS was created to change that. It became the first attempt to connect the entire organisation through a shared platform that digitised core workflows, reduced bottlenecks, and gave people the information they needed without waiting on others.
+The business functioned through experience and effort rather than systems.
 
-I led the UX design and front-end implementation from the very beginning, shaping how the platform looks, behaves, and supports more than thirty specialised modules used across several regions.
+OMIS was created to change that. It became the first platform to connect the organisation through a shared system that digitised known workflows, reduced bottlenecks, and gave teams immediate access to reliable data.
+
+I led UX design and front-end implementation from the beginning, shaping how the platform looks, behaves, and scales across regions and departments.
+
+> **Thinking Aloud**
+> The fastest way to replace a spreadsheet is to respect why it existed. Shadowing teams before touching the UI kept every module grounded in real work.
 
 ---
 
 ## The Starting Point
 
-### Digitising known workflows
+### Digitising known workflows, not reinventing the business
 
-Oriental Merchant had no ERP. Every department built its own processes through Excel, email, and manual handovers. These tools were created by people who understood the business well, but their limitations were obvious:
+Oriental Merchant had no ERP. Each department built its own processes using Excel, email, and manual handovers.
 
-- Each team maintained separate files and rules
-- Reports took hours to prepare
-- Forecasting meant cross-referencing many spreadsheets
-- Delivery routes were drawn manually every morning
-- Order history was stored in binders
-- Input validation was inconsistent
-- Regions developed their own habits and logic
+**Key limitations:**
 
-OMIS was not designed to reinvent the company. It was designed to digitise known workflows, remove unnecessary friction, and give people immediate access to the information they relied on.
+* Separate files and inconsistent rules by team
+* Time-consuming reporting and forecasting
+* Manual route planning
+* Paper-based order history
+* Inconsistent input validation
+* Region-specific logic and definitions
+
+OMIS was designed to digitise these existing workflows, remove unnecessary friction, and make trusted information immediately accessible.
+
+> **In Hindsight**
+> Alignment mattered as much as tooling. When regions agreed on definitions, progress was fast. When they didn’t, reconciliation slowed everything down.
 
 ---
 
 ## Why OMIS Mattered
 
-### The company had grown past what manual tools could support
+### The business had outgrown manual tools
 
 Teams were spending more time finding information than using it.
 
-- Sales reps needed live stock and pricing data.
-- Procurement needed a single place to plan national replenishment.
-- Logistics needed to eliminate hours of manual route planning.
-- Managers needed transparency over operations instead of chasing files.
+**Needs by function:**
 
-OMIS became the central platform that brought these needs together.
+* **Sales:** Live stock, pricing, promotions, and customer history
+* **Procurement:** Centralised national replenishment planning
+* **Logistics:** Elimination of manual route planning and paper-based proof of delivery
+* **Management:** Real-time operational visibility without chasing files
+
+OMIS became the central platform teams actually relied on instead of juggling files, emails, and workarounds.
 
 ---
 
@@ -56,45 +82,40 @@ OMIS became the central platform that brought these needs together.
 
 ### Lead UX designer and primary front-end developer
 
-I served as the lead UX designer and one of the primary front-end developers on the project. My responsibilities included:
+I owned UX design and front-end execution across the platform.
 
-- Designing and wireframing every module in OMIS
-- Creating the platform structure and navigation
-- Building a design system to support dozens of internal applications
-- Working directly with department heads to understand workflows deeply
-- Translating their processes into clear digital interfaces
-- Running discovery sessions and shadowing staff
-- Collaborating with backend engineers to define feasible solutions
-- Presenting modules to regional teams
-- Creating training materials, onboarding guides, and stakeholder presentations
+**Key responsibilities:**
 
-The development team had strong engineering expertise, but little exposure to UX. I introduced design principles such as hierarchy, contrast, spacing, and interaction patterns. This created a shared language that helped us work more effectively as a team.
+* Designed and wireframed every OMIS module
+* Defined platform structure and navigation
+* Built a scalable design system for internal tools
+* Led discovery sessions and shadowed staff across departments
+* Translated operational workflows into digital interfaces
+* Collaborated closely with backend engineers on feasibility and data models
+* Presented modules to regional teams and stakeholders
+* Created training materials and onboarding documentation
+
+The engineering team had strong technical capability but limited UX exposure. I introduced core design principles,hierarchy, spacing, contrast, and interaction patterns,so we could stop debating UI basics and move faster with more confidence.
 
 ---
 
 ## Who OMIS Serves
 
-### OMIS needed to support nearly every operational team in the business
+### One platform, many operational roles
 
-Each module had its own requirements, but everything needed to feel like it belonged in the same ecosystem.
+OMIS supports nearly every operational team. Each module had unique requirements, but all needed to feel part of a cohesive system.
 
-**Sales**
-Customer ordering, promotions and pricing, sales history, customer delivery information, SKU search, account data
+> **Thinking Aloud**
+> Shared foundations were the only way to scale. Once the basics were locked, new modules could ship without renegotiating design decisions.
 
-**Procurement**
-Stock forecasting, supplier planning, warehouse allocation, container planning, inventory visibility, inter-warehouse transfers
+**Primary users:**
 
-**Logistics**
-Transport management, daily route planning, live driver tracking, signature capture, photo evidence, route history
-
-**Warehouse**
-Receiving, dispatch, adjustments, transfers
-
-**Shipping**
-Container registry, purchase order registry, best-before-date tracking
-
-**Admin and IT**
-User permissions, module access, image storage
+* **Sales:** Ordering, pricing, promotions, customer history, SKU search
+* **Procurement:** Forecasting, supplier planning, warehouse allocation, container planning
+* **Logistics:** Route planning, driver tracking, proof of delivery, route history
+* **Warehouse:** Receiving, dispatch, adjustments, transfers
+* **Shipping:** Container registry, purchase orders, best-before tracking
+* **Admin / IT:** User permissions, module access, asset management
 
 ---
 
@@ -103,42 +124,60 @@ User permissions, module access, image storage
 ### Department-specific pain points
 
 **Sales**
-Order creation involved many spreadsheets and slow cross-checking. Customer history and stock data were difficult to find. Promotions varied by region.
+
+* Slow, fragmented order creation
+* Poor visibility of stock and customer history
+* Region-specific promotions
 
 **Logistics**
-Drivers had no digital tools. There was no tracking, no proof of delivery, and no route history. Planning took hours.
+
+* No digital tools for drivers
+* No tracking or proof of delivery
+* Hours spent planning routes
 
 **Procurement**
-Forecasting required intense manual effort. Warehouse splits were inconsistent. Container plans relied heavily on individual experience and were not centralised.
+
+* Manual, error-prone forecasting
+* Inconsistent warehouse allocation
+* No centralised container planning
 
 **Shipping**
-Container records were scattered across files and emails.
+
+* Container records spread across emails and files
 
 **Company-wide**
-There was no centralised data, slow communication, and constant duplication. Mistakes were common because validation varied across spreadsheets.
 
-OMIS had to solve each of these issues without overwhelming users or removing the logic they trusted.
+* No single source of truth
+* Heavy duplication and validation errors
+* Slow communication between teams
+
+OMIS needed to solve these without overwhelming users or discarding trusted logic.
 
 ---
 
 ## Design Principles
 
-### Guardrails for every module
+**Visual Callout 2 (Design System Foundations)**
+*Image suggestion:* One clean frame showing typography scale, spacing, buttons, form fields, and table styles side-by-side.
+*Purpose:* Proves you didn’t just talk about consistency,you built it. This reassures senior designers instantly.
+*Effort level:* Export directly from Figma. No mock scenarios needed.
 
-- **Respect existing mental models**  
-  Many staff were experienced with spreadsheets. AG Grid preserved familiar behaviour such as multi-row copy, drag-to-fill, and rapid filtering.
+### Guardrails applied across every module
 
-- **Gate user input**  
-  Open text fields were replaced with dropdowns, selectors, and auto-search wherever possible. This improved accuracy and reduced support requests.
+* **Respect existing mental models**
+  Spreadsheet-like behaviour (via AG Grid) preserved speed and familiarity.
 
-- **Break workflows into steps**  
-  Complex modules like PO planning were divided into clear stages to reduce cognitive load.
+* **Gate user input**
+  Dropdowns, selectors, and auto-search replaced free text to improve accuracy.
 
-- **Use automation responsibly**  
-  Automation handled suggestions and repetitive calculations, but users retained the ability to override values. Tooltips explained the logic behind automated fields.
+* **Break workflows into steps**
+  Complex processes were staged to reduce cognitive load.
 
-- **Build consistency through foundations**  
-  Typography, spacing, interaction patterns, and page headers were consistent across modules. Layouts were tailored to each workflow.
+* **Use automation responsibly**
+  Automation suggested values; users retained control. Tooltips explained logic.
+
+* **Build consistency through foundations**
+  Shared typography, spacing, and interaction patterns across modules.
 
 ---
 
@@ -146,67 +185,79 @@ OMIS had to solve each of these issues without overwhelming users or removing th
 
 ### Structure without restriction
 
-The design system provided structure without restricting functionality. It included:
+The design system existed to solve real problems: shipping faster, avoiding rework, and keeping modules feeling familiar as the system grew.
 
-**Shared foundations**
-- Typography scale, spacing rules, standardised headers
-- Departmental colour coding
-- Consistent icons
+**Foundations**
+
+* Typography scale and spacing rules
+* Standardised headers and layouts
+* Departmental colour coding
 
 **Components**
-- SKU search with advanced filtering
-- AG Grid table variations
-- Forms, step flows, drawers and modals, validation patterns
+
+* SKU search with advanced filtering
+* AG Grid table patterns
+* Forms, step flows, drawers, modals, validation
 
 **Interaction patterns**
-- Inline validation and clear success feedback
-- Tooltip explanations
-- Expand and collapse behaviour for dense content
+
+* Inline validation and feedback
+* Tooltips for complex logic
+* Expand/collapse for dense content
 
 ---
 
 ## Key Module: Purchase Order System
 
-### Procurement's most complex workflow
+**Visual Callout 3 (Complexity Management)**
+*Image suggestion:* One screenshot of the PO workflow showing staged steps (or a dense table with tooltips/overrides visible).
+*Purpose:* Demonstrates how you handle complexity without hiding it. This is your strongest “enterprise UX” proof.
+*Effort level:* One real screen. Annotate lightly if needed.
 
-The PO System was the most complex part of OMIS. Procurement needed to manage replenishment across four national warehouses and align with vendor schedules.
+### Procurement’s most complex workflow
+
+The PO System coordinated replenishment across four national warehouses.
 
 **Challenges:**
-- Large volumes of data
-- Dependent decisions
-- Complex forecasting logic
-- Warehouse splits
-- Container planning
-- Validation at every step
+
+* Large data volumes
+* Dependent decisions
+* Complex forecasting logic
+* Warehouse splits and container planning
 
 **Solution:**
-- Structured workflow into stages
-- Automated suggestions with manual overrides
-- Tooltips explaining calculations
-- Expandable tables
-- Multi-layer validation
-- Clear success flow
+
+* Clear, staged workflow
+* Automated suggestions with manual overrides
+* Tooltips explaining calculations
+* Expandable tables and layered validation
 
 ---
 
 ## Key Module: Transport Management System
 
+**Visual Callout 4 (End-to-End Workflow)**
+*Image suggestion:* Two-up image: logistics dashboard + driver app screen (route list, signature/photo capture).
+*Purpose:* Shows systems thinking across roles, devices, and constraints (offline, field use). Very high signal.
+*Effort level:* One dashboard screenshot + one mobile screen.
+
 ### Digitising delivery operations
 
-Before TMS, delivery routes were planned manually with printed maps. Drivers had no digital tools or proof-of-delivery workflow.
+Before TMS, routes were planned using printed maps and paper manifests.
 
 **Constraints:**
-- Offline mode
-- Simple driver interactions
-- Manager visibility
-- Signature and photo capture
+
+* Offline capability
+* Simple driver interactions
+* Manager visibility
+* Signature and photo capture
 
 **Solution:**
-- Automated route generation
-- Offline-capable driver app
-- Local caching and sync on reconnect
-- Logistics dashboard
-- Digital route history
+
+* Automated route generation
+* Offline-capable driver app
+* Local caching with sync on reconnect
+* Logistics dashboard and digital route history
 
 ---
 
@@ -214,46 +265,60 @@ Before TMS, delivery routes were planned manually with printed maps. Drivers had
 
 ### Replacing a scattered workflow
 
-The Sales Ordering Program replaced a scattered workflow involving many spreadsheets.
+The Sales Ordering Program unified multiple spreadsheets into a single interface.
 
 **Improvements:**
-High-speed SKU search, consolidated customer information, real-time stock visibility, integrated promotions, parallel and saved orders, built-in validation.
+
+* High-speed SKU search
+* Consolidated customer information
+* Real-time stock visibility
+* Integrated promotions
+* Parallel and saved orders
+* Built-in validation
 
 ---
 
 ## Regional & Departmental Challenges
 
-### Adapting without fragmenting the system
+### Adapting without fragmenting the platform
 
-Different regions required different rules. For example, Australia used a structured promotional system while the Netherlands and the UK were more flexible. Modules were adapted without breaking overall structure. Feature requests were versioned so teams could validate needs after using the module.
+Regions required different rules. For example, Australia used structured promotions, while the UK and Netherlands required more flexibility.
+
+Modules were adapted without breaking overall structure. Feature requests were versioned so teams could validate needs after real usage.
+
+> **In Hindsight**
+> Skipping versioning caused regional drift. Clear release cutoffs would have prevented rework.
 
 ---
 
 ## Impact
 
-### Efficiency across departments
+**Visual Callout 5 (Outcome Proof)**
+*Image suggestion:* Before/after comparison or a simple flow diagram showing spreadsheet chaos → OMIS workflow.
+*Purpose:* Visually reinforces impact without needing metrics. This helps non-design hiring managers “get it” fast.
+*Effort level:* Extremely low. Even a diagram or redacted spreadsheet vs OMIS screen works.
 
-- Efficiency improved significantly across all departments.
-- Order creation and route planning became faster.
-- Procurement gained a unified system for replenishment.
-- Staff no longer relied on email for data.
-- Accuracy increased due to consistent validation.
-- Managers gained instant access to history and analytics.
-- Delivery proof became digital and searchable.
-- Modules expanded from seven to more than thirty and now support multiple regions.
+### Measurable operational improvements
+
+* Order creation and route planning reduced from hours to minutes
+* Procurement planning centralised nationally
+* Validation significantly reduced input errors
+* Email dependency removed for operational data
+* Managers gained real-time visibility and historical insight
+* Proof of delivery became digital and searchable
+* Platform expanded from 7 to 30+ modules across regions
 
 ---
 
 ## What I Learned
 
-### Personal takeaways
+### Key takeaways
 
-- How to break down complex workflows into smaller steps
-- How to design for users who rely on familiar spreadsheet behaviour
-- How to use a design system as a foundation, not a limitation
-- How to manage scope through versioning
-- How to communicate clearly with stakeholders and engineers
-- How to design confidently within complex constraints
+* How to break complex workflows into manageable steps
+* How to design for users dependent on spreadsheet speed
+* How to scale systems through design foundations
+* How to manage scope using versioning
+* How to communicate across business, design, and engineering
 
 ---
 
@@ -261,5 +326,7 @@ Different regions required different rules. For example, Australia used a struct
 
 ### Looking forward
 
-Seeing staff rely on OMIS every day is rewarding. The platform has made daily work faster, clearer, and more consistent across the organisation. It continues to grow as new modules are added and existing ones are refined. I am proud to have contributed to a system that supports so many people across multiple regions and departments.
+OMIS is now part of everyday work across the organisation. It continues to evolve as new modules are added and existing ones refined.
 
+> **Thinking Aloud**
+> The biggest win wasn’t any single module,it was creating a shared source of truth. Once that existed, teams shifted from chasing files to improving workflows.

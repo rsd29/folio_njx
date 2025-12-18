@@ -236,8 +236,9 @@ strong{
   border-radius: inherit;
   background:
     radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.45), transparent 40%),
-    radial-gradient(circle at 80% 50%, rgba(102, 217, 255, 0.35), transparent 55%),
-    radial-gradient(circle at 50% 80%, rgba(255, 0, 153, 0.28), transparent 60%);
+    /* Acid green glow for "View Project" cursor */
+    radial-gradient(circle at 80% 50%, rgba(182, 255, 0, 0.42), transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(182, 255, 0, 0.22), transparent 60%);
   filter: blur(8px);
   opacity: 0.8;
   pointer-events: none;
