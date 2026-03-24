@@ -14,7 +14,7 @@ const navItems = [
 const rightNavItems = [
   { label: 'Off the Clock', href: '/off-the-clock' },
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/russellsawux/', external: true, isIcon: true },
-  { label: 'Resume', href: '/rs-resume-q3-2025-v2.pdf', external: true, download: true },
+  { label: 'Resume', href: '/rs-resume-q1-2026-v3.pdf', external: true, download: true },
 ]
 
 export default function Header() {

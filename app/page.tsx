@@ -431,7 +431,7 @@ export default function HomePage() {
                 <ArrowDownIcon className={styles.heroButtonIcon} />
               </Link>
               <a
-                href="/rs-resume-q3-2025-v2.pdf"
+                href="/rs-resume-q1-2026-v3.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.heroButtonSecondary}

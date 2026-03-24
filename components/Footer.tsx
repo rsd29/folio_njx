@@ -71,7 +71,7 @@ export default function Footer() {
                 >
                   LinkedIn
                 </a>
-                <a className={styles.link} href="/rs-resume-q3-2025-v2.pdf" target="_blank" rel="noopener noreferrer">
+                <a className={styles.link} href="/rs-resume-q1-2026-v3.pdf" target="_blank" rel="noopener noreferrer">
                   Resume (PDF)
                 </a>
               </div>

@@ -1108,9 +1108,7 @@ export default function Page() {
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
             gap: '60px',
-            alignItems: 'start',
-            transform: 'scale(0.95)',
-            transformOrigin: 'center'
+            alignItems: 'start'
           }}>
           {/* Left Column - Alternating Pattern */}
           <div className="gallery-left" style={{
@@ -1120,7 +1118,7 @@ export default function Page() {
             transform: 'translateY(0px)'
           }}>
             {/* Frame 1 */}
-            <AnimatedFrame delay={0.1} comment="A quiet moment of tranquility, taking in the sights in Hoi Ann.">
+            <AnimatedFrame delay={0.1} comment="Hoi Ann VN. Man it was beautiful.">
               <div id="gallery-frame-1" style={{
                 width: '100%',
                 aspectRatio: '4/5',
@@ -1211,7 +1209,7 @@ export default function Page() {
             </div>
             
             {/* Frame 3 */}
-            <AnimatedFrame delay={0.3} comment="Inspired by the beauty and precision of Japanese design philosophy, finding new perspectives.">
+            <AnimatedFrame delay={0.3} comment="Warm streets of Tokyo.">
               <div id="gallery-frame-3" style={{
                 width: '100%',
                 aspectRatio: '4/5',
@@ -1342,7 +1340,7 @@ export default function Page() {
             </div>
 
             {/* Frame 2 */}
-            <AnimatedFrame delay={0.2} comment="Lost in the flow of creative work, where ideas take shape and innovation happens naturally.">
+            <AnimatedFrame delay={0.2} comment="Dusk + Tokyo Dome, theres something menacing about giant rollercoasters after dark.">
               <div id="gallery-frame-2" style={{
                 width: '100%',
                 aspectRatio: '4/5',
@@ -1432,7 +1430,7 @@ export default function Page() {
               decision serves both user needs and business objectives. With every decision made, the goal is always to create a product that feels just &quot;sweet&quot; for the user. I believe great design isn&apos;t always loud or avant-garde. It lives where usability meets personality, where something simply feels right.
             </div>
             {/* Frame 4 */}
-            <AnimatedFrame delay={0.4} comment="Embracing the journey of continuous learning and the art of thoughtful craftsmanship.">
+            <AnimatedFrame delay={0.4} comment="Theres something unique about about the neons in JP. Its bloated, tacky, overwhelming but also somewhat aesthetic, charming and inspiring in its own way.">
               <div id="gallery-frame-4" style={{
                 width: '100%',
                 aspectRatio: '4/5',

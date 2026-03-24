@@ -6,6 +6,8 @@ import ContactForm from './ContactForm'
 import { gsap } from 'gsap'
 import { ScrollSmoother } from 'gsap/ScrollSmoother'
 
+const FOOTER_CTA_REQUEST_KEY = 'footer_cta_open_request'
+
 export default function FooterCta() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
@@ -55,29 +57,52 @@ export default function FooterCta() {
   useEffect(() => {
     if (typeof window === 'undefined') return
 
+    const scrollToCta = () => {
+      const el = containerRef.current
+      if (!el) return
+
+      const smoother = ScrollSmoother.get()
+      if (smoother) {
+        smoother.scrollTo(el, true, 'top top')
+        return
+      }
+
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+
     const onOpen = () => {
       resetCta()
       setIsOpen(true)
 
-      // Scroll after state updates/layout.
+      // Scroll after state updates/layout, then again once the panel finishes expanding.
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          const el = containerRef.current
-          if (!el) return
-
-          const smoother = ScrollSmoother.get()
-          if (smoother) {
-            smoother.scrollTo(el, true, 'top top')
-            return
-          }
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          scrollToCta()
         })
       })
+
+      window.setTimeout(() => {
+        scrollToCta()
+      }, 450)
     }
 
     window.addEventListener('footer-cta:open', onOpen)
     return () => window.removeEventListener('footer-cta:open', onOpen)
   }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const shouldOpen = sessionStorage.getItem(FOOTER_CTA_REQUEST_KEY)
+    if (shouldOpen !== 'true') return
+
+    sessionStorage.removeItem(FOOTER_CTA_REQUEST_KEY)
+    const timeoutId = window.setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('footer-cta:open'))
+    }, 250)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [pathname])
 
   // Hero-style GSAP crossfade between CTA content and success state.
   useEffect(() => {

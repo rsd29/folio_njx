@@ -40,19 +40,19 @@ What you build comes from where you’ve been. Here’s a bit of that, and some 
 
 #### Frame 1 (`#gallery-frame-1`)
 - **Image alt**: Portrait 1
-- **AnimatedFrame caption**: A quiet moment of tranquility, taking in the sights in Hoi Ann.
+- **AnimatedFrame caption**: Hoi Ann VN. Man it was beautiful. 
 
 #### Frame 2 (`#gallery-frame-2`)
 - **Image alt**: Portrait 2
-- **AnimatedFrame caption**: Lost in the flow of creative work, where ideas take shape and innovation happens naturally.
+- **AnimatedFrame caption**: Dusk + Tokyo Dome, theres something menacing about giant rollercoasters after dark. 
 
 #### Frame 3 (`#gallery-frame-3`)
 - **Image alt**: Portrait 3
-- **AnimatedFrame caption**: Inspired by the beauty and precision of Japanese design philosophy, finding new perspectives.
+- **AnimatedFrame caption**: Warm streets of Tokyo. 
 
 #### Frame 4 (`#gallery-frame-4`)
 - **Image alt**: Portrait 4
-- **AnimatedFrame caption**: Embracing the journey of continuous learning and the art of thoughtful craftsmanship.
+- **AnimatedFrame caption**: Theres something unique about about the neons in JP. Its bloated, tacky, overwhelming but also somewhat aesthetic, charming and inspiring in its own way. 
 
 ### Story cards (titles + body copy)
 
@@ -72,9 +72,9 @@ I&apos;m passionate about design systems that scale, accessibility that&apos;s b
 
 ## Final Story Text (`#my-path-to-enterprise`)
 
-My path to enterprise design started with curiosity about how creativity and technology connect. That early mix still influences how I design: practical, human, and quietly expressive.
+My path to enterprise design started with curiosity about how creativity and technology connect. That early mix still influences how I design: practical, human, and quietly expressive. 
 
-Whether sketching in Figma or prototyping in code, I believe great design happens at the intersection of craft and strategy.
+Whether sketching in Figma or developing in code, I believe great design happens at the intersection of craft and strategy.
 
 The result? Interfaces people actually want to use, not just tolerate.
 

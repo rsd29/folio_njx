@@ -1,68 +1,97 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-// Obfuscated password logic - harder to scrape
-const getPassword = () => {
-  const chars = ['u', 'x', 'd', 'e', 's', 'i', 'g', 'n']
-  const indices = [0, 1, 2, 3, 4, 5, 6, 7]
-  return indices.map(i => chars[i]).join('')
+interface PasswordGateProps {
+  children: React.ReactNode
+  correctPassword?: string
+  title?: string
+  description?: string
+  submitLabel?: string
+  storageKey?: string
+  requestPasswordLabel?: string
 }
 
-const getHash = (str: string) => {
+const MAX_ATTEMPTS = 3
+const FOOTER_CTA_REQUEST_KEY = 'footer_cta_open_request'
+
+const getHash = (value: string) => {
   let hash = 0
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i)
-    hash = ((hash << 5) - hash) + char
-    hash = hash & hash // Convert to 32-bit integer
+
+  for (let i = 0; i < value.length; i++) {
+    const character = value.charCodeAt(i)
+    hash = ((hash << 5) - hash) + character
+    hash = hash & hash
   }
+
   return Math.abs(hash)
 }
 
-export default function PasswordGate({ children }: { children: React.ReactNode }) {
+export default function PasswordGate({
+  children,
+  correctPassword = 'design2026',
+  title = 'Case Studies',
+  description = 'Request a password to view my case studies!',
+  submitLabel = 'View case studies',
+  storageKey = 'case_study_auth_token',
+  requestPasswordLabel = 'Request password',
+}: PasswordGateProps) {
+  const router = useRouter()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [attempts, setAttempts] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  // Check if already authenticated (stored in sessionStorage)
   useEffect(() => {
-    const stored = sessionStorage.getItem('auth_token')
-    if (stored) {
-      const expectedHash = getHash(getPassword())
-      if (parseInt(stored) === expectedHash) {
-        setIsAuthenticated(true)
-      }
-    }
-  }, [])
+    const storedToken = sessionStorage.getItem(storageKey)
+    const expectedToken = getHash(correctPassword).toString()
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    // Rate limiting
-    if (attempts >= 3) {
+    if (storedToken === expectedToken) {
+      setIsAuthenticated(true)
+    }
+  }, [correctPassword, storageKey])
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+
+    if (attempts >= MAX_ATTEMPTS) {
       setError('Too many attempts. Please refresh the page.')
       return
     }
 
-    const correctPassword = getPassword()
-    const inputHash = getHash(password)
-    const correctHash = getHash(correctPassword)
+    const inputHash = getHash(password).toString()
+    const expectedHash = getHash(correctPassword).toString()
 
-    if (inputHash === correctHash) {
-      // Store authentication token
-      sessionStorage.setItem('auth_token', correctHash.toString())
+    if (inputHash === expectedHash) {
+      sessionStorage.setItem(storageKey, expectedHash)
       setIsAuthenticated(true)
       setError('')
-    } else {
-      setAttempts(prev => prev + 1)
-      setError(`Incorrect password. ${3 - attempts} attempts remaining.`)
-      setPassword('')
-      if (inputRef.current) {
-        inputRef.current.focus()
-      }
+      return
     }
+
+    const nextAttempts = attempts + 1
+    const attemptsRemaining = MAX_ATTEMPTS - nextAttempts
+
+    setAttempts(nextAttempts)
+    setPassword('')
+    setError(
+      attemptsRemaining > 0
+        ? `Incorrect password. ${attemptsRemaining} attempt${attemptsRemaining === 1 ? '' : 's'} remaining.`
+        : 'Too many attempts. Please refresh the page.',
+    )
+
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }
+
+  const handleRequestPassword = () => {
+    if (typeof window === 'undefined') return
+
+    sessionStorage.setItem(FOOTER_CTA_REQUEST_KEY, 'true')
+    router.push('/')
   }
 
   if (isAuthenticated) {
@@ -70,62 +99,100 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
   }
 
   return (
-    <div 
-      className="fixed inset-0 z-[99999] bg-black flex items-center justify-center"
+    <div
       style={{
-        width: '100vw',
-        height: '100vh',
         position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        inset: 0,
         zIndex: 99999,
-        backgroundColor: '#000000',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        background:
+          'radial-gradient(circle at top, rgba(64, 64, 64, 0.35), transparent 40%), #000000',
+        padding: '32px',
       }}
     >
-      
-      {/* Password form */}
-      <div className="relative z-20 text-center px-8 py-12 mx-auto w-full flex-shrink-0" style={{ zIndex: 20, maxWidth: '600px', padding: '48px 32px' }}>
-        <div className="mb-12">
-          <h1 className="text-6xl font-light text-white mb-6" style={{ fontFamily: 'var(--font-heading)', color: 'white' }}>
-            Portfolio
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 20,
+          width: '100%',
+          maxWidth: '560px',
+          padding: '48px 32px',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: '24px',
+          background: 'rgba(12, 12, 12, 0.92)',
+          backdropFilter: 'blur(16px)',
+          textAlign: 'center',
+          boxShadow: '0 24px 80px rgba(0, 0, 0, 0.45)',
+        }}
+      >
+        <div style={{ marginBottom: '32px' }}>
+          <h1
+            style={{
+              margin: '0 0 12px',
+              fontFamily: 'var(--font-heading)',
+              fontSize: 'clamp(2.5rem, 6vw, 4rem)',
+              fontWeight: 400,
+              color: '#ffffff',
+            }}
+          >
+            {title}
           </h1>
-          <p className="text-gray-300 text-xl mb-2" style={{ color: '#d1d5db' }}>
-            Enter password to access
-          </p>
-          <p className="text-gray-500 text-sm" style={{ color: '#6b7280' }}>
-            Professional UX Design Portfolio
+          <p
+            style={{
+              margin: 0,
+              color: '#c7c7c7',
+              fontFamily: 'var(--font-body)',
+              fontSize: '1rem',
+              lineHeight: 1.6,
+            }}
+          >
+            {description}
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
-          <div>
-            <input
-              ref={inputRef}
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter password"
-              className="w-full px-6 py-4 bg-transparent border-2 border-gray-600 rounded-none text-white placeholder-gray-400 focus:outline-none focus:border-white transition-all duration-300 text-lg"
-              style={{ 
-                fontFamily: 'var(--font-body)',
-                color: 'white',
-                backgroundColor: 'transparent',
-                border: '2px solid #4b5563',
-                padding: '16px 24px',
-                fontSize: '18px'
-              }}
-              autoFocus
-            />
-          </div>
+        <form onSubmit={handleSubmit}>
+          <input
+            ref={inputRef}
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder="Enter password"
+            autoComplete="current-password"
+            autoFocus
+            aria-label="Case study password"
+            style={{
+              width: '100%',
+              padding: '16px 20px',
+              borderRadius: '14px',
+              border: '1px solid rgba(255, 255, 255, 0.16)',
+              backgroundColor: 'rgba(255, 255, 255, 0.03)',
+              color: '#ffffff',
+              fontFamily: 'var(--font-body)',
+              fontSize: '1rem',
+              outline: 'none',
+            }}
+          />
 
           {error && (
-            <div className="bg-red-900/20 border border-red-500/30 px-4 py-3 rounded">
-              <p className="text-red-300 text-sm">
+            <div
+              style={{
+                marginTop: '16px',
+                border: '1px solid rgba(255, 107, 107, 0.35)',
+                borderRadius: '14px',
+                background: 'rgba(120, 20, 20, 0.18)',
+                padding: '12px 14px',
+              }}
+            >
+              <p
+                style={{
+                  margin: 0,
+                  color: '#ffb4b4',
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '0.9rem',
+                }}
+              >
                 {error}
               </p>
             </div>
@@ -133,53 +200,41 @@ export default function PasswordGate({ children }: { children: React.ReactNode }
 
           <button
             type="submit"
-            className="w-full py-4 bg-white text-black font-medium hover:bg-gray-200 transition-all duration-300 text-lg"
-            style={{ 
-              fontFamily: 'var(--font-body)',
-              backgroundColor: 'white',
-              color: 'black',
+            disabled={attempts >= MAX_ATTEMPTS}
+            style={{
+              width: '100%',
+              marginTop: '18px',
               padding: '16px',
-              fontSize: '18px',
-              fontWeight: '500',
               border: 'none',
-              cursor: 'pointer',
-              marginTop: '20px',
-              borderRadius: '10px'
+              borderRadius: '14px',
+              backgroundColor: attempts >= MAX_ATTEMPTS ? '#6b6b6b' : '#ffffff',
+              color: '#000000',
+              fontFamily: 'var(--font-body)',
+              fontSize: '1rem',
+              fontWeight: 600,
+              opacity: attempts >= MAX_ATTEMPTS ? 0.6 : 1,
             }}
           >
-            Access Portfolio
+            {submitLabel}
           </button>
         </form>
 
-        {/* Hint */}
-        <div className="mt-12 text-gray-600 text-sm" style={{ color: '#6b7280', marginTop: '48px' }}>
-          <p>Hint: My profession in two words</p>
-        </div>
-      </div>
-
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none z-5">
-        <div 
-          className="absolute top-1/4 left-1/4 w-40 h-40 rounded-full opacity-5"
+        <button
+          type="button"
+          onClick={handleRequestPassword}
           style={{
-            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-            animation: 'float 8s ease-in-out infinite',
+            marginTop: '18px',
+            border: 'none',
+            background: 'transparent',
+            color: 'rgba(255, 255, 255, 0.72)',
+            fontFamily: 'var(--font-body)',
+            fontSize: '0.95rem',
+            textDecoration: 'underline',
+            textUnderlineOffset: '4px',
           }}
-        />
-        <div 
-          className="absolute bottom-1/4 right-1/4 w-32 h-32 rounded-full opacity-5"
-          style={{
-            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-            animation: 'float 10s ease-in-out infinite reverse',
-          }}
-        />
-        <div 
-          className="absolute top-1/2 right-1/3 w-24 h-24 rounded-full opacity-5"
-          style={{
-            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%)',
-            animation: 'float 12s ease-in-out infinite',
-          }}
-        />
+        >
+          {requestPasswordLabel}
+        </button>
       </div>
     </div>
   )
